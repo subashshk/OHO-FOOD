@@ -1,0 +1,87 @@
+<div class="back" *ngIf="showBack">
+  <div class="icon-div ion-activatable" (click)="goBack()">
+    <i class="icon-back-arrow"></i>
+  </div>
+</div>
+
+<ion-content>
+  <app-google-maps
+    *ngIf="pickupAddress"
+    [apiKey]="apiKey"
+    [latlng]="pickupAddress"
+    [startLocation]="pickupAddress"
+    [currentAddress]="address"
+    [showCurrentLocation]="true"
+    [canSearchAddress]="false"
+    [isMartModule]="true"
+    class="order-map-height"
+  ></app-google-maps>
+
+  <ng-container *ngIf="isCart; else showModal">
+    <app-order-detail
+      (onChangeEvent)="goBack($event)"
+      (addressEvent)="goto()"
+      (newAddressEvent)="setAddressId($event)"
+      [addressId]="addressId"
+      [style.display]="!isFullBreakpoint ? 'none' : isAddress ? 'none' : ''"
+    ></app-order-detail>
+    <app-checkout-address
+      *ngIf="isAddress"
+      [addressId]="addressId"
+      (setAddressEvent)="setAddress()"
+      (goBackEvent)="setAddress()"
+    ></app-checkout-address>
+  </ng-container>
+
+  <ng-template #showModal>
+    <ion-modal
+      #modal
+      trigger="open-modal"
+      class="order-detail-modal"
+      [isOpen]="true"
+      [initialBreakpoint]="initialBP"
+      [breakpoints]="[smallBreakpoint, 0.99]"
+      [backdropBreakpoint]="smallBreakpoint"
+      [showBackdrop]="false"
+      [animated]="false"
+      [handle]="false"
+      (ionBreakpointDidChange)="break($event)"
+    >
+      <ng-template>
+        <ion-content
+          class="sheet-content"
+          [ngClass]="!isFullBreakpoint ? 'modal-content' : ''"
+          (touchmove)="touchMoved($event, isFullBreakpoint)"
+        >
+          <!-- Either display order detail or display address section start -->
+          <ng-container>
+            <app-order-detail
+              (onChangeEvent)="goBack($event)"
+              (onMapView)="changeBreakpoint($event)"
+              (scrollPosition)="updateScroll($event)"
+              (addressEvent)="goto()"
+              (newAddressEvent)="setAddressId($event)"
+              (showBackBtnEvent)="showBackBtn()"
+              [addressId]="addressId"
+              [style.display]="!isFullBreakpoint ? 'none' : isAddress ? 'none' : ''"
+            ></app-order-detail>
+            <app-checkout-address
+              *ngIf="isAddress"
+              [addressId]="addressId"
+              (setAddressEvent)="setAddress()"
+              (goBackEvent)="setAddress()"
+            ></app-checkout-address>
+          </ng-container>
+          <!-- Either display order detail or display address section start -->
+
+          <app-order-status
+            [style.display]="isFullBreakpoint ? 'none' : ''"
+            [order]="order"
+            [stepper]="stepper"
+            [estTimeForOrder]="estTimeForOrder"
+          ></app-order-status>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </ng-template>
+</ion-content>

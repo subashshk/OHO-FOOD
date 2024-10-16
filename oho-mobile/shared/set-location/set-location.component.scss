@@ -1,0 +1,63 @@
+@import "src/global.scss";
+
+.services {
+  background: $white;
+  border-radius: 8px;
+  height: 95%;
+  margin: 16px;
+  padding: 70px 16px 16px;
+  text-align: center;
+
+  .image {
+    height: 250px;
+
+    ion-img {
+      height: 100%;
+    }
+  }
+
+  .header {
+    @include font-size($font-size-lg);
+
+    color: $txt-color-dk;
+    font-weight: $bold-n;
+    margin-top: 32px;
+  }
+
+  .sub-header {
+    @include font-size(15px);
+
+    color: $solid-gray;
+    line-height: 22px;
+    margin-top: 12px;
+  }
+
+  ion-button {
+    @include font-size($font-size-n);
+
+    --background: #ee001a;
+    --box-shadow: none;
+    --ion-color-contrast: white;
+    --padding-end: 10px;
+    --padding-start: 10px;
+
+    border-radius: 8px;
+    box-shadow: none;
+    color: $white;
+    font-weight: $bold-n;
+    height: 44px;
+    letter-spacing: normal;
+    margin-top: 32px;
+    overflow: hidden;
+    text-transform: capitalize;
+    width: 100%;
+  }
+
+  .set-from-map {
+    --background: #ffffff;
+
+    border: 1px solid $red-dk;
+    color: $red-dk;
+    margin-top: 16px;
+  }
+}

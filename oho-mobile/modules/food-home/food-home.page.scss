@@ -1,0 +1,497 @@
+@import '../../../global.scss';
+
+ion-content {
+  --color: #4a4a4a; // txt color dk
+  .location {
+    padding: 15px;
+
+    .location-label {
+      font-weight: $bold-n;
+      @include font-size($font-size-n);
+    }
+  }
+
+  .header-slider,
+  .categories-slider {
+    margin: 16px;
+
+    ion-slides {
+      --bullet-background-active: #ee001a; // red-dk
+      --bullet-background: white;
+
+      border-radius: 8px;
+
+      ion-slide {
+        width: 100%;
+
+        ion-img {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .header-slider {
+    margin: 20px 16px;
+  }
+
+  .full-height {
+    height: 100%;
+    background: $white;
+  }
+
+  .search-and-cart {
+    display: flex;
+    align-items: center;
+
+    app-search-bar {
+      &.full-height {
+        height: calc(100vh - 60px);
+      }
+    }
+
+    app-search-bar {
+      width: 100%;
+    }
+  }
+
+  app-food-slide-item {
+    width: 100%;
+  }
+
+  .category {
+    padding: 15px 15px 0 15px;
+
+    .title {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      flex-grow: 1;
+      @include font-size($font-size-lg);
+    }
+
+    ion-slide {
+      margin-top: 15px;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+
+        .img {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 6px;
+          overflow: hidden;
+          position: relative;
+
+          &.all {
+            padding: 10px;
+          }
+
+          ion-img {
+            object-fit: contain;
+            border-radius: 6px;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+          }
+        }
+
+        i {
+          @include font-size($font-size-xxlg);
+        }
+      }
+
+      h6 {
+        margin: 5px 0;
+        @include font-size($font-size-sm);
+        color: $txt-color-dk;
+      }
+    }
+  }
+
+  .list-with-banner {
+    margin: 20px 0;
+
+    &.spotlight {
+      ion-badge {
+        @include font-size(13px);
+
+        --background: white;
+        --padding-bottom: 6px;
+        --padding-end: 10px;
+        --padding-start: 10px;
+        --padding-top: 6px;
+
+        color: $red-dk;
+        font-weight: $bold-md;
+        margin: 0 0 8px 16px;
+      }
+
+      .spotlight-title {
+        @include font-size($font-size-md);
+
+        color: $black-dk;
+        font-weight: $bold-n;
+      }
+
+      .list-title {
+        padding: 0 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .link {
+          @include font-size($font-size-sm);
+
+          color: $red-dk;
+          font-weight: $bold-md;
+        }
+      }
+    }
+
+    .banner {
+      padding: 15px;
+
+      ion-img {
+        border-radius: 10px;
+        overflow: hidden;
+      }
+    }
+    .listing {
+      .slide-div {
+        padding: 10px 16px;
+      }
+
+      .list-title {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 16px;
+        padding-bottom: 6px;
+        font-weight: $bold-n;
+
+        div:first-child {
+          @include font-size($font-size-md);
+        }
+      }
+    }
+  }
+
+  .listing {
+    margin-top: 5px;
+
+    &.spotlight {
+      padding: 5px 0;
+
+      ion-badge {
+        @include font-size(13px);
+
+        --background: white;
+        --padding-bottom: 6px;
+        --padding-end: 10px;
+        --padding-start: 10px;
+        --padding-top: 6px;
+
+        color: $red-dk;
+        font-weight: $bold-md;
+        margin: 0 0 8px 16px;
+        text-transform: uppercase;
+      }
+
+      .spotlight-title {
+        @include font-size($font-size-md);
+
+        color: $black-dk;
+        font-weight: $bold-n;
+      }
+
+      .title {
+        .link {
+          @include font-size($font-size-sm);
+
+          color: $red-dk;
+          font-weight: $bold-md;
+        }
+      }
+    }
+
+    .link {
+      @include font-size($font-size-sm);
+      font-weight: $bold-md;
+      position: relative;
+      padding: 2px 0;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    .banner {
+      ion-img {
+        width: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+    }
+
+    .banner {
+      padding: 15px;
+    }
+
+    .title {
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      font-weight: $bold-n;
+
+      .list-title {
+        @include font-size($font-size-lg);
+        flex-grow: 1;
+        color: $txt-color-dk;
+      }
+    }
+
+    ion-icon {
+      color: $app-accent-color;
+      @include font-size($font-size-xxlg);
+    }
+
+    .slide-div {
+      padding: 8px 16px;
+
+      ion-slides {
+        img {
+          margin-right: 24px;
+        }
+
+        ion-slide {
+
+          app-product-item {
+            height: 100%;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .progress-section {
+    position: fixed;
+    top: 0;
+    z-index: 10000;
+    height: 5px;
+    width: 100%;
+
+    ion-progress-bar {
+      --background: light(#ff0000); // $red-lt
+      --progress-background: #ee001a; //red-dk;
+    }
+  }
+
+  .rating-div {
+    display: flex;
+
+    i {
+      color: $rating-star-color;
+    }
+
+    div {
+      margin-left: 5px;
+      font-weight: $bold-n;
+    }
+  }
+
+  .restaurant-list {
+    ion-grid {
+      padding: 0 8px;
+
+      ion-col {
+        padding: 8px;
+      }
+
+      ion-col:first-child {
+        padding-top: 0;
+      }
+    }
+
+    .list-title {
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      padding-bottom: 16px;
+      font-weight: $bold-n;
+
+      div:first-child {
+        @include font-size($font-size-md);
+
+        flex-grow: 1;
+      }
+
+      .link {
+        @include font-size($font-size-sm);
+        font-weight: $bold-md;
+        position: relative;
+        padding: 2px 0;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  .recent {
+    padding: 15px;
+    margin-bottom: 15px;
+    .recent-wrap {
+      border-radius: 8px;
+      padding: 15px 0 25px 15px;
+      background: $background-blue;
+      .recent-title {
+        @include font-size($font-size-lg);
+        color: $white;
+        padding-bottom: 20px;
+      }
+      .recent-item {
+        background: $white;
+        border-radius: 8px;
+        .img-div {
+          height: 80px;
+          ion-img {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+          }
+        }
+        .recent-name {
+          padding: 10px 10px 20px 10px;
+          text-align: left;
+          color: $txt-color-dk;
+          @include font-size($font-size-sm);
+        }
+      }
+    }
+  }
+}
+
+.veg-restaurant-list,
+.featured-restaurant-list,
+.new-restaurant-list {
+  .list-title {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    padding-bottom: 6px;
+    font-weight: $bold-n;
+
+    div:first-child {
+      @include font-size($font-size-md);
+
+      flex-grow: 1;
+    }
+
+    .link {
+      @include font-size($font-size-sm);
+      font-weight: $bold-md;
+      position: relative;
+      padding: 2px 0;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .slide-div {
+    padding: 8px 16px;
+
+    app-restaurant-item {
+      width: 100%;
+    }
+  }
+}
+
+.categories-products {
+  .title {
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+    font-weight: $bold-n;
+
+    div:first-child {
+      @include font-size($font-size-md);
+
+      flex-grow: 1;
+    }
+  }
+
+  ion-grid {
+    padding: 5px 8px;
+  }
+
+  ion-col {
+    padding: 2px;
+  }
+
+  ion-icon {
+    color: $app-accent-color;
+    @include font-size($font-size-xxlg);
+  }
+
+  .slide-div {
+    padding: 5px 16px;
+  }
+
+  .link {
+    @include font-size($font-size-sm);
+    font-weight: $bold-md;
+    position: relative;
+    padding: 8px 0;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .category-banner {
+    padding: 15px;
+
+    ion-img {
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+  }
+}
+
+.swiper-slide {
+  height: auto;
+}
+.background-white {
+  --background: #ffffff;
+}
+
+.fixed {
+  position: fixed;
+  bottom: 55px;
+  right: 0;
+  z-index: 3;
+}
+
+.veg-restaurant-list,
+.featured-restaurant-list,
+.new-restaurant-list,
+.restaurant-list {
+  margin: 20px 0;
+}
+
+.restaurant-list {
+  margin-bottom: 0;
+}
+
+.slide-div {
+  padding-bottom: 0 !important;
+}

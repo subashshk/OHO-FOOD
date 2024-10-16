@@ -1,0 +1,694 @@
+@import '../../../../global.scss';
+
+.cart-checkout {
+  .stores {
+    background: $white;
+    border-radius: 8px;
+    box-shadow: none;
+    margin: 16px;
+    overflow: hidden;
+
+    .store-header {
+      .header {
+        align-items: center;
+        display: flex;
+      }
+
+      @include font-size($font-size-md);
+
+      align-items: center;
+      background-color: white;
+      border-bottom: 1px solid $border-color-lt;
+      display: flex;
+      margin: 0 16px;
+      padding: 5px 0;
+
+      ion-checkbox {
+        margin-right: 10px;
+      }
+
+      .store-name {
+        @include font-size($font-size-n);
+
+        align-items: center;
+        color: $black-dk;
+        display: flex;
+        font-weight: $bold-n;
+        line-height: 19px;
+        padding: 7px 0;
+        position: relative;
+        text-transform: capitalize;
+
+        ion-icon {
+          color: $solid-gray;
+          font-size: 20px;
+          margin-left: 4px;
+        }
+
+        .icon-store {
+          @include font-size($font-size-md);
+
+          margin-right: 8px;
+        }
+      }
+
+      .order-state {
+        color: $white;
+        padding: 5px 15px;
+        text-align: center;
+        @include font-size($font-size-xs);
+        text-transform: uppercase;
+        border-radius: 5px;
+        margin-left: auto;
+        margin-right: 8px;
+
+        &.confirm,
+        &.ready,
+        &.received,
+        &.delivered {
+          background-color: $status-delivered-bg;
+          color: $status-delivered-text-color;
+        }
+
+        &.shipping {
+          background-color: $table-status-confirm-bg-color;
+          color: $app-secondary-color;
+        }
+
+        &.draft,
+        &.pending {
+          background-color: $table-status-processing-bg;
+          color: $status-processing-text-color;
+        }
+
+        &.canceled {
+          background-color: $table-status-cancelled-bg;
+          color: $status-cancelled-text-color;
+        }
+      }
+
+      .add-more-link {
+        padding: 4px;
+        color: $app-accent-color;
+      }
+
+      .package-index {
+        @include font-size($font-size-sm);
+
+        align-items: center;
+        color: $solid-gray;
+        display: flex;
+        font-weight: $normal;
+        line-height: 16px;
+
+        &.left-auto {
+          margin-left: auto;
+        }
+      }
+    }
+
+    .store-header-mart {
+      align-items: center;
+      background-color: $white;
+      border-bottom: 1px solid $yellow-light;
+      display: flex;
+      margin: 0 16px;
+      padding-top: 12px;
+      padding-bottom: 16px;
+
+
+      .store-name {
+        align-items: center;
+        display: flex;
+
+        .store-img {
+          border-radius: 5px;
+          height: 60px;
+          margin-right: 12px;
+          object-fit: cover;
+          width: 60px;
+        }
+
+        .detail {
+          .title {
+            @include font-size($font-size-n);
+
+            color: $black-dk;
+            font-weight: $bold-n;
+            line-height: 19px;
+          }
+
+          .rating {
+            @include font-size($font-size-sm);
+
+            align-items: center;
+            display: flex;
+            font-weight: $normal;
+            line-height: 16px;
+            margin-top: 4px;
+
+            ion-rating {
+              ::ng-deep {
+                ion-button {
+                  height: fit-content;
+                  width: 15px;
+                }
+              }
+            }
+
+            .rate-num {
+              color: $black-dk;
+              margin-left: 5px;
+            }
+
+            .rating-count {
+              color: $solid-gray;
+              margin-left: 5px;
+            }
+          }
+        }
+      }
+    }
+
+    .store-footer {
+      @include font-size($font-size-sm);
+
+      align-items: center;
+      background: $white;
+      border-top: 1px solid $yellow-light;
+      display: flex;
+      font-weight: $bold-n;
+      line-height: 16px;
+      margin: 0 16px;
+      padding: 12px 0;
+
+      .price {
+        margin: 0 6px;
+        color: $txt-color-dk;
+      }
+
+      .sub-total,
+      .store-total {
+        @include font-size($font-size-sm);
+
+        color: $black-dk;
+        font-weight: $bold-n;
+      }
+
+      .store-total {
+        margin-left: auto;
+      }
+    }
+
+    .store-footer-rider {
+      .rider-details {
+        background: $white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+
+        .info {
+          display: flex;
+          align-items: center;
+
+          .img-div {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 20px;
+
+            ion-img {
+              height: 100%;
+              width: 100%;
+              object-fit: cover;
+            }
+          }
+        }
+
+        .name-div {
+          color: $txt-color-dk;
+          @include font-size($font-size-n);
+
+          .strong {
+            margin-top: 5px;
+            font-weight: $bold-n;
+          }
+
+          .mobile {
+            margin-top: 4px;
+          }
+        }
+      }
+
+      .store-total {
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        color: $txt-color-dk;
+        font-weight: $bold-n;
+        @include font-size($font-size-n);
+      }
+    }
+  }
+
+  .stores:first-child {
+    margin: 10px 16px 16px;
+  }
+}
+
+.mart-padding {
+  padding: 0;
+}
+
+ion-list {
+  margin: 0 16px;
+
+  .delivery-options {
+    color: $cornflower-blue;
+    display: flex;
+    padding: 2px 16px 8px;
+
+    ion-label {
+      @include font-size(13px);
+
+      align-items: center;
+      display: flex;
+      font-weight: $normal;
+      justify-content: space-between;
+      line-height: 15px;
+      position: relative;
+
+      ion-icon {
+        @include font-size($font-size-sm);
+
+        margin-left: 2px;
+      }
+    }
+
+    .down-icon {
+      display: flex;
+      align-items: center;
+      margin-left: 5px;
+    }
+
+    .price {
+      @include font-size(13px);
+
+      font-weight: $normal;
+      line-height: 15px;
+    }
+  }
+
+  .delivery-div {
+    padding: 5px 15px;
+    color: $txt-color-blue;
+    @include font-size($font-size-n);
+    display: flex;
+    align-items: baseline;
+
+    .strong {
+      margin: 5px 0 0 5px;
+    }
+  }
+
+  ion-item-sliding {
+    ion-item {
+      --padding-start: 0;
+      --padding-end: 0;
+      --inner-padding-end: 0;
+
+      width: 100%;
+
+      .cart-item {
+        @include font-size($font-size-n);
+        background-color: white;
+        width: 100%;
+
+        .product-info {
+          align-items: center;
+          background: $white;
+          display: flex;
+          padding: 4px 16px;
+
+          .img-wrap {
+            margin-right: 12px;
+
+            .product-image {
+              height: 80px;
+              width: 80px;
+
+              img {
+                border-radius: 5px;
+                height: 100%;
+                object-fit: cover;
+                width: 100%;
+              }
+            }
+
+            // .btn-div {
+            //   display: flex;
+            //   justify-content: space-around;
+
+            //   ion-button {
+            //     --border-radius: 50%;
+            //     --background: white;
+            //     width: 35px;
+            //     height: 35px;
+            //     @include font-size($font-size-md);
+            //     --box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+
+            //     i,
+            //     ion-icon {
+            //       min-width: 1.125rem;
+            //     }
+            //   }
+
+            //   .wishlist-btn {
+            //     --color: #ee001a; // red-dk;
+            //   }
+
+            //   .special-instructions-btn {
+            //     color: $app-accent-color;
+            //   }
+
+            //   .icon-wish-list,
+            //   .icon-wish-list-filled {
+            //     @include font-size($font-size-lg);
+            //   }
+
+            //   .wishlist-selected {
+            //     --background: #ee001a; //app accent color
+
+            //     i {
+            //       color: $white !important;
+            //     }
+            //   }
+
+            //   .delete-btn {
+            //     --color: #adadad; // grey;
+            //   }
+            // }
+          }
+
+          .info-div {
+            width: 100%;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+
+            .text-info {
+              align-items: flex-end;
+              display: flex;
+              justify-content: space-between;
+              margin-top: 6px;
+            }
+
+            .product-title {
+              @include font-size($font-size-sm);
+
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+
+              color: $black-dk;
+              display: -webkit-box;
+              font-weight: $bold-md;
+              line-height: 16px;
+              overflow: hidden;
+            }
+
+            .product-options {
+              @include font-size(13px);
+
+              color: $solid-gray;
+              font-weight: $normal;
+              line-height: 15px;
+              margin-top: 6px;
+            }
+
+            .product-price {
+              @include font-size($font-size-sm);
+
+              color: $red-dk;
+              font-weight: $bold-md;
+              line-height: 16px;
+            }
+
+            .seller {
+              b {
+                position: relative;
+              }
+            }
+          }
+        }
+
+        .special-instructions {
+          background-color: $special-instructions-bg;
+          padding: 20px;
+          margin: 10px;
+          margin-top: 0;
+          border-radius: 4px;
+          position: relative;
+
+          .label {
+            font-weight: $bold-n;
+            @include font-size($font-size-md);
+            color: $txt-color-dk;
+          }
+
+          .instructions {
+            margin-top: 15px;
+            color: $txt-color-dk;
+            @include font-size($font-size-md);
+          }
+        }
+
+        .extra-info {
+          display: flex;
+          padding: 10px 15px;
+          align-items: center;
+          background: $background-color-xlt;
+
+          .quantity {
+            color: red;
+            margin-left: auto;
+          }
+        }
+      }
+    }
+
+    ion-item:last-item {
+      border-bottom: none !important;
+    }
+
+    ion-item-options {
+      ion-item-option {
+        min-width: 80px;
+      }
+
+      i {
+        @include font-size($font-size-xlg);
+      }
+
+      .wishlist,
+      .special-instructions {
+        background: $background-xmd;
+
+        i {
+          color: $white;
+        }
+
+        .filled {
+          color: $app-accent-color;
+        }
+      }
+
+      .delete {
+        background: $app-accent-color;
+      }
+
+      .wishlist {
+        ion-icon {
+          @include font-size($font-size-xllg);
+        }
+      }
+    }
+  }
+}
+.quantity-mart {
+  app-value-spinner {
+    margin-left: auto;
+    ::ng-deep {
+      .alter-value {
+        height: 35px;
+        border-color: #dedede;
+        .minus {
+          color: $solid-gray;
+        }
+        .plus,
+        .value {
+          color: $black-dk;
+        }
+      }
+    }
+  }
+}
+
+.quantity-mall {
+  app-value-spinner {
+    margin-left: auto;
+    ::ng-deep {
+      .alter-value {
+        border-color: #dedede;
+        .plus,
+        .minus,
+        .value {
+          color: #757575;
+        }
+      }
+    }
+  }
+}
+
+.cart-container {
+  .special-instructions {
+    background-color: $special-instructions-bg;
+    padding: 20px;
+    margin: 10px;
+    margin-top: 0;
+    border-radius: 4px;
+    position: relative;
+
+    .label {
+      font-weight: $bold-n;
+      @include font-size($font-size-md);
+      color: $txt-color-dk;
+    }
+
+    .instructions {
+      margin-top: 15px;
+      color: $txt-color-dk;
+      @include font-size($font-size-md);
+    }
+  }
+
+  &.last {
+    .mart-checkout {
+      border-bottom: none;
+    }
+  }
+}
+
+.mart-checkout {
+  background: $white;
+  border-bottom: 1px solid $yellow-light;
+  padding: 16px 0;
+
+  .img-wrap {
+    margin-right: 12px;
+
+    .product-image {
+      border-radius: 5px;
+      height: 54px;
+      width: 54px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .product-details {
+    padding-right: 10px;
+    .product-name {
+      @include font-size($font-size-sm);
+
+      align-items: center;
+      color: $black-dk;
+      display: flex;
+      font-weight: $bold-md;
+      line-height: 16px;
+    }
+
+    .product-price {
+      @include font-size($font-size-sm);
+
+      color: $red-dk;
+      font-weight: $bold-md;
+      line-height: 16px;
+      margin-top: 6px;
+    }
+
+    .special-instructions-new {
+      @include font-size(13px);
+
+      color: $solid-gray;
+      font-weight: $bold-md;
+      margin-top: 6px;
+    }
+
+    &.skeleton {
+      width: 100%;
+    }
+  }
+  .mart-price {
+    margin-left: 0px !important;
+    padding-left: 10px;
+    padding-right: 10px;
+    .original-price {
+      width: 50px;
+      h3 {
+        @include font-size($font-size-n);
+        font-weight: bold;
+      }
+    }
+    .discounted-price {
+      width: 50px;
+      h3 {
+        @include font-size($font-size-n);
+        text-decoration: line-through;
+        color: $black-lt;
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+.product-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.veg-nonveg-indicator {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-right: 8px;
+
+  .green {
+    color: $veg-color;
+    font-size: 14px;
+  }
+  .brown {
+    color: $non-veg-color;
+    font-size: 14px;
+  }
+}
+
+ion-checkbox {
+  --background-checked: #ee001a;
+  --border-color: #dedede;
+  --border-color-checked: #ee001a;
+  --size: 20px;
+
+  margin: 0;
+}
+
+.checkbox-store {
+  margin-right: 10px;
+}

@@ -1,0 +1,61 @@
+@import "../../../../../styles.scss";
+
+.food-sales-over-time {
+  padding: 24px;
+
+  .table {
+    background: $white;
+    border-radius: 8px;
+    padding: 24px 24px 12px 24px;
+
+    .table-responsive {
+      nz-table {
+        .header-arrow {
+          align-items: center;
+          display: flex;
+          flex-direction: row;
+        }
+
+        .table-header {
+          float: left;
+          margin-right: 10px;
+        }
+
+        th {
+          @include font-size($font-size-sm);
+
+          background-color: $grey-xlgt;
+          border: none;
+          color: $txt-color-dk;
+          cursor: pointer;
+          font-weight: bold;
+          padding: 20px;
+          text-align: center;
+
+          .table-heading {
+            align-items: center;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+          }
+
+          &:hover {
+            background-color: $grey-xxlt;
+          }
+        }
+
+        tbody {
+          tr {
+            @include font-size($font-size-sm);
+
+            td {
+              border-bottom: 1px solid $border-color;
+              border-top: 0;
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,71 @@
+<section class="customer-card">
+  <div class="wrap">
+    <div class="head">
+      <div class="icon-name">
+        <div class="icon-div">
+          <ion-img [src]="getRiderImage()" *ngIf="!isUser"></ion-img>
+          <i class="icon-user" *ngIf="isUser"></i>
+          <div class="rate" *ngIf="!isUser">
+            <i class="icon-star-grade"></i>
+            <div class="pl-1">
+              {{ user.avgRating | number: '1.0-0' }}
+            </div>
+          </div>
+        </div>
+        <div class="name" *ngIf="!isUser">
+          {{ user && user.fullName ? user.fullName : '---' }}
+        </div>
+        <div class="name" *ngIf="isUser">
+          {{ customer && customer.name ? customer.name : '---' }}
+        </div>
+      </div>
+      <div class="status" *ngIf="isUser && !returnStatusLabel">
+        <ion-img src="assets/images/esewa.svg"></ion-img>
+      </div>
+      <div class="status" *ngIf="isUser && returnStatusLabel">
+        <div [class]="returnStatusLabel">
+          {{ returnStatusLabel }}
+        </div>
+      </div>
+      <div class="status" *ngIf="!isUser">
+        <div [class]="status">
+          {{ getStatus(status) }}
+        </div>
+      </div>
+    </div>
+    <div class="tail">
+      <div class="icon-text">
+        <div class="icon-div ion-activatable">
+          <a [href]="getPhoneString()">
+            <i class="icon-Call-outline"></i>
+          </a>
+        </div>
+        <div class="text">CALL</div>
+      </div>
+      <!-- <div class="icon-text">
+        <div class="icon-div ion-activatable">
+          <a [href]="getSmsString() | safeUrl">
+            <i class="icon-message"></i>
+          </a>
+          
+        </div>
+        <div class="text">MESSAGE</div>
+      </div> -->
+      <!-- ---------------------- -->
+      <div class="icon-text">
+        <div class="icon-div ion-activatable">
+          <a (click)="sendChatMessage()">
+            <i class="icon-messages-outline"></i>
+          </a>
+        </div>
+        <div class="text">CHAT</div>
+      </div>
+      <div class="icon-text" *ngIf="!hideMap">
+        <div class="icon-div ion-activatable" (click)="mapClicked()">
+          <i class="icon-Location-outline"></i>
+        </div>
+        <div class="text">MAP</div>
+      </div>
+    </div>
+  </div>
+</section>

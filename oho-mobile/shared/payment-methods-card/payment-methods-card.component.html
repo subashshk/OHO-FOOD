@@ -1,0 +1,33 @@
+<div class="payment-section">
+  <div class="section-title">Select Payment Method</div>
+  <div class="payment-method" *ngFor="let method of paymentMethods">
+    <div class="ion-activatable title" (click)="setPaymentMethod(method)">
+      <ion-icon
+        name="radio-button-off-outline"
+        *ngIf="!isCurrentPaymentMethod(method)"
+      ></ion-icon>
+      <ion-icon
+        class="selected"
+        name="radio-button-on-outline"
+        *ngIf="isCurrentPaymentMethod(method)"
+      ></ion-icon>
+      <ion-label>{{method?.title}}</ion-label>
+    </div>
+    <div class="sub-methods" *ngIf="method.subMethods">
+      <div
+        class="ion-activatable sub-method"
+        [class.selected]="isCurrentPaymentMethod(subMethod)"
+        *ngFor="let subMethod of method.subMethods"
+        (click)="setPaymentMethod(subMethod)"
+      >
+        <ion-img [src]="subMethod?.img"> </ion-img>
+        <ion-icon
+          class="circle-check-icon"
+          name="checkmark-circle"
+          *ngIf="isCurrentPaymentMethod(subMethod)"
+        >
+        </ion-icon>
+      </div>
+    </div>
+  </div>
+</div>

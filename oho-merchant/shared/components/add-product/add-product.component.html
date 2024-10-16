@@ -1,0 +1,455 @@
+<app-toolbar-arrow-text
+  [title]="isEdit ? 'Edit Product': 'Add Product'"
+  (backEvent)="dismiss()"
+></app-toolbar-arrow-text>
+
+<ion-content>
+  <app-circular-stepper
+    *ngIf="!isEdit"
+    [stepCount]="1"
+    stepTitle="Product Details"
+    [totalSteps]="6"
+  ></app-circular-stepper>
+  <form [formGroup]="productForm">
+    <!-- name start -->
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked"
+          >Name
+          <p class="required">*</p></ion-label
+        >
+      </div>
+      <ion-input
+        formControlName="name"
+        inputmode="text"
+        placeholder="Enter your product name"
+      ></ion-input>
+      <ion-text
+        class="error"
+        color="danger"
+        *ngIf="
+          productForm.get('name').invalid &&
+          (productForm.get('name').dirty ||
+            productForm.get('name').touched)
+        "
+      >
+        Product name is required
+      </ion-text>
+    </ion-item>
+    <!-- name start -->
+    <!-- Store start -->
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="floating"
+          >Store
+          <p class="required">*</p></ion-label
+        >
+      </div>
+      <ion-select
+        (ionChange)="setSelectedStore($event)"
+        formControlName="storeId"
+        placeholder="Select Store"
+        interface="popover"
+      >
+        <ion-select-option
+          *ngFor="let item of storeList"
+          [value]="item?.id"
+          >{{ item?.name }}
+        </ion-select-option>
+      </ion-select>
+      <ion-text
+        class="error"
+        color="danger"
+        *ngIf="
+          productForm.get('storeId').invalid &&
+          (productForm.get('storeId').dirty || productForm.get('storeId').touched)
+        "
+      >
+        Store is required
+      </ion-text>
+    </ion-item>
+    <!-- Store end -->
+    <!-- Start date start -->
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked">
+          Start Date
+          <p class="required">*</p>
+        </ion-label
+        >
+      </div>
+      <div class="input-container" id="popover">
+        <ion-input
+          formControlName="startDate"
+          inputmode="text"
+          placeholder="DD/MM/YYYY"
+          value="selectedDate"
+        ></ion-input>
+      <ion-button slot="end" fill="clear">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </ion-button>
+      </div>
+    </ion-item>
+    <ion-modal
+      class="date-picker-modal"
+      trigger="popover"
+      id="date-modal"
+      showBackdrop="true"
+    >
+      <ng-template>
+        <ion-content>
+          <ion-datetime
+            mode="md"
+            color="oho"
+            presentation="date"
+            placeholder="Add start date"
+            [showDefaultButtons]="true"
+            (ionChange)="getDate($event)"
+          ></ion-datetime>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+    <!-- Start date end -->
+    <!-- End date start -->
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked">
+          End Date
+          <p class="required">*</p>
+        </ion-label
+        >
+      </div>
+      <div class="input-container" id="selectEndDate">
+        <ion-input
+          formControlName="endDate"
+          inputmode="text"
+          placeholder="DD/MM/YYYY"
+        ></ion-input>
+      <ion-button slot="end" fill="clear">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </ion-button>
+      </div>
+    </ion-item>
+    <ion-modal
+      class="date-picker-modal"
+      trigger="selectEndDate"
+      id="date-modal"
+      showBackdrop="true"
+    >
+      <ng-template>
+        <ion-content>
+          <ion-datetime
+            mod="md"
+            color="oho"
+            presentation="date"
+            placeholder="Add start date"
+            [showDefaultButtons]="true"
+            (ionChange)="getDate($event, true)"
+          ></ion-datetime>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+    <!-- End date end -->
+    <!-- Category start -->
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="floating"
+          >Category
+          <p class="required">*</p></ion-label
+        >
+      </div>
+      <ion-select
+        formControlName="categories"
+        placeholder="Select Category"
+        interface="popover"
+        [multiple]="true"
+      >
+        <ion-select-option
+          *ngFor="let item of listOfCategories"
+          [value]="item.id"
+          >{{ item?.prettyName }}
+        </ion-select-option>
+      </ion-select>
+      <ion-text
+        class="error"
+        color="danger"
+        *ngIf="
+          (productForm.get('categories').invalid &&
+            productForm.get('categories').dirty) ||
+          (isAttemptingSubmit && productForm.get('categories').touched)
+        "
+      >
+        Product category is required
+      </ion-text>
+    </ion-item>
+    <!-- Category end -->
+    <!-- Taxonomies start -->
+    <ion-item *ngIf="storeServiceType !== platformServices.Food" lines="none">
+      <div class="title">
+        <ion-label position="floating"
+          >Taxonomies
+          <p class="required">*</p></ion-label
+        >
+      </div>
+      <ion-select
+        formControlName="taxons"
+        placeholder="Select taxonomies"
+        interface="popover"
+        [multiple]="true"
+      >
+        <ion-select-option
+          *ngFor="let item of taxonsSelectedList"
+          [value]="item?.id"
+          >{{ item?.prettyName }}
+        </ion-select-option>
+        <ion-select-option *ngFor="let item of listOfTaxons" [value]="item.id"
+          >{{ item?.prettyName }}
+        </ion-select-option>
+      </ion-select>
+      <ion-text
+        class="error"
+        color="danger"
+        *ngIf="
+          (productForm.get('taxons').invalid &&
+            productForm.get('taxons').dirty) ||
+          (isAttemptingSubmit && productForm.get('taxons').touched)
+        "
+      >
+        Product Taxonomy is required
+      </ion-text>
+    </ion-item>
+    <!-- Taxonomies end -->
+    <!-- Option type start -->
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="floating"
+          >Option Type
+          <p class="required">*</p></ion-label
+        >
+      </div>
+      <ion-select
+        formControlName="optionTypeIds"
+        placeholder="Select option type"
+        interface="popover"
+      >
+        <ion-select-option
+          *ngFor="let item of optionTypesList"
+          [value]="item?.id"
+        >{{ item?.name }}</ion-select-option>
+      </ion-select>
+      <ion-text
+        class="error"
+        color="danger"
+        *ngIf="
+          (productForm.get('optionTypeIds').invalid &&
+            productForm.get('optionTypeIds').dirty) ||
+          (isAttemptingSubmit && productForm.get('optionTypeIds').touched)
+        "
+      >
+        Product option type is required
+      </ion-text>
+    </ion-item>
+    <!-- Option type end -->
+    <!-- Product type start -->
+    <ion-item *ngIf="storeServiceType === platformServices.Food" lines="none">
+      <div class="title">
+        <ion-label position="floating"
+          >Product Type
+          <p class="required">*</p></ion-label
+        >
+      </div>
+      <ion-select
+        formControlName="productType"
+        placeholder="Select product type"
+        interface="popover"
+      >
+        <ion-select-option
+          *ngFor="let item of foodTypes | keyvalue"
+          [value]="item.value"
+          >{{ item.key | removeUnderScore }}
+        </ion-select-option>
+      </ion-select>
+      <ion-text
+        class="error"
+        color="danger"
+        *ngIf="
+          (productForm.get('productType').invalid &&
+            productForm.get('productType').dirty) ||
+          (isAttemptingSubmit && productForm.get('productType').touched)
+        "
+      >
+        Product condition is required
+      </ion-text>
+    </ion-item>
+    <!-- product type end -->
+    <!-- Description start -->
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked"
+          >Description
+          <p class="required">*</p></ion-label
+        >
+      </div>
+      <ion-textarea
+        formControlName="description"
+        placeholder="Enter description"
+        rows="4"
+      ></ion-textarea>
+      <ion-text
+        class="error"
+        color="danger"
+        *ngIf="
+          productForm.get('description').invalid &&
+          (productForm.get('description').dirty ||
+            productForm.get('description').touched)
+        "
+      >
+        Product description is required
+      </ion-text>
+    </ion-item>
+    <!-- Description end -->
+    <!-- Selling price start -->
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked">Selling Price (RS)</ion-label>
+      </div>
+      <ion-input
+        formControlName="price"
+        type="number"
+        placeholder="Enter selling price"
+      ></ion-input>
+      <ion-text
+        class="error"
+        color="danger"
+        *ngIf="
+          productForm.get('price').invalid &&
+          (productForm.get('price').dirty ||
+            productForm.get('price').touched)
+        "
+      >
+        Product selling price is required
+      </ion-text>
+      <ion-text
+        class="error"
+        color="danger"
+        *ngIf="
+          (productForm.get('price').touched &&
+            productForm.get('price').value == 0) ||
+          (isAttemptingSubmit && productForm.get('price').value == 0)
+        "
+      >
+        Product price can not be zero !
+      </ion-text>
+    </ion-item>
+    <!-- Selling price end -->
+    <!-- Cost price start -->
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked">Cost Price (RS)</ion-label>
+      </div>
+      <ion-input
+        formControlName="costPrice"
+        type="number"
+        placeholder="Enter cost price"
+      ></ion-input>
+      <ion-text
+        class="error"
+        color="danger"
+        *ngIf="
+          productForm.get('costPrice').invalid &&
+          (productForm.get('costPrice').dirty ||
+            productForm.get('costPrice').touched)
+        "
+      >
+        Product cost price is required
+      </ion-text>
+      <ion-text
+        class="error"
+        color="danger"
+        *ngIf="
+          (productForm.get('costPrice').touched &&
+            productForm.get('costPrice').value == 0) ||
+          (isAttemptingSubmit && productForm.get('costPrice').value == 0)
+        "
+      >
+        Product price can not be zero !
+      </ion-text>
+    </ion-item>
+    <!-- Cost price end -->
+    <!-- SKU start -->
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked"
+          >Master SKU
+          <p class="required">*</p></ion-label
+        >
+      </div>
+      <ion-input
+        formControlName="sku"
+        inputmode="text"
+        placeholder="Enter master SKU"
+      ></ion-input>
+      <ion-text
+        class="error"
+        color="danger"
+        *ngIf="
+          productForm.get('sku').invalid &&
+          (productForm.get('sku').dirty ||
+            productForm.get('sku').touched)
+        "
+      >
+        Product MasterSKU is required
+      </ion-text>
+    </ion-item>
+    <!-- SKU end -->
+    <!-- Status start -->
+    <div
+      *ngIf="storeServiceType !== platformServices.Food"
+      lines="none"
+      class="status"
+    >
+      <div class="title">
+        <ion-label position="stacked"
+          >Status</ion-label
+        >
+      </div>
+      <ion-toggle
+        (ionChange)="setProductStatus($event)"
+        formControlName="productStatus"
+        [checked]="false"
+        class="toggle-small"
+        slot="end"
+        mode="ios"
+      >
+      </ion-toggle>
+    </div>
+    <!-- Track in inventory start -->
+    <div
+      *ngIf="storeServiceType !== platformServices.Food"
+      lines="none"
+      class="status"
+    >
+      <div class="title">
+        <ion-label position="stacked">Track Inventory</ion-label>
+      </div>
+      <ion-toggle
+        (ionChange)="setTrackInventory($event)"
+        formControlName="trackInventory"
+        [checked]="false"
+        class="toggle-small"
+        slot="end"
+        mode="ios"
+      >
+      </ion-toggle>
+    </div>
+    <!-- Track in inventory end -->
+    <!-- Status end -->
+  </form>
+</ion-content>
+<ion-footer no-shadow class="footer">
+  <app-footer-button
+      btnTitle="Next"
+      (btnEvent)="onSubmit()"
+      [isDisabled]="isAttemptingSubmit"
+  ></app-footer-button>
+</ion-footer>

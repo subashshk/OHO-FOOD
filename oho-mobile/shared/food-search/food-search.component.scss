@@ -1,0 +1,157 @@
+@import "src/global.scss";
+
+.search {
+  display: flex;
+
+  ion-searchbar {
+    --background: white;
+    --placeholder-color: #8b8b8b;
+    --placeholder-opacity: 1;
+
+    padding: 10px 16px;
+    text-align: left;
+    z-index: 3000;
+
+    ::ng-deep {
+      .searchbar-input-container {
+        border-radius: 10px;
+        border: none;
+        height: 38px;
+        overflow: hidden;
+
+        .searchbar-search-icon {
+          color: $grey-md;
+          height: 1rem;
+          padding-top: 12px;
+        }
+
+        .searchbar-input {
+          @include font-size($font-size-sm);
+        }
+      }
+      .searchbar-cancel-button {
+        @include font-size($font-size-sm);
+
+        color: $black-dk;
+        font-weight: $bold-md;
+      }
+    }
+
+    input {
+      border: 0 !important;
+      font-size: 1rem !important;
+    }
+
+    &.expanded {
+      animation-name: expand;
+      left: 0;
+    }
+
+    &.show-border {
+      ::ng-deep {
+        .searchbar-input-container {
+          border: 1px solid $grey-lt;
+        }
+      }
+    }
+
+    &.expanded,
+    &.hidden {
+      animation-duration: 0.25s;
+      position: absolute;
+      right: 0;
+      top: 5px;
+      z-index: 10;
+    }
+
+    &.hidden {
+      animation-name: hide;
+      left: 100%;
+    }
+  }
+
+  .buttons {
+    .searchbar-cancel-button {
+      @include font-size($font-size-sm);
+
+      --background-focused-opacity: 0;
+      --background-hover: white;
+      --padding-end: unset;
+      --padding-start: unset;
+      
+      color: $black-dk;
+      font-weight: $bold-md;
+      margin-left: 0;
+      margin-right: 16px;
+      position: relative;
+      text-transform: capitalize;
+    }
+  }
+}
+
+.segment {
+  height: 100%;
+
+  .segment-section {
+    display: flex;
+    margin: 14px 16px 8px;
+  }
+}
+
+ion-segment {
+  z-index: 1;
+
+  ion-segment-button {
+    @include no-leftover-ripple();
+
+    --color-checked: #ee001a; //$red-dk
+    --font-family: $font-family;
+    --padding-end: 15px;
+    --padding-start: 15px;
+    --ripple-color: transparent;
+
+    text-transform: none;
+    width: 50%;
+  }
+}
+
+.all-items {
+  max-height: 550px;
+  overflow: scroll;
+
+  .item-lists {
+    border-bottom: 1px solid $yellow-light;
+    margin: 16px;
+    padding-bottom: 16px;
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+}
+
+.restaurant-lists {
+  max-height: 75vh;
+  overflow: scroll;
+
+  .list {
+    border-bottom: 1px solid $yellow-light;
+    margin: 16px;
+    padding-bottom: 16px;
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+}
+
+.no-results-txt {
+  @include font-size($font-size-md);
+
+  align-items: center;
+  display: flex;
+  height: calc(100% - 180px) !important;
+  justify-content: center;
+}

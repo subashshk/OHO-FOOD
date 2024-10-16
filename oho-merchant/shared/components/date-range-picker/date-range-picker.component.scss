@@ -1,0 +1,83 @@
+@import '../../../../global.scss';
+
+.select-date-container {
+  margin-bottom: env(safe-area-inset-bottom);
+
+  .date-options {
+    padding: 20px 16px 12px;
+  }
+
+  .header {
+    @include font-size($font-size-md);
+
+    color: $txt-color-dk;
+    font-weight: $bold-n;
+    margin-bottom: 12px;
+  }
+
+  ion-item {
+    @include no-leftover-ripple();
+
+    --min-height: unset;
+    --padding-start: 0;
+    --ripple-color: transparent;
+
+    margin-bottom: 4px;
+    padding: 4px 0;
+  }
+
+  ion-radio {
+    --border-checked: #ee001a;
+    --color: #dedede;
+    --color-checked: #ee001a;
+
+    margin: 0 16px 0 0;
+  }
+
+  ion-label {
+    @include font-size(15px);
+
+    color: $black-dk;
+    margin: 8px 0;
+  }
+
+  .divider {
+    border-bottom: 1px solid $seashell;
+  }
+}
+
+.btn {
+  display: flex;
+  gap: 17px;
+  justify-content: space-between;
+  margin: 16px;
+  margin-bottom: calc(env(safe-area-inset-bottom) + 16px);
+
+  ion-button {
+    @include font-size($font-size-n);
+
+    --box-shadow: none;
+
+    font-weight: $bold-n;
+    height: 44px;
+    margin: 0;
+    text-transform: capitalize;
+    width: 50%;
+
+    &::part(native) {
+      border-radius: 8px;
+    }
+  }
+
+  .cancel-btn {
+    border: 1px solid $red-dk;
+    border-radius: 8px;
+    color: $red-dk;
+  }
+
+  .ok-btn {
+    --background: #ee001a;
+
+    color: $white;
+  }
+}

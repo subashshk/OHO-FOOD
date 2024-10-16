@@ -1,0 +1,24 @@
+<div class="ride-rate">
+  <div class="rate-header">
+    Rate Delivery
+  </div>
+  <div class="rate-body">
+    <div>How do you rate this delivery?</div>
+    <div class="rating">Your rating: <strong>{{ rate + ' / 5' }}</strong></div>
+    <div class="stars">
+      <ion-rating [rate]="rate" (rateChange)="onModelChange($event)"></ion-rating>
+    </div>
+    <div class="review">
+      <ion-textarea
+        rows="3"
+        (ionChange)="reviewChange($event)"
+        placeholder="Write your review here..."
+      ></ion-textarea>
+    </div>
+  </div>
+  <div class="rate-footer">
+    <ion-button [disabled]="rate <= 0" expand="block" (click)="buttonClick()"
+      >Confirm Rating</ion-button
+    >
+  </div>
+</div>

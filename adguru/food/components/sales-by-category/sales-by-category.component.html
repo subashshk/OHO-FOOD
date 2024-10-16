@@ -1,0 +1,59 @@
+<div class="sales-report">
+  <app-header-breadcrumb
+    [title]="title"
+    [breadcrumbs]="breadcrumbs"
+  ></app-header-breadcrumb>
+  <div class="filter-bar mt-4">
+    <app-report-filter-bar
+      [selectFields]="filterOpt"
+      (exportSales)="exportData($event)"
+      (rangeFilter)="handleRangeFilter($event)"
+      (storeStatus)="handleFilterString($event)"
+    ></app-report-filter-bar>
+  </div>
+  <div class="table mt-4">
+    <div class="table-responsive">
+      <nz-table
+        [nzShowPagination]="false"
+        [nzData]="dataList"
+        [nzLoading]="isLoading"
+        [nzLoadingIndicator]="loader"
+      >
+        <thead>
+          <th *ngIf="path===route.Vendor; else category">Vendor</th>
+          <ng-template #category>
+            <th>Categories</th>
+          </ng-template>
+          <th>Qty</th>
+          <th>Gross Sales</th>
+          <th>Discounts</th>
+          <th>Net Profit</th>
+          <th>Total Sales</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of dataList">
+            <td *ngIf="path === route.Vendor; else categoryData">{{ data?.name ?? '--' }}</td>
+            <ng-template #categoryData>
+              <td>{{ data?.name ?? '--' }}</td>
+            </ng-template>
+            <td>{{ data?.quantity ?? 0 }}</td>
+            <td>{{ (data?.grossSales ?? 0) | nprCurrency }}</td>
+            <td>{{ (data?.discount ?? 0) | nprCurrency }}</td>
+            <td>{{ (data?.grossSales - data?.discount) | nprCurrency }}</td>
+            <td>{{ (data?.totalSales ?? 0) | nprCurrency }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+  <app-select-pagination
+    [totalPageCount]="totalPageCount"
+    [perPage]="perPage"
+    [pageIndex]="pageIndex"
+    (pageChanged)="handlePageChange($event)"
+    (perPageIndicator)="handlePerPageChange($event)"
+  ></app-select-pagination>
+</div>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

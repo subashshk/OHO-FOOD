@@ -1,0 +1,54 @@
+@import "../../../../global.scss";
+
+.inspection-results {
+  background: $white;
+  border-radius: 8px;
+  margin: 16px;
+  padding: 16px;
+
+  .header {
+    @include font-size($font-size-n);
+
+    color: $txt-color-dk;
+    font-weight: $bold-n;
+    padding-bottom: 12px;
+    text-transform: capitalize;
+  }
+
+  .collection-point, .warehouse {
+    border-bottom: 1px solid $yellow-light;
+    border-top: 1px solid $yellow-light;
+    padding: 12px 0 16px;
+
+    .title {
+      @include font-size($font-size-sm);
+
+      color: $txt-color-dk;
+      font-weight: $bold-n;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .reason {
+      padding: 12px 0;
+    }
+
+    .reason, .remark {
+      @include font-size($font-size-sm);
+
+      color: $txt-color-dk;
+
+      p:first-child {
+        color: $solid-gray;
+        padding-bottom: 6px;
+      }
+    }
+  }
+
+  .warehouse {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}

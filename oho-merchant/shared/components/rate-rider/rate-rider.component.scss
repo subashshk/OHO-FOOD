@@ -1,0 +1,36 @@
+@import '../../../../global.scss';
+
+.ride-rate {
+  .rate-header {
+    padding: 20px;
+    font-weight: 600;
+    color: $txt-color-dk;
+    @include font-size($font-size-xlg);
+  }
+  .rate-body {
+    padding: 20px;
+    padding-top: 5px;
+    color: $txt-color-dk;
+    @include font-size($font-size-md);
+    .rating {
+      margin-top: 10px;
+    }
+    .stars {
+      margin-top: 10px;
+    }
+    .review {
+      ion-textarea {
+        --background: #f0f0f0;
+        --border-radius: 8px;
+      }
+    }
+  }
+  .rate-footer {
+    padding: 20px;
+    padding-top: 0;
+
+    ion-button {
+      --background: #ee001a; // app accent color
+    }
+  }
+}

@@ -1,0 +1,210 @@
+@import '../../../../global.scss';
+
+.rating-review {
+  .summary {
+    background: $white;
+    border-bottom: 1px solid $yellow-light;
+    padding: 10px 0;
+
+    ion-col {
+      text-align: center;
+    }
+
+    .rate-summary {
+      padding-right: 20px;
+      border-right: 1px solid $border-color;
+
+      ion-rating {
+        --star-color: #dedede; // $background-color-xlt
+        --star-color-filled: #f5a623; // $rating-star-color
+      }
+    }
+
+    .rate-label {
+      @include font-size(28px);
+      font-weight: $normal;
+
+      span {
+        color: $solid-gray;
+
+        .max {
+          @include font-size($font-size-md);
+        }
+      }
+    }
+
+    .rating-breakdown {
+      padding-left: 20px;
+
+      .progress-ratings {
+        align-items: center;
+        color: $txt-color-mute;
+        display: flex;
+        font-weight: $bold-md;
+        line-height: 16px;
+
+        ion-icon {
+          padding: 0 8px;
+          color: $orange-n;
+        }
+
+        ion-progress-bar {
+          --buffer-background: #f7f7f7;
+
+          border-radius: 4px;
+        }
+
+        .amount {
+          padding-left: 8px;
+        }
+      }
+    }
+
+    .total-ratings {
+      @include font-size($font-size-sm);
+      color: $solid-gray;
+      font-size: $normal;
+    }
+
+    ion-rating {
+      ::ng-deep {
+        ion-button {
+          width: 10px;
+
+          &.button-disabled {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  .submitted-images {
+    margin: 0 -20px;
+    padding: 0 20px;
+    border-bottom: 1px solid $border-color;
+
+    ion-button {
+      --background: transparent;
+      --color: #4a4a4a;
+      --box-shadow: none;
+      text-transform: capitalize;
+      font-weight: normal;
+    }
+  }
+
+  .reviews {
+    background: $white;
+
+    .filter {
+      margin: 0 -30px;
+      padding: 0 15px;
+      display: flex;
+      border-top: 1px solid $border-color;
+      border-bottom: 1px solid $border-color;
+
+      .sort-select-div,
+      .filter-select-div {
+        flex: 0.5;
+        display: flex;
+        align-items: center;
+
+        ion-icon {
+          padding: 0 10px;
+        }
+
+        lbl {
+        }
+
+        ion-select {
+          flex-grow: 1;
+        }
+      }
+
+      .sort-select-div {
+        border-right: 1px solid $border-color;
+
+        ion-icon {
+          transform: rotate(90deg);
+        }
+      }
+    }
+
+    .reviews-header {
+      display: flex;
+      align-items: center;
+
+      .write-btn {
+        text-transform: none;
+        --background: #ee001a; //red-dk
+        --box-shadow: none;
+        margin: 0;
+      }
+    }
+
+    .review {
+      @include font-size($font-size-md);
+      color: $txt-color-dk;
+      border-bottom: 1px solid $border-color;
+      padding: 0 16px;
+
+      &:last-child {
+        border: none;
+      }
+
+      .user-desc {
+        display: flex;
+        align-items: center;
+
+        ion-rating {
+          margin-top: -2px;
+
+          ::ng-deep {
+            ion-button {
+              width: 10px;
+            }
+          }
+        }
+
+        .name {
+          font-weight: $bold-n;
+          @include font-size($font-size-n);
+        }
+
+        .rating {
+          margin-left: 5px;
+        }
+      }
+
+      .purchase-date {
+        @include font-size($font-size-xs);
+
+        align-items: center;
+        color: $solid-gray;
+        display: flex;
+        font-weight: $normal;
+        line-height: 14px;
+      }
+
+      .review-content {
+        margin-top: 10px;
+
+        .review-header {
+          @include font-size(15px);
+
+          font-weight: $bold-md;
+          padding: 5px 0;
+          margin-top: 10px;
+        }
+
+        .review-txt {
+          @include font-size($font-size-sm);
+
+          font-weight: $normal;
+          color: $solid-gray;
+          line-height: 20px;
+        }
+      }
+    }
+  }
+}

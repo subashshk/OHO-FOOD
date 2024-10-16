@@ -1,0 +1,19 @@
+<app-toolbar-arrow-text
+  title="Set Location"
+  (backEvent)="dismiss()"
+></app-toolbar-arrow-text>
+
+<ion-content>
+  <section class="services">
+    <div class="image">
+      <ion-img src="/assets/images/set-location.svg"></ion-img>
+    </div>
+    <div class="header">Find Services Near You</div>
+    <div class="sub-header">
+      Enable location access to easily find nearby vendors and receive more
+      precise service.
+    </div>
+    <ion-button class="current-location" id="set-current-location" (click)="setLocation()">Use current location</ion-button>
+    <ion-button class="set-from-map" id="set-from-map" (click)="setLocation('map')">Set from map</ion-button>
+  </section>
+</ion-content>

@@ -1,0 +1,74 @@
+@import '../../../../global.scss';
+
+.store-header-mart {
+  align-items: center;
+  background-color: $white;
+  display: flex;
+
+  .store-name {
+    align-items: center;
+    display: flex;
+    width: -webkit-fill-available;
+
+    .store-img {
+      border-radius: 5px;
+      height: 60px;
+      margin-right: 12px;
+      object-fit: cover;
+      width: 60px;
+    }
+
+    .detail {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      white-space: nowrap;
+
+      .title {
+        @include font-size($font-size-n);
+
+        color: $black-dk;
+        font-weight: $bold-n;
+        line-height: 19px;
+      }
+
+      .cuisine {
+        @include font-size($font-size-sm);
+
+        color: $solid-gray;
+        font-weight: $normal;
+        line-height: 20px;
+        margin-top: 4px;
+      }
+
+      .rating {
+        @include font-size($font-size-sm);
+
+        align-items: center;
+        display: flex;
+        font-weight: $normal;
+        line-height: 16px;
+        margin-top: 4px;
+
+        ion-rating {
+          ::ng-deep {
+            ion-button {
+              height: fit-content;
+              width: 15px;
+            }
+          }
+        }
+
+        .rate-num {
+          color: $black-dk;
+          margin-left: 5px;
+        }
+
+        .rating-count {
+          color: $solid-gray;
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+}

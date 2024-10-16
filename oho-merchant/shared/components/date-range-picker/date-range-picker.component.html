@@ -1,0 +1,31 @@
+<div class="select-date-container">
+  <div class="date-options">
+    <div class="header">Pick a date</div>
+    <ion-radio-group (ionChange)="changeFilter($event)">
+      <ion-item lines="none" *ngFor="let date of ranges | keyvalue: noSorting">
+        <ion-label>{{ date?.key }}</ion-label>
+        <ion-radio color="danger" [value]="date?.value" slot="start"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </div>
+  <div class="divider"></div>
+  <div class="btn">
+    <ion-button
+      class="cancel-btn"
+      fill="clear"
+      expand="full"
+      id="date-range-cancel"
+      (click)="dismiss()"
+    >
+      Cancel
+    </ion-button>
+    <ion-button
+      class="ok-btn"
+      expand="full"
+      id="date-range-ok"
+      (click)="confirm()"
+    >
+      Ok
+    </ion-button>
+  </div>
+</div>

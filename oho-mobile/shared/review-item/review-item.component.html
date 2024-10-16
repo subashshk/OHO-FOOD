@@ -1,0 +1,98 @@
+<div class="review-item" *ngIf="!isLoading">
+  <div class="product">
+    <div class="image-div" *ngIf="!isHotel(); else showHotel">
+      <img [src]="product?.imageSrcMini ?? '/assets/images/no-image.png'" />
+    </div>
+    <ng-template #showHotel>
+      <div class="image-div">
+        <img [src]="product?.images?.[0]?.imageUrl ?? '/assets/images/no-image.png'" />
+      </div>
+    </ng-template>
+
+    <div class="product-details" *ngIf="!isHotel(); else isHotelDetail">
+      <div class="item-name">
+        {{product?.productName ? product?.productName : product?.name}}
+      </div>
+      <div class="item-option-type" *ngIf="product.fiveFormattedOptionType" >
+        {{product?.fiveFormattedOptionType}}
+      </div>
+      <div class="item-highlights" *ngIf="product.fiveFormattedHighlights">
+        {{product?.fiveFormattedHighlights}}
+      </div>
+      <div class="item-seller">
+        {{ product?.reviews ? 'Seller': 'Sold by' }}: {{product?.storeName ? product?.storeName : product?.store?.name}}
+      </div>
+    </div>
+    <ng-template #isHotelDetail>
+      <div class="product-details">
+        <div class="item-name">
+          {{ product?.storeName ?? product?.store?.name }}
+        </div>
+        <div class="item-option-type" *ngIf="product?.checkIn && product?.checkOut">
+          Check in-out: {{ product?.checkIn | date: 'dd MMM, yyyy'}} - {{ product?.checkOut | date: 'dd MMM, yyyy'}}
+        </div>
+        <div class="item-seller">
+          Room Type: {{ product?.productName ?? product?.name }}
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <div *ngIf="!isReviewModal">
+    <div class="reviews" *ngIf="product?.reviews">
+      <div class="review-ratings">
+        <div class="review-date">
+          {{product?.reviews?.createdAt | date: 'dd MMMM, yyyy'}}
+        </div>
+        <div class="rating-div">
+          <ion-rating
+            size="small"
+            [rate]="product?.reviews?.rating"
+            [readonly]="true"
+          ></ion-rating>
+        </div>
+      </div>
+      <div class="review-title">
+        {{product?.reviews?.title}}
+      </div>
+      <div class="review-desc">
+        {{ product?.reviews?.review }}
+      </div>
+    </div>
+    <ion-button
+      class="rate-btn"
+      *ngIf="!product?.reviews"
+      (click)="showReviewModal()"
+      id="add-review-button"
+    >
+      Rate & Write a Review
+    </ion-button>
+  </div>
+</div>
+
+<div class="review-item loader-container" *ngIf="isLoading">
+  <div class="product">
+    <ion-skeleton-text [animated]="true" class="image-div"></ion-skeleton-text>
+    <div class="product-detail">
+      <ion-skeleton-text
+        [animated]="true"
+        style="height: 13px"
+      ></ion-skeleton-text>
+      <ion-skeleton-text
+        [animated]="true"
+        style="margin: 6px 0; height: 11px"
+      ></ion-skeleton-text>
+      <ion-skeleton-text
+        [animated]="true"
+        style="height: 13px"
+      ></ion-skeleton-text>
+      <ion-skeleton-text
+        [animated]="true"
+        style="height: 13px"
+      ></ion-skeleton-text>
+    </div>
+  </div>
+
+  <div *ngIf="!isReviewModal">
+    <ion-skeleton-text [animated]="true" class="rate-btn"></ion-skeleton-text>
+  </div>
+</div>

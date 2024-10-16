@@ -1,0 +1,380 @@
+@import '../../../../global.scss';
+
+ion-header {
+  padding: 0px 16px;
+  z-index: 0;
+
+  ion-toolbar {
+    --border-width: 0px;
+
+    ion-title {
+      padding: 15px 0px;
+      margin-left: 8px;
+      font-weight: 600;
+      @include font-size($font-size-lg);
+      color: $black-dk;
+    }
+
+    ion-icon {
+      padding: 15px 0px;
+      margin-right: 24px;
+      color: $grey-xmd;
+    }
+  }
+
+  ion-icon {
+    padding: 15px 0px;
+    margin-right: 24px;
+    color: #979797;
+  }
+}
+
+ion-content {
+  --background: #f7f7f7;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 8px;
+  --padding-bottom: calc(env(safe-area-inset-bottom) + 16px);
+
+  app-circular-stepper {
+    ::ng-deep {
+      .circle-progress {
+        padding-left: 0;
+      }
+    }
+  }
+
+  .add-store-info {
+    background: $white;
+    border-radius: 8px;
+    padding: 0 16px 16px;
+  }
+
+  .header-section {
+    .circle-step {
+      display: flex;
+      align-items: center;
+      padding: 10px 0;
+
+      .circle-1 {
+        border: 3px solid $red-dk;
+        border-radius: 50%;
+
+        .num {
+          @include font-size($font-size-xlg);
+          padding: 8px 14px;
+          margin: 0;
+        }
+      }
+
+      ion-icon {
+        @include font-size($font-size-lg);
+      }
+
+      .circle {
+        margin-right: 20px;
+        height: 44px;
+        width: 44px;
+      }
+
+      .step {
+        @include font-size($font-size-md);
+        .title {
+          color: $txt-color-blt;
+        }
+
+        .sub-title {
+          color: $txt-color-dk;
+          font-weight: 600;
+          padding-left: 8px;
+        }
+      }
+    }
+  }
+
+  .form-section {
+    background: $white;
+    border-radius: 8px;
+    padding: 10px 16px 16px;
+    margin-bottom: env(safe-area-inset-bottom);
+
+    ion-item {
+      --padding-start: 0;
+      --padding-end: 0;
+      --inner-padding-end: 0;
+
+      margin-bottom: 14px;
+
+      ion-label {
+        @include font-size($font-size-n);
+
+        color: $solid-gray;
+        display: flex;
+        font-weight: $bold-md;
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+
+        .required {
+          color: $red-dk;
+        }
+      }
+
+      ion-label.ios {
+        @include font-size($font-size-sm);
+      }
+
+      ion-select, ion-select::part(native) {
+        @include no-leftover-ripple();
+      }
+
+      ion-input,
+      ion-select,
+      ion-textarea {
+        @include font-size(15px);
+
+        --background: $grey-xlt;
+        --padding-bottom: 13px;
+        --padding-start: 16px;
+        --padding-top: 13px;
+        --placeholder-color: #808080; //grey-xlt
+        --placeholder-opacity: 1;
+
+        border-radius: 8px;
+        border: 1px solid $grey-dk;
+        box-sizing: border-box;
+        caret-color: $solid-gray;
+        color: $solid-gray;
+        margin: auto;
+        width: 100%;
+      }
+
+      ion-select::part(icon) {
+        content: url("../../../../assets/icon/dropdown.svg");
+        margin-bottom: -16px;
+        padding-right: 12px;
+        transform: translateY(-50%);
+        width: 12px;
+      }
+
+      ion-select.select-expanded::part(icon) {
+        content: url("../../../../assets/icon/chevron-up.svg");
+        margin-bottom: -16px;
+        padding-right: 10px;
+        transform: translateY(-50%);
+        width: 16px;
+      }
+
+      ion-textarea {
+        ::ng-deep {
+          .textarea-wrapper {
+            height: 96px;
+          }
+        }
+      }
+
+      .upload-img-btn,
+      .add-location-btn {
+        @include font-size(15px);
+
+        --background: $grey-xlt;
+        --padding-bottom: 13px;
+        --padding-start: 16px;
+        --padding-top: 13px;
+        --placeholder-color: #808080; //grey-xlt
+
+        border-radius: 8px;
+        border: 1px dashed $grey-dk;;
+        color: $solid-gray;
+        height: 44px;
+        margin: auto;
+        width: 100%;
+        text-transform: none;
+        letter-spacing: normal;
+
+        .button-inner {
+          display: flex;
+          width: 100%;
+          justify-content: flex-start;
+        }
+      }
+
+      .add-location-btn {
+        --box-shadow: none;
+
+        width: 188px;
+      }
+
+      .upload-img-btn::part(native) {
+        box-shadow: unset;
+      }
+
+      .file {
+        @include font-size(15px);
+
+        display: flex;
+        width: 100%;
+        border: 1px solid $border-color;
+        border-radius: 8px;
+        color: $solid-gray;
+        height: 44px;
+        justify-content: space-between;
+        align-items: center;
+
+        .name {
+          padding: 13px 0 13px 16px;
+        }
+
+        .delete {
+          padding: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+
+          i {
+            color: $app-accent-color;
+            @include font-size($font-size-n);
+          }
+        }
+      }
+
+      ion-text {
+        @include font-size($font-size-sm);
+
+        .error-msg {
+          color: $red-dk;
+          margin: 8px 6px 0;
+        }
+      }
+
+      .location-added {
+        align-items: center;
+        border-radius: 8px;
+        border: 1px solid $yellow-light;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+        padding: 12px;
+        width: 100%;
+
+        .address {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+
+          .status {
+            @include font-size($font-size-xs);
+
+            border-radius: 8px;
+            font-weight: $bold-md;
+            padding: 6px 10px;
+            width: fit-content;
+
+            &.is-default {
+              border: 1px solid $fern-green;
+              color: $fern-green;
+            }
+
+            &.not-default {
+              border: 1px solid $red-dk;
+              color: $red-dk;
+            }
+          }
+
+          .location {
+            @include font-size(13px);
+
+            color: $solid-gray;
+            margin: 0;
+          }
+        }
+
+        .actions {
+          align-items: center;
+          display: flex;
+          gap: 12px;
+
+          i {
+            @include font-size($font-size-md);
+
+            color: $grey-xmd;
+          }
+        }
+      }
+    }
+
+    .check-box {
+      align-items: center;
+      display: flex;
+      margin: 20px 0 16px;
+
+      ion-checkbox {
+        --background-checked: #ee001a;
+        --border-color-checked: #ee001a;
+        --border-color: #dedede;
+        --border-radius: 5px;
+        --size: 18px;
+
+        margin: 0;
+        margin-right: 8px;
+      }
+
+      div {
+        @include font-size(15px);
+
+        color: $black-dk;
+      }
+    }
+  }
+
+  .submit-info {
+    @include font-size($font-size-sm);
+    color: $txt-color-dk;
+    font-weight: 600;
+    padding: 16px 0;
+  }
+
+  .activation-email-info {
+    margin: 10px 0 25px;
+    @include font-size($font-size-sm);
+    color: $txt-color-md;
+    padding: 10px;
+    border: 1px dashed $success-color;
+  }
+
+  .already {
+    position: relative;
+    margin-top: 10px;
+    padding: 10px 0;
+    text-align: center;
+    color: $txt-color-dk;
+    @include font-size($font-size-n);
+  }
+}
+
+ion-content::part(scroll) {
+  padding-top: 0;
+}
+
+app-footer-button {
+  ::ng-deep {
+    .footer {
+      box-shadow: none;
+      position: relative;
+      padding: 14px 0 4px;
+    }
+
+    ion-footer {
+      padding-bottom: 0;
+
+      ion-toolbar {
+        padding: 0 !important;
+      }
+    }
+  }
+}
+
+.multiple-location {
+  margin-top: 16px !important;
+}

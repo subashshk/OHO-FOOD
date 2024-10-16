@@ -1,0 +1,26 @@
+<section>
+  <div class="header-section" (click)="openStore()" id="show-store-btn">
+    <div class="left">
+      <img [src]="utility.getImage(store?.logo)">
+      <div class="content">
+        <span class="title">{{ store?.name | titlecase }}</span>
+        <span class="cuisine">
+          {{ store?.cuisineType || 'Variety Cuisine' }}
+        </span>
+      </div>
+    </div>
+    <div class="right">
+      <i class="icon-chevron-right"></i>
+    </div>
+  </div>
+  <div class="body">
+    <div class="lists" *ngFor="let product of store?.products" (click)="showOrderModal(product)" id="show-order-btn">
+      <div class="food-title">
+        {{ product?.name | titlecase }}
+      </div>
+      <div class="price">
+        {{ product?.price | nprCurrency }}
+      </div>
+    </div>
+  </div>
+</section>

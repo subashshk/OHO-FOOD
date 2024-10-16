@@ -1,0 +1,110 @@
+@import "../../../../global.scss";
+
+.confirm-modal {
+  background: $white;
+  border-radius: 8px;
+  box-shadow: none;
+  margin: 26vh 20px 0 20px;
+  padding: 20px 16px;
+
+  .header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    &-title {
+      @include font-size($font-size-md);
+
+      color: $black-dk;
+      display: flex;
+      font-weight: $bold-n;
+      margin: 0;
+      text-align: center;
+    }
+
+    i {
+      @include font-size($font-size-xlg);
+
+      color: $solid-gray;
+    }
+  }
+
+  .help-text {
+    @include font-size(15px);
+
+    color: $solid-gray;
+    line-height: 22px;
+    padding-top: 8px;
+  }
+
+  form {
+    margin-top: 16px;
+  }
+
+  ion-item::part(native) {
+    --padding-start: 0;
+  }
+
+  ion-item {
+    --background-activated: transparent;
+    --background-focused: transparent;
+    --background-hover: transparent;
+    --inner-padding-end: 0;
+    --ripple-color: transparent;
+
+    margin-bottom: 20px;
+
+    .title {
+      display: flex;
+
+      ion-label {
+        @include font-size($font-size-n);
+
+        color: $solid-gray;
+        display: flex;
+        font-weight: $bold-md;
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+
+        .required {
+          color: $red-dk;
+        }
+      }
+    }
+
+    ion-textarea {
+      @include font-size(15px);
+
+      --background: $grey-xlt;
+      --padding-bottom: 13px;
+      --padding-start: 16px;
+      --padding-top: 13px;
+      --placeholder-color: #808080; //grey-xlt
+
+      border-radius: 8px;
+      border: 1px solid $grey-dk;
+      box-sizing: border-box;
+      color: $solid-gray;
+      margin: auto;
+      width: 100%;
+    }
+
+    ion-text {
+      @include font-size(13px);
+
+      color: $red-dk;
+      margin: 6px;
+    }
+  }
+
+  app-footer-button {
+    ::ng-deep {
+      .footer {
+        box-shadow: none;
+        position: relative;
+        padding: 4px 0 0;
+      }
+    }
+  }
+}

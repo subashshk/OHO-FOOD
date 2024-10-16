@@ -1,0 +1,81 @@
+<app-toolbar-arrow-text
+  title="Stock"
+  (backEvent)="dismiss()"
+></app-toolbar-arrow-text>
+
+<ion-content>
+  <ng-container *ngIf="isLoading; else loadContent">
+    <section class="stocks-section" *ngFor="let i of 2 | staticArray">
+      <div class="product">
+        <div class="product-details">
+          <div class="product-image">
+            <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+          </div>
+          <div class="product-info">
+            <ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text>
+            <ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text>
+          </div>
+        </div>
+        <ion-skeleton-text [animated]="true" style="width: 10%;"></ion-skeleton-text>
+      </div>
+      <div class="variant">
+        <p class="header">Variant</p>
+        <div class="option-type">
+          <ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text>
+          <ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="label">
+          <p><ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text></p>
+          <p><ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text></p>
+          <p><ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text></p>
+          <p><ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text></p>
+        </div>
+        <div class="value">
+          <p><ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text></p>
+          <p><ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text></p>
+          <p><ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text></p>
+          <p><ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text></p>
+        </div>
+      </div>
+    </section>
+  </ng-container>
+  <ng-template #loadContent>
+    <section class="stocks-section" *ngFor="let item of dataSet">
+      <div class="product">
+        <div class="product-details">
+          <div class="product-image">
+            <ion-img [src]="utility.getImage(item?.imageSrcMini)"></ion-img>
+          </div>
+          <div class="product-info">
+            <div class="product-sku"><span>SKU: </span>{{ item?.sku }}</div>
+            <div class="product-name">{{ item?.name }}</div>
+          </div>
+        </div>
+        <i class="icon-Edit-filled" (click)="editStock(item)"></i>
+      </div>
+      <div class="variant">
+        <p class="header">Variant</p>
+        <div class="option-type" *ngFor="let option of item?.optionTypes">
+          <p class="label">{{ option?.presentation}}</p>
+          <p class="value">{{ option?.optionValue?.presentation }}</p>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="label">
+          <p>Back Orderable</p>
+          <p>Count on hand</p>
+          <p>Modifier</p>
+          <p>Threshold</p>
+        </div>
+        <div class="value">
+          <p>{{ item?.backorderable }}</p>
+          <p>{{ item?.countOnHand > 0 ? item?.countOnHand : 1 }}</p>
+          <p>{{ item?.modify }}</p>
+          <p>{{ item?.threshold }}</p>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+</ion-content>

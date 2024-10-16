@@ -1,0 +1,69 @@
+<app-toolbar-arrow-text
+  [title]="fromProductDetail ? 'Properties': 'Add Product'"
+  (backEvent)="dismiss()"
+></app-toolbar-arrow-text>
+<ion-content>
+  <app-circular-stepper
+    *ngIf="!fromProductDetail"
+    [stepCount]="4"
+    stepTitle="Product Properties"
+    [totalSteps]="6"
+  ></app-circular-stepper>
+  <section class="product-properties" *ngIf="isLoading; else loadContent">
+    <ion-list>
+      <ion-item
+        *ngFor="let i of 3 | staticArray"
+        lines="none"
+      >
+        <div class="property">
+          <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+          <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+        </div>
+        <ion-skeleton-text [animated]="true" style="width: 20%;"></ion-skeleton-text>
+      </ion-item>
+    </ion-list>
+  </section>
+  <ng-template #loadContent>
+    <section class="product-properties" *ngIf="productProperties?.length">
+      <ion-list>
+        <ion-item
+          *ngFor="let property of productProperties let i = index"
+          lines="none"
+        >
+          <div class="property">
+            <p class="property-name">{{ property?.propertyName }}</p>
+            <p class="property-value">{{ property?.value }}</p>
+          </div>
+          <div class="icons">
+            <i
+              class="icon-Edit-filled"
+              (click)="addNewProperty(property)"
+              id="edit-product-property"
+            ></i>
+            <i
+              class="icon-Delete-filled"
+              (click)="deleteConfirmModal(property)"
+            ></i>
+          </div>
+        </ion-item>
+      </ion-list>
+    </section>
+    <section class="no-data" *ngIf="!productProperties?.length">
+      <div class="no-content" [class.full-height]="fromProductDetail">
+        <app-no-data
+          imgPath="empty-variants.svg"
+          title="No Properties Added"
+          subtitle="Please add properties for your product"
+        ></app-no-data>
+      </div>
+    </section>
+  </ng-template>
+</ion-content>
+<ion-footer>
+  <app-footer-button
+    btnTitle="Add New Property"
+    (btnEvent)="addNewProperty()"
+    [nextBtnTitle]="fromProductDetail ? '' : 'Next'"
+    (nextBtnEvent)="showProductOffers()"
+  ></app-footer-button>
+</ion-footer>

@@ -1,0 +1,86 @@
+@import "../../../../global.scss";
+
+.order-block {
+  background: white;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 16px;
+  padding: 16px;
+
+  .delivery-note,
+  .expected-delivery {
+    display: flex;
+
+    .icon-div {
+      i {
+        @include font-size($font-size-xllg);
+
+        color: $black-xxlt;
+        margin-right: 16px;
+      }
+    }
+  }
+}
+
+.address-container {
+  display: flex;
+  overflow: hidden;
+}
+
+.left {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  ion-img {
+    height: 24px;
+    width: 24px;
+  }
+
+  .dots {
+    margin-bottom: 9px;
+    margin-top: 2px;
+
+    .dot {
+      background: $lbl-color-lt;
+      border-radius: 50%;
+      height: 3px;
+      margin-left: 1.5px;
+      margin-top: 5px;
+      overflow: hidden;
+      width: 3px;
+    }
+  }
+}
+
+.right {
+  margin-left: 16px;
+  width: 100%;
+
+  .pickup {
+    margin-bottom: 24px;
+  }
+}
+
+ion-label {
+  @include font-size(13px);
+
+  color: $black-xxlt;
+  font-weight: $bold-md;
+  text-transform: uppercase;
+}
+
+.text-md {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+
+  color: $txt-color-dk;
+  display: -webkit-box;
+  font-weight: $bold-md;
+  margin-top: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}

@@ -1,0 +1,18 @@
+<ion-card class="success-modal">
+  <ion-img
+    class="success-img"
+    src="assets/images/store-create-success.svg"
+  ></ion-img>
+  <ion-label class="title" id="success-title-section">
+    {{ titleText }}
+  </ion-label>
+  <p class="description">
+    You have successfully placed your online store. <br />
+    Happy selling!
+  </p>
+  <div class="div-btn">
+    <ion-button id="success-modal-btn" class="success-modal-btn" (click)="dismiss()">
+      {{ btnText }}
+    </ion-button>
+  </div>
+</ion-card>

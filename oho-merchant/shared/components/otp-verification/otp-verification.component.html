@@ -1,0 +1,134 @@
+<app-red-background
+  title="OTP Verification"
+  backIconId="otp-verification-back"
+  (backEvent)="back()"
+></app-red-background>
+<main class="main-wrapper">
+  <div class="verification-design">
+    <div>
+      <img src="/assets/images/otp-code.svg" />
+    </div>
+    <div class="otp-text">
+      <div>
+        <p>
+          Enter OTP code sent to <span> +977 {{ mobileNumber }}</span>
+        </p>
+        <div *ngIf="getError" class="error-message-otp">
+          The entered OTP is incorrect, please enter the correct OTP code.
+        </div>
+        <div>
+          <div
+            class="main-otp-wrapper"
+            [ngClass]="getError ? 'error-message' : 'none'"
+          >
+            <ion-input
+              class="input-wrapper"
+              #otp1
+              required="true"
+              maxLength="1"
+              type="text"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1')"
+              inputmode="numeric"
+              [(ngModel)]="OTP.first"
+              (keyup)="otpMainInput($event, otp2, '')"
+              [ngModelOptions]="{ standalone: true }"
+            >
+            </ion-input>
+            <ion-input
+              class="input-wrapper"
+              #otp2
+              required="true"
+              maxLength="1"
+              type="text"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1')"
+              inputmode="numeric"
+              [(ngModel)]="OTP.second"
+              (keyup)="otpMainInput($event, otp3, otp1)"
+              [ngModelOptions]="{ standalone: true }"
+            >
+            </ion-input>
+            <ion-input
+              class="input-wrapper"
+              #otp3
+              required="true"
+              maxLength="1"
+              type="text"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1')"
+              inputmode="numeric"
+              [(ngModel)]="OTP.third"
+              (keyup)="otpMainInput($event, otp4, otp2)"
+              [ngModelOptions]="{ standalone: true }"
+            >
+            </ion-input>
+
+            <ion-input
+              class="input-wrapper"
+              #otp4
+              required="true"
+              maxLength="1"
+              type="text"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1')"
+              inputmode="numeric"
+              [(ngModel)]="OTP.forth"
+              (keyup)="otpMainInput($event, otp5, otp3)"
+              [ngModelOptions]="{ standalone: true }"
+            >
+            </ion-input>
+
+            <ion-input
+              class="input-wrapper"
+              #otp5
+              required="true"
+              maxLength="1"
+              type="text"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1')"
+              inputmode="numeric"
+              [(ngModel)]="OTP.fifth"
+              (keyup)="otpMainInput($event, otp6, otp4)"
+              [ngModelOptions]="{ standalone: true }"
+            >
+            </ion-input>
+
+            <ion-input
+              class="input-wrapper"
+              #otp6
+              required="true"
+              maxLength="1"
+              type="text"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1')"
+              inputmode="numeric"
+              [(ngModel)]="OTP.sixth"
+              (keyup)="otpMainInput($event, '', otp5)"
+              [ngModelOptions]="{ standalone: true }"
+            >
+            </ion-input>
+          </div>
+          <div *ngIf="sendOTPAgain" class="resend-otp">
+            <p>
+              Didn’t receive OTP?
+              <span
+                class="color-text"
+                (click)="resendOTP()"
+                [ngClass]="!isLoading ? 'none' : 'active'"
+                id="resend-otp"
+              >
+                Resend OTP</span
+              >
+            </p>
+          </div>
+          <div *ngIf="!sendOTPAgain" class="resend-otp">
+            <p>
+              You can request the code again in
+              <span class="color-text"> 0:{{ maxTime }}</span>
+            </p>
+          </div>
+        </div>
+        <app-footer-button
+          btnTitle="Verify"
+          (btnEvent)="signUpValidate()"
+          [isDisabled]="isLoading"
+        ></app-footer-button>
+      </div>
+    </div>
+  </div>
+</main>

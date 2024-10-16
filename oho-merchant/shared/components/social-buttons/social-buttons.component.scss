@@ -1,0 +1,19 @@
+@import '../../../../global.scss';
+.btn {
+  --background: white;
+  --box-shadow: none;
+  --color: #4a4a4a; //$txt-color-dk;
+  --border-color: #979797; // $border-color-md
+  --border-width: 1px;
+  --border-style: solid;
+  font-weight: 600;
+  text-transform: none;
+  width: 100%;
+  --border-radius: 8px;
+  height: 50px;
+  margin-bottom: 20px;
+
+  img {
+    margin-right: 15px;
+  }
+}

@@ -1,0 +1,75 @@
+<div class="alert-container">
+  <div class="header">
+    <div class="title">{{ optionType ? "Edit" : "Add" }} Add-on</div>
+    <i (click)="dismissModal()" id="alert-close-btn" class="icon-close"></i>
+  </div>
+  <div class="form">
+    <form [formGroup]="optionTypeForm">
+      <ion-item lines="none">
+        <div class="title">
+          <ion-label position="stacked" formControlName="name">Name</ion-label>
+        </div>
+        <ion-input
+          formControlName="name"
+          inputmode="text"
+          placeholder="Enter add-ons name"
+        ></ion-input>
+      </ion-item>
+      <ion-label
+        class="error"
+        color="danger"
+        *ngIf="
+          optionTypeForm.controls.name.touched &&
+          optionTypeForm.controls.name.errors
+        "
+      >
+        <div
+          *ngIf="optionTypeForm.controls.name.errors.required"
+        >
+          Name is required.
+        </div>
+      </ion-label>
+      <ion-item lines="none">
+        <div class="title">
+          <ion-label position="stacked">Option Type</ion-label>
+        </div>
+        <ion-select
+          placeholder="Select required or optional type"
+          interface="popover"
+          formControlName="choiceType"
+        >
+          <ion-select-option value="optional">Optional</ion-select-option>
+          <ion-select-option value="required">Required</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item lines="none">
+        <div class="title">
+          <ion-label position="stacked">Maximum no of choice</ion-label>
+        </div>
+        <ion-select
+          placeholder="Select an option"
+          interface="popover"
+          formControlName="maxNoOfChoice"
+        >
+          <ion-select-option *ngFor="let i of generateRange(10)" [value]="i" >{{ i }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </form>
+  </div>
+  <div class="btn">
+    <ion-button
+      fill="clear"
+      class="cancel-btn"
+      (click)="dismissModal()"
+      id="alert-cancel-btn"
+      >Cancel
+    </ion-button>
+    <ion-button
+      class="confrim-btn"
+      (click)="confirmClick()"
+      id="alert-confirm-btn"
+      [disabled]="!optionTypeForm.valid"
+      >Save
+    </ion-button>
+  </div>
+</div>

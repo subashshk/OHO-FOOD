@@ -1,0 +1,148 @@
+@import "../../../../global.scss";
+
+.order-summary {
+  background: $white;
+  border-radius: 8px;
+  margin: 16px;
+  padding: 12px 16px;
+
+  .header {
+    align-items: center;
+    border-bottom: 1px solid $yellow-light;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+
+    .title {
+      @include font-size($font-size-n);
+
+      color: $txt-color-dk;
+      font-weight: $bold-n;
+      text-transform: capitalize;
+    }
+    .payment {
+      div {
+        @include font-size($font-size-sm);
+
+        background: $rating-star-color;
+        border-radius: 8px;
+        color: $white;
+        font-weight: $bold-n;
+        padding: 4px 8px;
+        text-transform: capitalize;
+      }
+    }
+  }
+  .orders {
+    .order {
+      align-items: center;
+      border-bottom: 1px solid $yellow-light;
+      display: flex;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+
+      .img-div {
+        margin-right: 25px;
+
+        ion-img {
+          height: 56px;
+          object-fit: contain;
+          width: 56px;
+
+          &::part(image) {
+            border-radius: 5px;
+            object-fit: cover;
+          }
+        }
+      }
+
+      .details {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        .sku-name {
+          @include font-size($font-size-sm);
+
+          color: $solid-gray;
+          display: flex;
+          flex-direction: column;
+          font-weight: $bold-md;
+          gap: 4px;
+          line-height: 17px;
+
+          .product-name {
+            color: $txt-color-dk;
+          }
+
+          span {
+            font-weight: normal;
+          }
+        }
+        .price-div {
+          @include font-size($font-size-sm);
+
+          line-height: 20px;
+          text-align: right;
+
+          .product-qt {
+            color: $solid-gray;
+          }
+
+          .product-rate {
+            color: $txt-color-dk;
+            font-weight: $bold-md;
+          }
+        }
+      }
+    }
+
+    .delivery-div {
+      @include font-size($font-size-sm);
+
+      align-items: center;
+      display: flex;
+      font-weight: $bold-md;
+      justify-content: space-between;
+
+      .delivery-type {
+        div {
+          align-items: center;
+          color: $green-xmd;
+          display: flex;
+          text-transform: capitalize;
+
+          i {
+            @include font-size($font-size-lg);
+
+            margin-right: 8px;
+          }
+        }
+      }
+
+      .delivery-charge {
+        color: $txt-color-dk;
+      }
+    }
+    .total {
+      @include font-size($font-size-sm);
+
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
+
+      div:first-child {
+        color: $solid-gray;
+        font-weight: $normal;
+        text-transform: capitalize;
+      }
+      div {
+        color: $txt-color-dk;
+        font-weight: $bold-n;
+      }
+    }
+  }
+}

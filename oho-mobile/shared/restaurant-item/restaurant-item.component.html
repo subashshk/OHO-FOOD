@@ -1,0 +1,95 @@
+<div
+  class="restaurant-item"
+  [class.slide-item]="isSlideItem"
+  (click)="navigateToStore(restaurant?.id)"
+  id="store_btn"
+  *ngIf="!isLoading"
+>
+  <div class="restaurant-wrap">
+    <div class="cover">
+      <div class="closed-info" *ngIf="!restaurant?.storeIsOpen">
+        <div class="new-label">
+          <i class="icon-clock-filled"></i>
+          <span>
+            Closed<span *ngIf="restaurant?.storeTimings.length">.</span>
+            <span
+              *ngIf="restaurant?.storeTimings.length && timing?.isOpen"
+            >
+              Opens at {{ utility.getLocalTime(timing?.opensAt) }}
+            </span>
+            <span
+              *ngIf="restaurant?.storeTimings.length && !timing?.isOpen"
+            >
+              Opens tomorrow
+            </span>
+          </span>
+        </div>
+      </div>
+      <ion-img [class.no-img]="!restaurant?.coverMedium" [src]="utility.getImage(restaurant?.coverMedium)"
+        class="restaurant-img"></ion-img>
+      <div class="closed-txt" *ngIf="!restaurant?.storeIsOpen">
+      </div>
+    </div>
+    <div class="text-desc">
+      <div class="title">
+        {{ restaurant?.name }}
+      </div>
+      <div class="cuisine">
+        {{restaurant?.cuisineType || 'Variety Cuisine'}}
+      </div>
+      <div class="lower-section">
+        <div class="rating-status">
+          <div class="rating-div">
+            <i class="icon-Star-filled"></i>
+            <div class="avg-rating">{{ restaurant?.avgRating }}</div>
+          </div>
+        </div>
+        <div class="location-section">
+          <ion-icon class="dot" name="ellipse" *ngIf="restaurantDuration"></ion-icon>
+          <div class="location" *ngIf="restaurantDuration">
+            <i class="icon-Clock"></i>
+            <span>
+              {{ restaurantDuration }}
+            </span>
+          </div>
+          <ion-icon class="dot" name="ellipse" *ngIf="restaurantDistance"></ion-icon>
+          <div class="location" *ngIf="restaurantDistance">
+            <i class="icon-Location-outline"></i>
+            <span>
+              {{ restaurantDistance }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- skeleton loading -->
+<div
+  class="restaurant-item"
+  [class.slide-item]="isSlideItem"
+  *ngIf="isLoading"
+>
+  <div class="restaurant-wrap">
+    <div class="cover">
+      <ion-skeleton-text [animated]="true" style="margin: 0"></ion-skeleton-text>
+    </div>
+    <div class="text-desc">
+      <div class="title">
+        <ion-skeleton-text [animated]="true" style="width: 200px;"></ion-skeleton-text>
+      </div>
+      <div class="cuisine">
+        <ion-skeleton-text [animated]="true" style="width: 150px;"></ion-skeleton-text>
+      </div>
+      <div class="lower-section">
+        <div class="rating-status">
+          <div class="rating-div">
+            <ion-skeleton-text [animated]="true" style="width: 200px;"></ion-skeleton-text>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

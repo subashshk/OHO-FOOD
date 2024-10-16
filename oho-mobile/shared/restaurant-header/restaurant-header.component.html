@@ -1,0 +1,34 @@
+<div class="store-header-mart" *ngIf="!isLoader">
+  <div class="ion-activatable store-name">
+    <img class="store-img" [src]="utility.getImage(storeInfo?.logoMedium)" />
+    <div class="detail">
+      <span class="title">{{ storeInfo?.name }}</span>
+      <div class="cuisine">
+        {{ storeInfo?.cuisineType }}
+      </div>
+      <div class="rating">
+        <img src="assets/images/rate-star.svg" />
+        <span class="rate-num">{{ storeInfo?.avgRating }}</span>
+        <div class="rating-count">({{ storeInfo?.reviewsCount }} Ratings)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- skeleton loading -->
+<div class="store-header-mart" *ngIf="isLoader">
+  <div class="ion-activatable store-name">
+    <ion-skeleton-text class="store-img" style="width: 70px;"></ion-skeleton-text>
+    <div class="detail">
+      <span class="title">
+        <ion-skeleton-text></ion-skeleton-text>
+      </span>
+      <div class="cuisine">
+        <ion-skeleton-text></ion-skeleton-text>
+      </div>
+      <div class="rating">
+        <ion-skeleton-text></ion-skeleton-text>
+      </div>
+    </div>
+  </div>
+</div>

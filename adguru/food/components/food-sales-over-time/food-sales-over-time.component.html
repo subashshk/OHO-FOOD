@@ -1,0 +1,90 @@
+<div class="food-sales-over-time">
+  <app-header-breadcrumb
+    title="Sales Over Time"
+    [breadcrumbs]="breadcrumbs"
+  ></app-header-breadcrumb>
+  <div class="mt-4">
+    <app-report-filter-bar
+      (rangeFilter)="setSalesDateRange($event)"
+      (storeStatus)="handleStatus($event)"
+      [selectFields]="orderStatusSelect"
+      (exportSales)="exportDataEvent($event)"
+    ></app-report-filter-bar>
+  </div>
+  <div class="chart mt-4">
+    <app-chart-card
+      [chartOptions]="salesOverTimeChartOptions"
+    ></app-chart-card>
+  </div>
+  <div class="table mt-4">
+    <div class="table-responsive">
+      <nz-table
+        [nzLoading]="isLoading"
+        [nzShowPagination]="false"
+        [nzData]="salesData"
+        [nzLoadingIndicator]="loader"
+      >
+        <thead>
+          <th>Month</th>
+          <th (click)="sortTable('order')">
+            <div class="table-heading">
+              Order
+              <app-sort-arrows></app-sort-arrows>
+            </div>
+          </th>
+          <th (click)="sortTable('gross_sales')">
+            <div class="table-heading">
+              Gross Sales
+              <app-sort-arrows></app-sort-arrows>
+            </div>
+          </th>
+          <th (click)="sortTable('discount')">
+            <div class="table-heading">
+              Discounts
+              <app-sort-arrows></app-sort-arrows>
+            </div>
+          </th>
+          <th (click)="sortTable('net_sales')">
+            <div class="table-heading">
+              Net Sales
+              <app-sort-arrows></app-sort-arrows>
+            </div>
+          </th>
+          <th (click)="sortTable('delivery')">
+            <div class="table-heading">
+              Delivery
+              <app-sort-arrows></app-sort-arrows>
+            </div>
+          </th>
+          <th (click)="sortTable('net_profit')">
+            <div class="table-heading">
+              Net Profit
+              <app-sort-arrows></app-sort-arrows>
+            </div>
+          </th>
+          <th (click)="sortTable('total_sales')">
+            <div class="table-heading">
+              Total Sales
+              <app-sort-arrows></app-sort-arrows>
+            </div>
+          </th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of salesData[0] | keyvalue; let i = index">
+            <td>{{ salesOverTimeChartOptions?.xaxis?.categories[i] }}</td>
+            <td>{{ data?.value?.ordersCount }}</td>
+            <td>{{ data?.value?.grossSales | nprCurrency }}</td>
+            <td>{{ data?.value?.discount | nprCurrency }}</td>
+            <td>{{ data?.value?.netSales | nprCurrency }}</td>
+            <td>{{ data?.value?.delivery | nprCurrency }}</td>
+            <td>{{ 'Rs. ' + ((data?.value?.grossSales - data?.value?.netSales) ?? 0) }}</td>
+            <td>{{ data?.value?.totalSales | nprCurrency }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</div>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

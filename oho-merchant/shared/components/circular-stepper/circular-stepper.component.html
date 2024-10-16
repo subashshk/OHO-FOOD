@@ -1,0 +1,21 @@
+<div class="circle-progress">
+  <circle-progress
+    [percent]="progressPercent"
+    [radius]="15"
+    [backgroundOpacity]="1"
+    [backgroundStrokeWidth]="0"
+    [space]="-4"
+    [outerStrokeColor]="'#ee001a'"
+    [outerStrokeWidth]="4"
+    [innerStrokeColor]="'#e0e0e0'"
+    [innerStrokeWidth]="4"
+    [showSubtitle]="false"
+    [showUnits]="false"
+    [showBackground]="false"
+    [ngClass]="'circle-progress-custom'"
+  ></circle-progress>
+  <div class="step-information">
+    <p class="step-count">Step {{ stepCount }} of {{ totalSteps }}</p>
+    <p class="step-title">{{ stepTitle }}</p>
+  </div>
+</div>

@@ -1,0 +1,59 @@
+<div class="sales-by-product">
+  <app-header-breadcrumb
+    title="Sales By Product"
+    [breadcrumbs]="breadcrumbs"
+  ></app-header-breadcrumb>
+  <div class="filter mt-4">
+    <app-report-filter-bar
+      [selectFields]="filterOptions"
+      [categoryFields]="categoryFilterSelect"
+      (exportSales)="handleExport($event)"
+      (rangeFilter)="getRangeFilter($event)"
+      (storeStatus)="storeFilter($event)"
+      (categoryStatus)="categoryFilter($event)"
+    ></app-report-filter-bar>
+  </div>
+  <div class="table mt-4">
+    <div class="table-responsive">
+      <nz-table
+        [nzLoading]="isLoading"
+        [nzData]="prodData"
+        [nzShowPagination]="false"
+        [nzLoadingIndicator]="loader"
+      >
+        <thead>
+          <th>Product</th>
+          <th>Restaurant</th>
+          <th>Category</th>
+          <th>Qty</th>
+          <th>Unit Price</th>
+          <th>Total Sales</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of prodData">
+            <td>
+              <a>{{ data?.name ?? '--' }}</a>
+            </td>
+            <td>
+              <a>{{ data?.store ?? '--' }}</a>
+            </td>
+            <td>{{ data?.categories[0] ?? '--' }}</td>
+            <td>{{ data?.quantity ?? '--' }}</td>
+            <td>{{ (data?.price | nprCurrency) ?? '--' }}</td>
+            <td>{{ (data?.totalSales | nprCurrency) ?? '--' }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+  <app-select-pagination
+    [perPage]="perPage"
+    [pageIndex]="pageIndex"
+    [totalPageCount]="totalCount"
+    (pageChanged)="handlePageChange($event)"
+    (perPageIndicator)="handlePerPageChange($event)"
+  ></app-select-pagination>
+</div>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

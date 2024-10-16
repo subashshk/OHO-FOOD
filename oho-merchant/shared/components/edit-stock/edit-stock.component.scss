@@ -1,0 +1,71 @@
+@import "../../../../global.scss";
+
+.edit-stock-modal {
+  background: $white;
+  border-radius: 8px;
+  box-shadow: none;
+  margin: 26vh 20px 0 20px;
+  padding: 20px 16px;
+
+  .header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    &-title {
+      @include font-size($font-size-md);
+
+      color: $black-dk;
+      display: flex;
+      font-weight: $bold-n;
+      margin: 0;
+      text-align: center;
+    }
+
+    i {
+      @include font-size($font-size-xlg);
+
+      color: $solid-gray;
+    }
+  }
+
+  .stock-content {
+    margin-top: 20px;
+
+    ion-toggle {
+      --background: #dedede;
+      --background-checked: #ee001a;
+
+      width: 62px;
+      zoom: 0.6;
+    }
+  }
+
+  .count, .modifier, .threshold, .orderable {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+
+    .label, .value {
+      @include font-size($font-size-sm);
+
+      font-weight: $bold-md;
+      color: $solid-gray;
+    }
+
+    .value {
+      color: $txt-color-dk;
+    }
+  }
+
+  app-footer-button {
+    ::ng-deep {
+      .footer {
+        box-shadow: none;
+        position: relative;
+        padding: 4px 0 0;
+      }
+    }
+  }
+}

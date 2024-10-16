@@ -1,0 +1,69 @@
+<div class="rating-review">
+  <app-rating-summary [product]="product"></app-rating-summary>
+
+  <!-- No feature yet -->
+  <!-- <section class="submitted-images" *ngIf="showCustomerImages && product">
+    <h5 class="header">
+      Customer Submitted images
+    </h5>
+    <div class="image-list">
+      TODO use submitted images
+      <img src="../../../assets/slider.png">
+    </div>
+    <ion-button expand="full">View All <ion-icon name="chevron-forward-outline"></ion-icon>
+    </ion-button>
+  </section> -->
+
+  <section class="reviews" *ngIf="(product && reviews?.length) || canReview">
+    <div class="reviews-header">
+      <ion-button class="write-btn" (click)="showReviewModal()" *ngIf="canReview && showWriteReview">
+        Write Review
+      </ion-button>
+    </div>
+    <!-- <div class="review" *ngFor="let review of reviews" >
+      <ion-badge class="rating-div">
+        <ion-icon name="star"></ion-icon>
+        {{review.rating}}
+      </ion-badge>
+      <div class="review-header" *ngIf="review.title" >
+        {{review.title}}
+      </div>
+      <div class="review-content">
+        {{review.review}}
+      </div>
+      <div class="review-writer">
+        {{review.userName}}
+      </div>
+      <div class="purchase-date">
+        <div class="purchase-verification" *ngIf="review.verifiedPurchaser" >
+          <ion-icon name="checkmark-circle-outline" class="checkmark"></ion-icon>
+          Purchase Verified,
+        </div>
+        <div class="date">
+          {{review.formattedCreatedAt}}
+        </div>
+      </div>
+    </div> -->
+    <div class="review" *ngFor="let review of reviews">
+      <div class="user-desc">
+        <div class="name">
+          {{review.userName}}
+        </div>
+        <div class="rating">
+          <ion-rating size="small" [rate]="review.rating" [readonly]="true"></ion-rating>
+        </div>
+      </div>
+      <div class="purchase-date">
+        {{review.formattedCreatedAt}}
+      </div>
+      <div class="review-content">
+        <div class="review-header" *ngIf="review.title">
+          {{review.title}}
+        </div>
+        <div class="review-txt">
+          {{review.review}}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

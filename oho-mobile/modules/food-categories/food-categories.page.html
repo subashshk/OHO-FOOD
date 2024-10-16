@@ -1,0 +1,92 @@
+<ion-header [ngClass]="{'full-height': searchBarIsExpanded}">
+  <ion-toolbar [ngClass]="{'full-height': searchBarIsExpanded}">
+    <ion-buttons slot="start" *ngIf="!searchBarIsExpanded">
+      <ion-button defaultHref="" (click)="back()" [disabled]="isLoading">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title slot="start" *ngIf="!searchBarIsExpanded"
+      >{{currentCategoryName}}</ion-title
+    >
+    <app-search-bar
+      [ngClass]="{'full-height': searchBarIsExpanded}"
+      slot="end"
+      placeholder="Search a cuisine"
+      (searchBarExpandEvent)="searchBarExpanded($event)"
+      [stickyBar]="true"
+      [expandedSearchBar]="searchBarIsExpanded"
+      [showSegment]="true"
+    >
+    </app-search-bar>
+    <ion-buttons class="action-btns" slot="end" *ngIf="!searchBarIsExpanded">
+      <ion-button (click)="openCartModal()">
+        <i class="icon-cart">
+          <div class="badge" *ngIf="cartCount > 0">{{cartCount}}</div>
+        </i>
+      </ion-button>
+      <ion-button class="more-options-btn" (click)="presentPopover($event)">
+        <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!isLoading">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <section class="header-slider">
+    <ion-slides pager="true" [options]="headerSlideOpts">
+      <ion-slide *ngFor="let item of bannerList">
+        <ion-img [src]="utility.getImage(item.imageUrl)"></ion-img>
+      </ion-slide>
+    </ion-slides>
+  </section>
+  <section class="categories-section">
+    <div class="categories">
+      <div
+        class="category ion-activatable"
+        *ngFor="let category of categories"
+        (click)="goToCategory(category)"
+      >
+        <div class="img">
+          <img
+            [src]="category.imageUrlMedium || '../../../assets/images/no-image-logo.png'"
+          />
+        </div>
+        <div class="category-name">{{category.name}}</div>
+      </div>
+    </div>
+  </section>
+  <section class="products-section" *ngIf="products.length > 0">
+    <div class="title">Products in this category</div>
+    <div class="products">
+      <ion-grid>
+        <ion-row *ngIf="currentServiceType === platformServices.Food">
+          <ion-col size="6" *ngFor="let product of products">
+            <app-food-slide-item [food]="product"></app-food-slide-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </section>
+  <div class="view-all-div">
+    <ion-button
+      class="view-all-btn"
+      *ngIf="products.length > 0"
+      (click)="viewAll()"
+    >
+      View All Items
+    </ion-button>
+  </div>
+  <app-no-data
+    imgPath="empty-search-result.svg"
+    title="No products found."
+    subtitle="There are no matches to the selected category."
+    *ngIf="currentCategory && currentCategoryName !== 'All categories' && products.length === 0"
+  ></app-no-data>
+</ion-content>
+
+<ion-content *ngIf="isLoading">
+  <app-loader message="Loading"></app-loader>
+</ion-content>

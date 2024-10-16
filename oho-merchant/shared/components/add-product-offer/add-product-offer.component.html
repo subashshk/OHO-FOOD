@@ -1,0 +1,102 @@
+<section class="product-offer-modal">
+  <div class="header">
+    <p class="header-title">Add Offer</p>
+    <i class="icon-close" (click)="dismiss()" id="close-product-modal"></i>
+  </div>
+  <form [formGroup]="productOffersForm">
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked">Offer Flat %</ion-label>
+      </div>
+      <ion-input
+        formControlName="value"
+        inputmode="text"
+        placeholder="Enter offer in %"
+      ></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked">
+          Start Date
+          <p class="required">*</p>
+        </ion-label
+        >
+      </div>
+      <div class="input-container" id="popover">
+        <ion-input
+          formControlName="startAt"
+          inputmode="text"
+          placeholder="DD/MM/YYYY"
+          value="selectedDate"
+        ></ion-input>
+      <ion-button slot="end" fill="clear">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </ion-button>
+      </div>
+    </ion-item>
+    <ion-modal
+      class="date-picker-modal"
+      trigger="popover"
+      id="date-modal"
+      showBackdrop="true"
+    >
+      <ng-template>
+        <ion-content>
+          <ion-datetime
+            mode="md"
+            color="oho"
+            displayFormat="YYYY-MM-DD"
+            presentation="date"
+            placeholder="Add start date"
+            [showDefaultButtons]="true"
+            (ionChange)="getDate($event)"
+          ></ion-datetime>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked">
+          End Date
+          <p class="required">*</p>
+        </ion-label
+        >
+      </div>
+      <div class="input-container" id="selectEndDate">
+        <ion-input
+          formControlName="endAt"
+          inputmode="text"
+          placeholder="DD/MM/YYYY"
+        ></ion-input>
+      <ion-button slot="end" fill="clear">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </ion-button>
+      </div>
+    </ion-item>
+    <ion-modal
+      class="date-picker-modal"
+      trigger="selectEndDate"
+      id="date-modal"
+      showBackdrop="true"
+    >
+      <ng-template>
+        <ion-content>
+          <ion-datetime
+            mode="md"
+            color="oho"
+            presentation="date"
+            placeholder="Add end date"
+            [showDefaultButtons]="true"
+            (ionChange)="getDate($event, true)"
+          ></ion-datetime>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </form>
+  <app-footer-button
+    btnTitle="Cancel"
+    (btnEvent)="dismiss()"
+    nextBtnTitle="Save"
+    (nextBtnEvent)="saveProductOffer()"
+  ></app-footer-button>
+</section>

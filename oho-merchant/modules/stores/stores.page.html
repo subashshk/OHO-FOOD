@@ -1,0 +1,113 @@
+<app-toolbar-arrow-text
+  title="Stores"
+  (backEvent)="navigateTo('tabs/profile')"
+></app-toolbar-arrow-text>
+
+<ion-content>
+  <ion-refresher class="red" slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <section *ngIf="!isLoading; else skeletonLoading">
+    <section *ngIf="storeList?.length">
+      <div
+        class="store-card"
+        *ngFor="let store of storeList"
+        (click)="storeDetailPage(store?.id)"
+        id="store-details-page"
+      >
+        <div class="store-header">
+          <div class="logo-name">
+            <div class="img-div">
+              <ion-img [src]="utility.getImage(store.logoMini, true)"></ion-img>
+            </div>
+            <div class="name-div">
+              <div>{{ store.name }}</div>
+              <div>{{ store.proprietorName }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="content" *ngIf="store.addresses.length > 0">
+          <div class="content-wrap" *ngFor="let item of store.addresses">
+            <div class="icon-div">
+              <i class="icon-location"></i>
+            </div>
+            <div class="location">
+              {{ item.formattedAddress ? item.formattedAddress : '---' }}
+            </div>
+          </div>
+        </div>
+        <div class="status-section">
+          <div class="status">
+            <div
+              class="dot"
+              [class.verified-status]="store?.verificationStatus === 'verified'"
+            ></div>
+            <div class="status-name">
+              {{ store?.verificationStatus === 'verified' ? 'Verified' :
+              'Verification In Progress' }}
+            </div>
+          </div>
+          <div class="store-date">{{ store?.formattedCreatedDate }}</div>
+        </div>
+        <!-- todo: verify if this design will be needed in coming phases -->
+        <!-- <div class="document">
+          <div class="ion-activatable" (click)="openStore(store.id)">
+            View Documents <ion-icon name="chevron-forward-outline"></ion-icon>
+          </div>
+        </div> -->
+      </div>
+      <ion-infinite-scroll
+        (ionInfinite)="getMoreStores($event)"
+        [disabled]="storeList.length === totalPageCount"
+      >
+        <ion-infinite-scroll-content loadingSpinner="circular">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </section>
+    <section *ngIf="storeList.length === 0">
+      <app-no-data
+        [title]="'No Stores!'"
+        [subtitle]="'Currently there are no stores to show'"
+      ></app-no-data>
+    </section>
+  </section>
+  <ng-template #skeletonLoading>
+    <section>
+      <div class="store-card" *ngFor="let i of 6 | staticArray">
+        <div class="store-header" style="display: unset;">
+          <div class="logo-name">
+            <div class="img-div" style="width: 14%;">
+              <ion-skeleton-text [animated]="true" style="border-radius: 50%;"></ion-skeleton-text>
+            </div>
+            <div class="name-div" style="width: 50%;">
+              <div>
+                <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+              </div>
+              <div>
+                <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content">
+          <div class="content-wrap">
+            <div class="icon-div">
+              <i class="icon-location"></i>
+            </div>
+            <div class="location">
+              <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+            </div>
+          </div>
+        </div>
+        <div class="status-section">
+          <div class="status" style="width: 35%;">
+            <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+          </div>
+          <div class="store-date" style="width: 35%;">
+            <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+</ion-content>

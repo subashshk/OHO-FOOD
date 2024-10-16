@@ -1,0 +1,400 @@
+<app-toolbar-arrow-text title="Sign Up" (backEvent)="dismiss()"></app-toolbar-arrow-text>
+
+<ion-content>
+  <app-circular-stepper
+    [stepTitle]="toolbarTitle"
+    [stepCount]="step"
+    [totalSteps]="2"
+  ></app-circular-stepper>
+    <section class="form-section">
+    <!-- Business Info -->
+      <section *ngIf="step === 1">
+        <form [formGroup]="businessForm">
+          <ion-item lines="none">
+            <ion-label position="stacked"
+              >Proprietor Name
+              <p class="required">*</p>
+            </ion-label>
+            <ion-input
+              placeholder="Name of your company owner"
+              formControlName="proprietorName"
+            >
+            </ion-input>
+            <ion-text
+              class="error"
+              color="danger"
+              *ngIf="
+                businessForm.get('proprietorName').touched &&
+                businessForm.get('proprietorName').errors
+              "
+            >
+              <div
+                class="error-msg"
+                *ngIf="businessForm.controls.proprietorName.errors.required"
+              >
+                Proprietor Name is required.
+              </div>
+            </ion-text>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="stacked"
+              >Name of your company
+              <p class="required">*</p>
+            </ion-label>
+            <ion-input
+              placeholder="Enter your company name"
+              formControlName="companyName"
+            >
+            </ion-input>
+            <ion-text
+              class="error"
+              color="danger"
+              *ngIf="
+                businessForm.get('companyName').touched &&
+                businessForm.get('companyName').errors
+              "
+            >
+              <div
+                class="error-msg"
+                *ngIf="businessForm.controls.companyName.errors.required"
+              >
+                Company Name is required.
+              </div>
+            </ion-text>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="stacked"
+              >VAT / PAN Registration No.
+              <p class="required">*</p>
+            </ion-label>
+            <ion-input placeholder="VAT / PAN No." formControlName="panNumber">
+            </ion-input>
+            <ion-text
+              class="error"
+              color="danger"
+              *ngIf="
+                businessForm.get('panNumber').touched &&
+                businessForm.get('panNumber').errors
+              "
+            >
+              <div
+                class="error-msg"
+                *ngIf="businessForm.controls.panNumber.errors.required"
+              >
+                VAT/PAN Registration No is required.
+              </div>
+            </ion-text>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="stacked"
+              >Mobile No
+              <p class="required">*</p>
+            </ion-label>
+            <ion-input
+              type="number"
+              placeholder="Enter your mobile number"
+              formControlName="mobileNumber"
+            >
+            </ion-input>
+            <ion-text
+              class="error"
+              color="danger"
+              *ngIf="
+                businessForm.get('mobileNumber').touched &&
+                businessForm.get('mobileNumber').errors
+              "
+            >
+              <div
+                class="error-msg"
+                *ngIf="
+                  businessForm.get('mobileNumber').errors.required;
+                  else mobileNumberError
+                "
+              >
+                Mobile Number is required.
+              </div>
+              <ng-template #mobileNumberError>
+                Mobile Number is not valid
+              </ng-template>
+            </ion-text>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="stacked"
+              >Company Email
+              <p class="required">*</p>
+            </ion-label>
+            <ion-input
+              placeholder="Enter your company email"
+              formControlName="email"
+            >
+            </ion-input>
+            <ion-text
+              class="error"
+              color="danger"
+              *ngIf="
+                businessForm.get('email').touched &&
+                businessForm.get('email').errors
+              "
+            >
+              <div
+                class="error-msg"
+                *ngIf="businessForm.controls.email.errors.required; else elseBlock"
+              >
+                Company Email is required.
+              </div>
+              <ng-template #elseBlock
+                >Email must be a valid email address.</ng-template
+              >
+            </ion-text>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="stacked"
+              >VAT/PAN Certified Scanned Image
+              <p class="required">*</p></ion-label
+            >
+            <ion-button
+              class="upload-img-btn"
+              (click)="selectImage(imageType.Certificate)"
+              *ngIf="!businessForm.get('certificateImage').value"
+            >
+              <span class="button-inner"> + Upload your scanned image </span>
+            </ion-button>
+            <div class="file" *ngIf="businessForm.get('certificateImage').value">
+              <div class="name">
+                {{ businessForm.get('certificateImage').value.name }}
+              </div>
+              <div
+                class="delete ion-activatable"
+                (click)="clearFile(imageType.Certificate)"
+              >
+                <i class="icon-cancel"></i>
+              </div>
+            </div>
+            <ion-text
+              class="error"
+              color="danger"
+              *ngIf="
+                businessForm.get('certificateImage').touched &&
+                businessForm.get('certificateImage').errors &&
+                businessForm.get('certificateImage').errors.required
+              "
+            >
+              VAT/PAN Certified Scanned Image is required.
+            </ion-text>
+          </ion-item>
+        </form>
+      </section>
+    <!-- Business Info Ends -->
+    <!-- Store Info -->
+      <section *ngIf="step === 2">
+        <form [formGroup]="storeForm">
+          <ion-item lines="none">
+            <ion-label position="stacked"
+              >Online Store Name
+              <p class="required">*</p>
+            </ion-label>
+            <ion-input
+              placeholder="Enter name of your online store"
+              formControlName="storeName"
+              [disabled]="step !== 2"
+            >
+            </ion-input>
+            <ion-text
+              class="error"
+              color="danger"
+              *ngIf="
+                storeForm.get('storeName').touched &&
+                storeForm.get('storeName').errors
+              "
+            >
+              <div
+                class="error-msg"
+                *ngIf="storeForm.controls.storeName.errors.required"
+              >
+                Store Name is required.
+              </div>
+            </ion-text>
+          </ion-item>
+          <ion-item lines="none" *ngIf="!isPhaseOne">
+            <ion-label position="stacked"
+              >Service type
+              <p class="required">*</p>
+            </ion-label>
+            <ion-select
+              placeholder="Select Service Type"
+              formControlName="serviceType"
+              [disabled]="step !== 2"
+              interface="popover"
+            >
+              <ion-select-option
+                *ngFor="let option of serviceTypes"
+                [value]="option.value"
+              >{{ option.label }}</ion-select-option>
+            </ion-select>
+            <ion-text
+              class="error"
+              color="danger"
+              *ngIf="
+                storeForm.get('serviceType').touched &&
+                storeForm.get('serviceType').errors
+              "
+            >
+              <div
+                class="error-msg"
+                *ngIf="storeForm.controls.serviceType.errors.required"
+              >
+                Service Type is required.
+              </div>
+            </ion-text>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="stacked"
+              >Logo Symbol
+              <p class="required">*</p>
+            </ion-label>
+            <ion-button
+              class="upload-img-btn"
+              *ngIf="!storeForm.get('logo').value"
+              (click)="selectImage(imageType.Logo)"
+            >
+              <span class="button-inner"> + Upload your logo symbol </span>
+            </ion-button>
+            <div class="file" *ngIf="storeForm.get('logo').value">
+              <div class="name">{{ storeForm.get('logo').value.name }}</div>
+              <div
+                class="delete ion-activatable"
+                (click)="clearFile(imageType.Logo)"
+              >
+                <i class="icon-cancel"></i>
+              </div>
+            </div>
+            <ion-text
+              class="error"
+              color="danger"
+              *ngIf="
+                storeForm.get('logo').touched &&
+                storeForm.get('logo').errors &&
+                storeForm.get('logo').errors.required
+              "
+            >
+              Logo Symbol is required.
+            </ion-text>
+          </ion-item>
+          <ion-item lines="none" *ngIf="!isPhaseOne">
+            <ion-label position="stacked"
+              >Store Cover Image
+              <p class="required">*</p>
+            </ion-label>
+            <ion-button
+              *ngIf="!storeForm.get('cover').value"
+              class="upload-img-btn"
+              (click)="selectImage(imageType.Cover)"
+            >
+              <span class="button-inner"> + Upload your store cover image </span>
+            </ion-button>
+            <div class="file" *ngIf="storeForm.get('cover').value">
+              <div class="name">{{ storeForm.get('cover').value.name }}</div>
+              <div
+                class="delete ion-activatable"
+                (click)="clearFile(imageType.Cover)"
+              >
+                <i class="icon-cancel"></i>
+              </div>
+            </div>
+            <ion-text
+              class="error"
+              color="danger"
+              *ngIf="
+                storeForm.get('cover').touched &&
+                storeForm.get('cover').errors &&
+                storeForm.get('cover').errors.required
+              "
+            >
+              Store Cover Image is required.
+            </ion-text>
+          </ion-item>
+          <!-- store locations starts -->
+          <ion-item
+            lines="none"
+          >
+            <ion-label position="stacked">
+              storefront locations
+              <p class="required">*</p>
+            </ion-label>
+            <div
+              formArrayName="locations"
+              *ngFor="let location of locations.controls;
+              let i = index;
+              first as isFirst"
+              class="location-added"  
+            >
+              <div class="address">
+                <div
+                  class="status"
+                  [ngClass]="{'not-default': !location?.value?.default, 'is-default': location?.value?.default}"
+                >
+                  <div
+                    *ngIf="!location?.value?.default"
+                    (click)="markAsDefault(i)"
+                    id="mark-default-address"
+                  >
+                    Mark as Default
+                  </div>
+                  <div *ngIf="location?.value?.default">Default</div>
+                </div>
+                <p class="location">
+                  {{ location?.value | removePlusCode }}
+                </p>
+              </div>
+              <div class="actions">
+                <i
+                  class="icon-Edit-filled"
+                  (click)="edit(location, i)"
+                  id="edit-location"
+                ></i>
+                <i
+                  class="icon-Delete-filled"
+                  (click)="delete(i)"
+                  id="delete-location"
+                ></i>
+              </div>
+            </div>
+            <div
+              (click)="openMapModal()"
+              id="open-map-select-location"
+            >
+              <ion-button
+                class="add-location-btn"
+              >
+                <span class="button-inner"> + Add Storefront Location </span>
+              </ion-button>
+            </div>
+          </ion-item>
+          <!-- store location ends -->
+
+          <div class="check-box" *ngIf="locations?.length && !isPhaseOne">
+            <ion-checkbox
+              formControlName="isOfficialStore"
+            ></ion-checkbox>
+            <div>Official Store</div>
+          </div>
+
+          <ion-item lines="none" *ngIf="storeForm.get('isOfficialStore').value">
+            <ion-label position="stacked"
+              >official store description
+            </ion-label>
+            <ion-textarea
+              formControlName="officialDescription"
+              placeholder="Enter official store description..."
+            ></ion-textarea>
+          </ion-item>
+        </form>
+      </section>
+    <!-- Store Info Ends  -->
+      <app-footer-button
+        [btnTitle]="buttonText"
+        (btnEvent)="btnClick()"
+        [isDisabled]="isLoading"
+      ></app-footer-button>
+    </section>
+</ion-content>

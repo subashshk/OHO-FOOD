@@ -1,0 +1,28 @@
+<app-toolbar-arrow-text
+  title="Details"
+  (backEvent)="back()"
+  [showEndButton]="true"
+  endButtonLabel="Edit"
+  (closeEvent)="showAddImageModal()"
+></app-toolbar-arrow-text>
+
+<ion-content>
+  <section class="my-images">
+    <div class="images-grid">
+      <ng-container *ngIf="!isLoading; else loadData">
+        <div class="grid-view" *ngFor="let image of imageSet">
+          <ion-img [src]="image?.productUrlMedium"></ion-img>
+        </div>
+      </ng-container>
+      <ng-template #loadData>
+        <section class="my-images">
+          <div class="images-grid">
+            <div class="grid-view" *ngFor="let i of 6 | staticArray">
+              <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+            </div>
+          </div>
+        </section>
+      </ng-template>
+    </div>
+  </section>
+</ion-content>

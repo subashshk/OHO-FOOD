@@ -1,0 +1,67 @@
+<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher-content></ion-refresher-content>
+</ion-refresher>
+<section *ngIf="isLoading ;else LoadMessages">
+  <div *ngFor="let i of 6 | staticArray" class="chat-item">
+    <div class="profile-image">
+      <ion-thumbnail>
+        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+      </ion-thumbnail>
+    </div>
+    <div class="profile-info">
+      <div class="room-name-wrap">
+        <div class="room-name">
+          <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+        </div>
+        <div class="date">
+          <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+        </div>
+      </div>
+      <div class="last-message-wrap">
+        <div class="last-message">
+          <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #LoadMessages>
+  <section *ngIf="!dataLength" class="no-data">
+    <div class="no-content">
+      <app-no-data imgPath="empty-messages.svg" title="No messages yet!"
+        subtitle="Message will be listed here once they are sent to you."></app-no-data>
+    </div>
+  </section>
+  <section *ngIf="dataLength">
+    <div
+      *ngFor="let room of roomList"
+      (click)="navigateTo(room)"
+      class="chat-item"
+      id="chat-item"
+    >
+      <div class="profile-image">
+        <ion-img [src]="utilityService.getImage(room.userImage)"></ion-img>
+      </div>
+      <div class="profile-info">
+        <div class="room-name-wrap">
+          <div class="room-name">
+            {{ room.userName }}
+          </div>
+          <div class="date">
+            {{ messageDate(room.timestamp) }}
+          </div>
+        </div>
+        <div class="last-message-wrap">
+          <div class="last-message">
+            {{ room.lastMessage }}
+          </div>
+          <div class="badge-div">
+            <ion-badge *ngIf="room.count !== '0'">{{ room.count }}</ion-badge>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>
+

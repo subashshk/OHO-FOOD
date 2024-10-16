@@ -1,0 +1,109 @@
+<app-toolbar-arrow-text
+  [title]="isEdit ? 'Edit Variant' : 'Add Variant'"
+  (backEvent)="dismiss()"
+></app-toolbar-arrow-text>
+<ion-content>
+  <form [formGroup]="variantForm">
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked">SKU</ion-label>
+      </div>
+      <ion-input
+        formControlName="sku"
+        inputmode="text"
+        placeholder="Enter SKU"
+      ></ion-input>
+    </ion-item>
+    <ion-item class="checkbox" lines="none">
+      <ion-checkbox formControlName="trackInventory"></ion-checkbox>
+      <ion-label>Track In Inventory</ion-label>
+    </ion-item>
+    <ion-item lines="none" *ngFor="let item of optionTypes; let i = index">
+      <div class="title">
+        <ion-label position="floating">{{ item?.presentation }}</ion-label>
+      </div>
+      <ion-select
+        [(ngModel)]="selectOptionTypes[i]"
+        placeholder="Select option type"
+        interface="popover"
+        [ngModelOptions]="{standalone: true}"
+      >
+        <ion-select-option
+          *ngFor="let subOption of item?.optionValues"
+          [value]="subOption?.id"
+        >{{ subOption?.presentation }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div class="sub-div-title">Variant Weight & Height</div>
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked">Weight (KG)</ion-label>
+      </div>
+      <ion-input
+        formControlName="weight"
+        inputmode="text"
+        placeholder="Enter your variant weight"
+      ></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked">Height (INCH)</ion-label>
+      </div>
+      <ion-input
+        formControlName="height"
+        inputmode="text"
+        placeholder="Enter your variant height"
+      ></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked">Width (INCH)</ion-label>
+      </div>
+      <ion-input
+        formControlName="width"
+        inputmode="text"
+        placeholder="Enter your variant width"
+      ></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked">Depth (INCH)</ion-label>
+      </div>
+      <ion-input
+        formControlName="depth"
+        inputmode="text"
+        placeholder="Enter your variant depth"
+      ></ion-input>
+    </ion-item>
+    <div class="sub-div-title">Variant Price</div>
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked">Selling Price (RS)</ion-label>
+      </div>
+      <ion-input
+        formControlName="price"
+        type="number"
+        placeholder="Enter selling price"
+      ></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked">Cost Price (RS)</ion-label>
+      </div>
+      <ion-input
+        formControlName="costPrice"
+        type="number"
+        placeholder="Enter cost price"
+      ></ion-input>
+    </ion-item>
+  </form>
+</ion-content>
+<ion-footer>
+  <app-footer-button
+    btnTitle="Cancel"
+    (btnEvent)="dismiss()"
+    nextBtnTitle="Save"
+    (nextBtnEvent)="onSubmit()"
+  ></app-footer-button>
+</ion-footer>

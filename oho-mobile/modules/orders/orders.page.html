@@ -1,0 +1,134 @@
+<ion-header
+  [ngClass]="orderStatus === orderStatusType.Returned ? 'return-header': '' "
+  class="ion-no-border"
+>
+  <ion-toolbar>
+    <i
+      class="icon-back-arrow"
+      slot="start"
+      *ngIf="!searchBarIsExpanded && fromAccounts"
+      (click)="goBack()"
+    ></i>
+    <ion-title *ngIf="!searchBarIsExpanded">
+      <span>
+        {{ currentServiceType === platformServices.Job ? 'My Jobs' : 'My Orders'
+        }}</span
+      >
+    </ion-title>
+
+    <!-- removed search bar not may need in future -->
+    <!-- <app-search-bar
+      *ngIf="orderStatus !== orderStatusType.Returned"
+      [ngClass]="{'full-height': searchBarIsExpanded}"
+      slot="end"
+      placeholder="Search an order"
+      (searchedOrderEvent)="searchOrder($event)"
+      (searchBarExpandEvent)="searchBarExpanded($event)"
+      [stickyBar]="true"
+      [expandedSearchBar]="searchBarIsExpanded"
+      [shouldSearchOrders]="true"
+    >
+    </app-search-bar> -->
+  </ion-toolbar>
+
+  <div class="segments">
+    <app-ion-segment
+      [value]="orderSegment"
+      [segmentValue]="orderStatus"
+      (onChangeEvent)="initialize(null, $event)"
+    >
+    </app-ion-segment>
+  </div>
+</ion-header>
+
+<ion-content *ngIf="orderStatus !== orderStatusType.Returned">
+  <section *ngIf="!isLoading && (ordersCount > 0)">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <section class="search-results-header" *ngIf="searchText">
+      <div>
+        {{ ordersCount }} result<span *ngIf="orderItems.length !== 1">s</span>
+        for '{{searchText}}'
+      </div>
+    </section>
+    <section class="wishlist">
+      <app-product-list
+        [items]="orderItems"
+        [shouldRedirectToOrder]="true"
+        [title]="title"
+        *ngIf="currentServiceType === platformServices.Mall || currentServiceType === platformServices.Job"
+      ></app-product-list>
+      <app-order-list
+        [orders]="orders"
+        *ngIf="currentServiceType !== platformServices.Mall"
+      ></app-order-list>
+      <ion-infinite-scroll (ionInfinite)="populateMoreOrders($event)">
+        <ion-infinite-scroll-content loadingSpinner="circular">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </section>
+  </section>
+
+  <section *ngIf="isLoading">
+    <app-product-list [isLoader]="true"></app-product-list>
+  </section>
+
+  <section *ngIf="!isLoading && ordersCount === 0" class="no-data">
+    <div class="no-content">
+      <app-no-data
+        *ngIf="currentServiceType === platformServices.Job; else orderNoData"
+        imgPath="empty-jobs.svg"
+        subtitle="You haven’t applied yet. Search for jobs and keep track of your application here!"
+        btnCText="Browse jobs"
+      ></app-no-data>
+
+      <ng-template #orderNoData>
+        <app-no-data
+          imgPath="empty-cart-new.svg"
+          title="Your Cart Is Empty!"
+          subtitle="Add some amazing items. Happy shopping!"
+          [btnAText]="currentServiceType !== platformServices.Food ? '' : 'Add from wishlist'"
+          [btnBText]="'continue shopping'"
+          (buttonClickA)="navigateTo('tabs/cart')"
+          (buttonClickB)="navigateTo('tabs/cart')"
+          [isCart]="true"
+        >
+        </app-no-data>
+      </ng-template>
+    </div>
+  </section>
+</ion-content>
+
+<ion-content *ngIf="orderStatus === orderStatusType.Returned">
+  <section *ngIf="!returnLoader">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <section>
+      <app-product-list
+        [items]="listOfReturn"
+        [shouldRedirectToOrder]="true"
+        [orderStatus]="orderStatus"
+        *ngIf="currentServiceType === platformServices.Mall"
+      ></app-product-list>
+      <ion-infinite-scroll (ionInfinite)="populateMoreReturnOrders($event)">
+        <ion-infinite-scroll-content loadingSpinner="circular">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </section>
+  </section>
+
+  <!-- skeleton loading -->
+  <section *ngIf="returnLoader">
+    <app-product-list [isLoader]="true"></app-product-list>
+  </section>
+</ion-content>
+
+<!-- sort button in footer might be ned so commented for now -->
+<!-- <ion-footer *ngIf="!isLoading && ordersCount > 0">
+  <ion-button class="sort-btn" (click)="showSortSheet()">
+    <i class="icon-sort"></i>
+    Sort
+  </ion-button>
+</ion-footer> -->

@@ -1,0 +1,76 @@
+<app-toolbar-arrow-text
+  title="Select Add-ons"
+  (backEvent)="goBack()"
+  [showEndButton]="true"
+  endButtonLabel="Add New"
+  (closeEvent)="openAddModal()"
+></app-toolbar-arrow-text>
+
+<ion-content *ngIf="!isLoading; else showLoading">
+  <section class="empty-state" *ngIf="!optionTypes?.length; else showData">
+    <div class="content">
+      <div class="img-container">
+        <img src="/assets/images/no-data.svg" />
+      </div>
+      <div class="detail">
+        <div class="message">You haven't added any add-ons yet.</div>
+        <div class="add-btn" id="add-btn" (click)="openAddModal()">
+          Add New Add-ons
+        </div>
+      </div>
+    </div>
+  </section>
+  <ng-template #showData>
+    <section class="add-ons-lists" *ngIf="optionTypes?.length">
+      <div class="add-ons-item" *ngFor="let option of optionTypes">
+        <div class="item">
+          <div>
+            <div class="top-section">
+              <div class="title">{{ option?.name | titlecase }}</div>
+            </div>
+            <div class="body">
+              <div class="option-type">Option Type: {{option?.choiceType | titlecase}}</div>
+              <div class="max-choice">Maximum no of choice: {{option?.maxNoOfChoice}}</div>
+            </div>
+          </div>
+          <ion-checkbox mode="ios" [ngModel]="isSelected(option)" (ngModelChange)="toggleSelection(option)"></ion-checkbox>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+</ion-content>
+<ng-template #showLoading>
+  <ion-content *ngIf="isLoading">
+    <section class="add-ons-lists">
+      <div class="add-ons-item" *ngFor="let i of 8 | staticArray">
+        <div class="item">
+          <div>
+            <div class="top-section">
+              <div class="title">
+                <ion-skeleton-text style="width: 180px;"></ion-skeleton-text>
+              </div>
+            </div>
+            <div class="body">
+              <div class="option-type">
+                <ion-skeleton-text style="width: 110px;"></ion-skeleton-text>
+              </div>
+              <div class="max-choice">
+                <ion-skeleton-text style="width: 110px;"></ion-skeleton-text>
+              </div>
+            </div>
+          </div>
+          <ion-checkbox mode="ios"></ion-checkbox>
+        </div>
+      </div>
+    </section>
+  </ion-content>
+</ng-template>
+
+<ion-footer no-shadow class="footer">
+  <app-footer-button
+    btnTitle="Confirm"
+    [isDisabled]="!selectedOptionTypes.length"
+    [disableSpinner]="true"
+    (btnEvent)="confirmSelection()"
+  ></app-footer-button>
+</ion-footer>

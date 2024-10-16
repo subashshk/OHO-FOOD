@@ -1,0 +1,18 @@
+<ion-header  class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="title">
+      Menu categories
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="close-btn" (click)="dismiss()" id="close_btn_dismiss">
+        <i class="icon-close-updated"></i>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<section>
+  <div class="category" (click)="getCategory(category)" id="select_category" *ngFor="let category of menu">
+    <div class="title">{{category?.name}}</div>
+    <div class="count">{{category?.productsCount}}</div>
+  </div>
+</section>

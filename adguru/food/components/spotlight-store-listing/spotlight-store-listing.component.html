@@ -1,0 +1,69 @@
+<div class="store-store-listing">
+  <app-header-breadcrumb
+    [title]="title ?? '--' | titlecase"
+    [breadcrumbs]="breadcrumbs"
+  ></app-header-breadcrumb>
+  <div class="table mt-4">
+    <div class="table-responsive">
+      <nz-table
+        [nzLoading]="isLoading"
+        [nzLoadingIndicator]="loader"
+        [nzShowPagination]="false"
+        [nzData]="storeListingData"
+      >
+        <thead>
+          <th>SN</th>
+          <th>Store</th>
+          <th>Approval Status</th>
+          <th>Active</th>
+          <th>Actions</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of storeListingData; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>
+              <div class="prod-image">
+                <img
+                  [src]="data?.logoMini ?? 'assets/images/no-image.png'"
+                  alt="store-image"
+                />
+                <p>{{ data?.store ?? '--' | titlecase }}</p>
+              </div>
+            </td>
+            <td>
+              <div class="status">
+                <a class="{{ data?.verificationStatus }}">
+                  {{ data?.verificationStatus ?? '--' | titlecase }}
+                </a>
+              </div>
+            </td>
+            <td>
+              <div class="status">
+                <nz-switch
+                  class="mr-2"
+                  [ngModel]="data?.status"
+                  nzSize="small"
+                  [nzDisabled]="data?.verificationStatus !== officialStatus.Approved"
+                  (ngModelChange)="changeStatus($event, data?.id, i)"
+                ></nz-switch>
+              </div>
+            </td>
+            <td>
+              <div class="icons">
+                <i
+                  class="icon-check-mark"
+                  (click)="approveRequest(data?.id)"
+                  *ngIf="data?.verificationStatus !== officialStatus.Approved"
+                ></i>
+                <i class="icon-close" (click)="rejectRequest(data?.id)"></i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</div>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

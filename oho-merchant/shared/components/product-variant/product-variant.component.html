@@ -1,0 +1,87 @@
+<app-toolbar-arrow-text
+  [title]="fromProductDetail ? 'Variants': 'Add Product'"
+  (backEvent)="dismiss()"
+></app-toolbar-arrow-text>
+<ion-content>
+  <app-circular-stepper
+    [stepCount]="3"
+    stepTitle="Product Variants"
+    *ngIf="!fromProductDetail"
+    [totalSteps]="allSteps.SixthStep"
+  ></app-circular-stepper>
+  <section class="product-variant" *ngIf="isLoading; else loadContent">
+    <ion-list>
+      <ion-item
+        *ngFor="let i of 2 | staticArray"
+        lines="none"
+      >
+        <div class="header">
+          <ion-skeleton-text [animated]="true" style="width: 30%"></ion-skeleton-text>
+        </div>
+        <div class="options">
+          <ion-skeleton-text [animated]="true" style="width: 30%"></ion-skeleton-text>
+          <ion-skeleton-text [animated]="true" style="width: 50%"></ion-skeleton-text>
+          <ion-skeleton-text [animated]="true" style="width: 50%"></ion-skeleton-text>
+        </div>
+        <div class="price">
+          <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+          <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+        </div>
+      </ion-item>
+    </ion-list>
+  </section>
+  <ng-template #loadContent>
+    <section class="product-variant" *ngIf="variants?.length">
+      <ion-list>
+        <ion-item
+          *ngFor="let item of variants; let i = index"
+          lines="none"
+        >
+          <div class="header">
+            <p class="property-name">{{ item?.name }}</p>
+            <div class="icons">
+              <i
+                class="icon-Edit-filled"
+                (click)="addProductVariant(item)"
+                id="edit-product-variant"
+              ></i>
+              <i
+                class="icon-Delete-filled"
+                (click)="deleteConfirmModal(item.id)"
+                id="delete-product-variant"
+              ></i>
+            </div>
+          </div>
+          <!-- TODO:: options value to be made dynamic -->
+          <div class="options">
+            <p class="title">Options</p>
+            <div *ngFor="let option of item?.optionValues">
+              <p class="sub-option">{{ option.optionTypeName }}: <span>{{ option?.presentation}}</span></p>
+            </div>
+          </div>
+          <div class="price">
+            <p>Selling Price (Rs): {{ item?.price }}</p>
+            <p>Cost Price (Rs): {{ item?.costPrice }}</p>
+          </div>
+        </ion-item>
+      </ion-list>
+    </section>
+    <section class="no-data" *ngIf="!variants?.length">
+      <div class="no-content">
+        <app-no-data
+          imgPath="empty-variants.svg"
+          title="No Variant Added"
+          subtitle="Please add variant for your product"
+        ></app-no-data>
+      </div>
+    </section>
+  </ng-template>
+</ion-content>
+<ion-footer>
+  <app-footer-button
+    btnTitle="Add New Variant"
+    (btnEvent)="addProductVariant()"
+    [nextBtnTitle]="fromProductDetail ? '' : 'Next'"
+    (nextBtnEvent)="showProductProperties()"
+  ></app-footer-button>
+</ion-footer>

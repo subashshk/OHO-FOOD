@@ -1,0 +1,72 @@
+<app-toolbar-arrow-text
+  [title]="fromProductDetail ? 'Offers': 'Add Product'"
+  (backEvent)="dismiss(false)"
+></app-toolbar-arrow-text>
+<ion-content>
+  <app-circular-stepper
+    *ngIf="!fromProductDetail"
+    [stepCount]="utility.isFood() ? 4 : 5"
+    stepTitle="Offers"
+    [totalSteps]="utility.isFood() ? 4 : 6"
+  ></app-circular-stepper>
+  <section class="product-offers" *ngIf="isLoading; else loadContent">
+    <ion-list>
+      <ion-item
+        *ngFor="let i of 3 | staticArray"
+        lines="none"
+      >
+        <div class="offer">
+          <ion-skeleton-text [animated]="true" style="width: 40%; padding: 2px;"></ion-skeleton-text>
+          <ion-skeleton-text [animated]="true" style="width: 40%; padding: 2px;"></ion-skeleton-text>
+          <ion-skeleton-text [animated]="true" style="width: 40%; padding: 2px;"></ion-skeleton-text>
+        </div>
+        <ion-skeleton-text [animated]="true" style="width: 20%; padding: 2px;"></ion-skeleton-text>
+      </ion-item>
+    </ion-list>
+  </section>
+  <ng-template #loadContent>
+    <section class="product-offers" *ngIf="offers?.length">
+      <ion-list>
+        <ion-item
+          *ngFor="let offer of offers; let i = index"
+          lines="none"
+        >
+          <div class="offer">
+            <p class="offer-name">{{ offer?.value }}% OFF</p>
+            <p class="offer-start-date">Start Date: {{ offer?.startAt }}</p>
+            <p class="offer-end-date">End Date: {{ offer?.endAt }}</p>
+          </div>
+          <div class="icons">
+            <i
+              class="icon-Edit-filled"
+              (click)="addOffer(offer)"
+              id="edit-product-offer"
+            ></i>
+            <i
+              class="icon-Delete-filled"
+              (click)="deleteOfferConfirm(offer.id)"
+              id="delete-product-offer"
+            ></i>
+          </div>
+        </ion-item>
+      </ion-list>
+    </section>
+    <section class="no-data" *ngIf="!offers?.length">
+      <div class="no-content">
+        <app-no-data
+          imgPath="empty-offers.svg"
+          title="No Offers Added"
+          subtitle="Please add offer for your product"
+        ></app-no-data>
+      </div>
+    </section>
+  </ng-template>
+</ion-content>
+<ion-footer>
+  <app-footer-button
+    btnTitle="Add Offer"
+    (btnEvent)="addOffer()"
+    [nextBtnTitle]="fromProductDetail ? '' : 'Next'"
+    (nextBtnEvent)="dismiss(true)"
+  ></app-footer-button>
+</ion-footer>

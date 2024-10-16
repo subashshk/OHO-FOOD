@@ -1,0 +1,96 @@
+@import "src/global.scss";
+
+.stores {
+  padding: 20px 16px 0;
+
+  .header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    .title {
+      @include font-size($font-size-md);
+
+      color: $txt-color-dk;
+      font-weight: $bold-md;
+    }
+
+    .add-store {
+      @include font-size($font-size-sm);
+
+      color: $red-dk;
+      font-weight: $bold-md;
+    }
+  }
+
+  .list {
+    margin-top: 18px;
+
+    ion-radio-group {
+      ion-item {
+        margin-bottom: 20px;
+
+        .store-img {
+          .img {
+            border-radius: 8px;
+            height: 40px;
+            object-fit: cover;
+            width: 40px;
+          }
+        }
+
+        .store-name {
+          @include font-size($font-size-sm);
+
+          font-weight: $bold-md;
+          padding-left: 12px;
+        }
+
+        ion-radio::part(container) {
+          border-color: $grey-dk;
+        }
+
+        .radio-checked::part(container) {
+          border-color: $red-dk;
+        }
+      }
+    }
+
+    .no-content {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 25px;
+
+      .image {
+        margin-bottom: 26px;
+
+        ion-img {
+          height: 100px;
+        }
+      }
+
+      .title {
+        @include font-size(15px);
+
+        color: $solid-gray;
+      }
+
+      .link {
+        @include font-size($font-size-n);
+
+        color: $red-dk;
+        font-weight: $bold-md;
+        padding-top: 12px;
+      }
+    }
+  }
+}
+
+app-footer-button {
+  ::ng-deep {
+    .footer {
+      position: relative;
+    }
+  }
+}

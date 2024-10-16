@@ -1,0 +1,168 @@
+@import '../../../global.scss';
+
+ion-header {
+  ion-title {
+    padding-left: 0;
+  }
+}
+
+ion-content {
+  --padding-bottom: 16px;
+  --padding-end: 16px;
+  --padding-start: 16px;
+  --padding-top: 8px;
+
+  .store-card {
+    background: $white;
+    border-radius: 8px;
+    margin-top: 16px;
+    overflow: hidden;
+    padding: 16px;
+
+    .store-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .logo-name {
+        display: flex;
+        align-items: center;
+
+        .img-div {
+          height: 44px;
+          margin-right: 12px;
+          width: 44px;
+
+          ion-img {
+            border-radius: 5px;
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+
+            &::part(image) {
+              border-radius: 5px;
+            }
+          }
+        }
+
+        .name-div {
+          div:first-child {
+            @include font-size($font-size-n);
+
+            color: $txt-color-dk;
+            font-weight: $bold-n;
+          }
+
+          div:last-child {
+            color: $solid-gray;
+            margin-top: 2px;
+          }
+        }
+      }
+    }
+
+    .content {
+      background: white;
+      border-bottom: 1px solid $yellow-light;
+      padding-bottom: 16px;
+
+      .content-wrap {
+        align-items: center;
+        display: flex;
+        padding: 14px 0 0;
+        width: 100%;
+
+        .icon-div {
+          margin-right: 26px;
+
+          i {
+            @include font-size($font-size-xlg);
+
+            color: $solid-gray;
+          }
+        }
+        .location {
+          @include font-size(15px);
+
+          width: 100%;
+          border-bottom: 1px solid $border-color;
+          color: $txt-color-blt;
+          padding-bottom: 14px;
+        }
+      }
+      .content-wrap:last-child {
+        .location {
+          border-bottom: 0;
+          padding-bottom: 0;
+        }
+      }
+    }
+
+    .status-section {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 12px;
+
+      .status {
+        align-items: center;
+        display: flex;
+
+        .dot {
+          background: $orange-n;
+          border-radius: 50%;
+          height: 6px;
+          margin-right: 6px;
+          width: 6px;
+        }
+
+        .verified-status {
+          background: $green-n;
+        }
+
+        &-name {
+          @include font-size(13px);
+
+          color: $solid-gray;
+          font-weight: $bold-md;
+        }
+      }
+
+      .store-date {
+        @include font-size(13px);
+
+        color: $solid-gray;
+        font-weight: $bold-md;
+      }
+    }
+
+    .document {
+      background: white;
+      padding-top: 20px ;
+
+      div {
+        @include font-size($font-size-sm);
+
+        border: 1px solid $red-dk;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        height: 40px;
+        justify-content: center;
+        color: $app-accent-color;
+        position: relative;
+
+        ion-icon {
+          @include font-size($font-size-sm);
+
+          color: $app-accent-color;
+          margin-left: 8px;
+          margin-top: 2px;
+        }
+      }
+    }
+  }
+
+  .store-card:first-child {
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,76 @@
+@import "../../../../global.scss";
+
+.no-data {
+  height: 100%;
+
+  .no-content {
+    background-color: $white;
+    border-radius: 8px;
+    height: 80%;
+    margin: 0 16px 16px;
+  }
+
+  .full-height {
+    height: 88%;
+  }
+}
+
+.product-properties {
+  height: 100%;
+  overflow: scroll;
+
+  ion-list {
+    background: $grey-xlt;
+    padding: 0;
+  }
+
+  ion-item:first-child {
+    margin-top: 0;
+  }
+
+  ion-item {
+    border-radius: 8px;
+    margin: 16px;
+
+    &::part(native) {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 0 16px 16px;
+    }
+
+    .icons {
+      color: $grey-xmd;
+
+      .icon-Edit-filled {
+        padding-right: 10px;
+      }
+    }
+  }
+
+  .property {
+    flex: 1;
+
+    p {
+      margin: 0;
+    }
+
+    ion-skeleton-text {
+      padding-bottom: 3px;
+      width: 40%;
+    }
+
+    &-name {
+      @include font-size(13px);
+
+      color: $grey-xmd;
+    }
+
+    &-value {
+      @include font-size(15px);
+
+      color: $txt-color-dk;
+      font-weight: $bold-md;
+      padding-top: 4px;
+    }
+  }
+}

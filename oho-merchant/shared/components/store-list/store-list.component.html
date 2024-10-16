@@ -1,0 +1,83 @@
+<section class="stores">
+  <div class="header">
+    <div class="title">Select Store</div>
+    <div
+      class="add-store"
+      id="add-new-store"
+      (click)="presentAddStoreModal()"
+      *ngIf="stores?.length"
+    >
+      + Add a new store
+    </div>
+  </div>
+  <section class="list">
+    <ion-radio-group *ngIf="isLoading; else loadStoreList">
+      <ion-item
+        *ngFor="let i of 4 | staticArray"
+        class="ion-no-padding"
+        lines="none"
+      >
+        <div class="store-img">
+          <div class="img">
+            <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+          </div>
+        </div>
+        <ion-skeleton-text
+          [animated]="true"
+          style="width: 70%; margin-left: 12px"
+        ></ion-skeleton-text>
+        <div slot="end" class="store-select">
+          <ion-skeleton-text
+            [animated]="true"
+            style="width: 20%"
+          ></ion-skeleton-text>
+        </div>
+      </ion-item>
+    </ion-radio-group>
+    <ng-template #loadStoreList>
+      <section *ngIf="stores?.length; else noStores">
+        <ion-radio-group (ionChange)="setStore($event)" *ngIf="!isLoading">
+          <ion-item
+            *ngFor="let store of stores"
+            class="ion-no-padding"
+            lines="none"
+          >
+            <div class="store-img">
+              <img
+                [src]="store?.logo ? store?.logo : '/assets/images/no-image.png'"
+                class="img"
+              />
+            </div>
+            <p class="store-name">{{ store?.name }}</p>
+            <div slot="end" class="store-select">
+              <ion-radio
+                class="ion-no-padding"
+                color="danger"
+                [value]="store?.id"
+              ></ion-radio>
+            </div>
+          </ion-item>
+        </ion-radio-group>
+      </section>
+      <ng-template #noStores>
+        <div class="no-content">
+          <div class="image">
+            <ion-img src="/assets/images/no-stores.svg"></ion-img>
+          </div>
+          <div class="title">
+            You have not added any store yet.
+          </div>
+          <div class="link" (click)="presentAddStoreModal()" id="add-new-store">
+            Add New Store
+          </div>
+        </div>
+      </ng-template>
+    </ng-template>
+  </section>
+</section>
+<app-footer-button
+  btnTitle="Confirm"
+  (btnEvent)="changeStore()"
+  [isDisabled]="isProcessing"
+  *ngIf="stores?.length"
+></app-footer-button>

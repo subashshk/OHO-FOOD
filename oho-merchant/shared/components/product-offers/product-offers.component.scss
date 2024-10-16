@@ -1,0 +1,68 @@
+@import "../../../../global.scss";
+
+.no-data {
+  height: 100%;
+
+  .no-content {
+    background-color: $white;
+    border-radius: 8px;
+    height: 80%;
+    margin: 0 16px 16px;
+  }
+}
+
+.product-offers {
+  ion-list {
+    background: $grey-xlt;
+    padding: 0;
+  }
+
+  ion-item:first-child {
+    margin-top: 0;
+  }
+
+  ion-item {
+    border-radius: 8px;
+    margin: 16px;
+
+    &::part(native) {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 0 16px 16px;
+    }
+
+    .icons {
+      color: $grey-xmd;
+      padding-bottom: 40px;
+
+      .icon-Edit-filled {
+        padding-right: 10px;
+      }
+    }
+  }
+
+  .offer {
+    flex: 1;
+
+    p {
+      margin: 0;
+    }
+
+    &-start-date {
+      padding: 8px 0 6px;
+    }
+
+    &-end-date, &-start-date {
+      @include font-size(13px);
+
+      color: $grey-xmd;
+    }
+
+    &-name {
+      @include font-size(15px);
+
+      color: $txt-color-dk;
+      font-weight: $bold-md;
+    }
+  }
+}

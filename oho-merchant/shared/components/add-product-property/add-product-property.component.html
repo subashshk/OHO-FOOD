@@ -1,0 +1,40 @@
+<section class="product-property-modal">
+  <div class="header">
+    <p class="header-title">Add New Properties</p>
+    <i class="icon-close" (click)="dismiss()" id="close-product-modal"></i>
+  </div>
+  <form [formGroup]="productPropertyForm">
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked">Property Type</ion-label>
+      </div>
+      <ion-select
+        formControlName="propertyType"
+        placeholder="Select property type"
+        interface="popover"
+        (ionChange)="setPropertyId($event)"
+      >
+        <ion-select-option
+          *ngFor="let item of propertyList"
+          [value]="item"
+        >{{ item?.presentation }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked">Property Value</ion-label>
+      </div>
+      <ion-input
+        formControlName="propertyValue"
+        inputmode="text"
+        placeholder="Enter property value"
+      ></ion-input>
+    </ion-item>
+  </form>
+  <app-footer-button
+    btnTitle="Cancel"
+    (btnEvent)="dismiss()"
+    nextBtnTitle="Save"
+    (nextBtnEvent)="onSubmit()"
+  ></app-footer-button>
+</section>

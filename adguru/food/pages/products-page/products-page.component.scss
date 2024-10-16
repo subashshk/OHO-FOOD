@@ -1,0 +1,149 @@
+@import "../../../../../styles.scss";
+
+.products-page {
+  padding: 24px;
+
+  .search-bar {
+    background-color: $white;
+    border-radius: 8px;
+    margin-top: 24px;
+    padding: 24px;
+
+    .filter-row {
+      align-items: flex-end;
+      display: flex;
+      flex-direction: row;
+
+      .block {
+        .label {
+          font-weight: $bold-md;
+        }
+
+        button {
+          @include font-size($font-size-sm);
+
+          border-radius: 5px;
+          height: 32px;
+          padding: 5px;
+          width: calculateRem(80px);
+
+          i {
+            @include font-size($font-size-sm);
+          }
+        }
+
+        .reset {
+          align-items: center;
+          display: flex;
+          justify-content: center;
+          text-transform: none;
+        }
+
+        ::ng-deep .ant-select {
+          width: calculateRem(200px);
+        }
+      }
+    }
+  }
+
+  .table {
+    background: $white;
+    border-radius: 8px;
+    padding: 24px 24px 12px 24px;
+
+    .table-responsive {
+      nz-table {
+        .header-arrow {
+          align-items: center;
+          display: flex;
+          flex-direction: row;
+        }
+
+        .table-header {
+          float: left;
+          margin-right: 10px;
+        }
+
+        th {
+          @include font-size($font-size-sm);
+
+          background-color: $grey-xlgt;
+          border: none;
+          color: $txt-color-dk;
+          cursor: pointer;
+          font-weight: bold;
+          padding: 20px;
+          text-align: left;
+        }
+
+        tbody {
+          tr {
+            @include font-size($font-size-sm);
+
+            td {
+              border-bottom: 1px solid $border-color;
+              border-top: 0;
+              text-align: center;
+
+              .table-data {
+                align-items: center;
+                display: flex;
+              }
+
+              .prod-image {
+                align-items: center;
+                display: flex;
+                gap: 1rem;
+
+                img {
+                  height: calculateRem(40px);
+                  width: calculateRem(40px);
+                }
+
+                p {
+                  @include font-size($font-size-sm);
+
+                  color: $blue-n;
+                  cursor: pointer;
+                  font-weight: $bold-md;
+                }
+              }
+
+              .status {
+                a {
+                  @include font-size($font-size-xs);
+
+                  align-items: center;
+                  border-radius: 8px;
+                  cursor: text;
+                  font-weight: $bold-md;
+                  padding: 4px 12px;
+
+                  &.new {
+                    border: 1px solid $blue-n;
+                    color: $blue-n;
+                  }
+
+                  &.blocked {
+                    border: 1px solid $red-dk;
+                    color: $red-dk;
+                  }
+
+                  &.active {
+                    border: 1px solid $green-pop;
+                    color: $green-pop;
+                  }
+
+                  &.inactive {
+                    border: 1px solid $grey;
+                    color: $grey;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+<div class="food-dashboard">
+  <app-header-breadcrumb
+    [title]="title"
+    [breadcrumbs]="breadcrumbs"
+  ></app-header-breadcrumb>
+  <div class="mt-4">
+    <div class="dashboard-items" *ngIf="!isLoading; else loader">
+      <div class="row">
+        <app-food-dashboard-item
+          class="col-md-3 mb-4"
+          *ngFor="let data of foodDashboardItems"
+          [title]="data?.title"
+          [info]="data?.info"
+        ></app-food-dashboard-item>
+      </div>
+    </div>
+  </div>
+  <div class="sales-overview-section">
+    <app-sales-overview></app-sales-overview>
+  </div>
+  <div class="pie-charts mt-4">
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <app-chart-card
+          [chartOptions]="topVendorsOptions"
+          chartClassName="top-vendors"
+          (filterEmitter)="getTopVendorSales($event)"
+          filterDown="TRUE"
+        ></app-chart-card>
+      </div>
+      <div class="col-md-4 mb-4">
+        <app-chart-card
+          [chartOptions]="topSellingOptions"
+          chartClassName="top-vendors"
+          filterDown="TRUE"
+          (filterEmitter)="getTopCategoryData($event)"
+        ></app-chart-card>
+      </div>
+      <div class="col-md-4 mb-4">
+        <app-chart-card
+          [chartOptions]="topSellingProducts"
+          chartClassName="top-vendors"
+          filterDown="TRUE"
+          (filterEmitter)="getTopSellingProducts($event)"
+        ></app-chart-card>
+      </div>
+    </div>
+  </div>
+  <div class="sales-tree">
+    <app-sales-treemap></app-sales-treemap>
+  </div>
+</div>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

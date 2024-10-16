@@ -1,0 +1,43 @@
+<section class="order-summary">
+  <div class="header">
+    <div class="title">Order Summary</div>
+    <!-- TODO: implement payment for order details page -->
+    <!-- <div class="payment">
+      <div>Paid</div>
+    </div> -->
+  </div>
+  <div class="orders">
+    <div class="order">
+      <div class="img-div">
+        <ion-img src="assets/images/dog.jpg"></ion-img>
+      </div>
+      <div class="details">
+        <div class="sku-name">
+          <div class="sku"><span>SKU:</span>43-32121</div>
+          <div class="product-name">Product Name</div>
+          <div class="option-type"><span>Size:</span> M | <span>Color:</span>Black</div>
+        </div>
+        <div class="price-div">
+          <div class="product-qt">{{ '3' + ' X' }}</div>
+          <div class="product-rate">{{ '1238' | nprCurrency }}</div>
+        </div>
+      </div>
+    </div>
+    <!-- TODO: implement delievery for order details page -->
+    <!-- <div class="delivery-div">
+      <div class="delivery-type">
+        <div>
+          <i class="icon-delivery"></i>
+          {{ orderDetails.deliveryOptionName }}
+        </div>
+      </div>
+      <div class="delivery-charge">
+        {{ orderDetails.deliveryCharge | nprCurrency }}
+      </div>
+    </div> -->
+    <div class="total">
+      <div>Total Rs.</div>
+      <div>{{ '11142' }}</div>
+    </div>
+  </div>
+</section>

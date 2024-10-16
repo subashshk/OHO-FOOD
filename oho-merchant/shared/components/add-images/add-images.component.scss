@@ -1,0 +1,111 @@
+@import '../../../../global.scss';
+
+ion-content {
+  .add-image {
+    background: $white;
+    border-radius: 8px;
+    margin: 2px 16px 8px;
+    padding: 16px 8px;
+
+    ion-text {
+      p {
+        @include font-size(13px);
+
+        color: $solid-gray;
+        line-height: 20px;
+        margin: 0;
+      }
+
+      .store-cover {
+        @include font-size($font-size-sm);
+
+        color: $solid-gray;
+        font-weight: $bold-md;
+        letter-spacing: 1.09px;
+        line-height: 16px;
+        margin-bottom: 12px;
+        margin-left: 8px;
+        text-transform: uppercase;
+      }
+
+      .store-cover-format {
+        margin-left: 8px;
+        margin-top: 12px;
+      }
+
+      .store-cover-size {
+        margin-left: 8px;
+      }
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, auto);
+      justify-content: start;
+
+      .card {
+        background: $grey-xlt;
+        border-radius: 5px;
+        box-shadow: none;
+        contain: none;
+        height: 66px;
+        margin: 8px;
+        overflow: unset;
+        padding-top: 15px;
+        position: relative;
+        text-align: center;
+        width: 66px;
+
+        .icon-add-image, .icon-add-video {
+          @include font-size($font-size-mdlg);
+
+          color: $red-dk;
+        }
+
+        .card-image {
+          border-radius: 5px;
+          height: 66px;
+          margin-top: -15px;
+          object-fit: cover;
+          width: 66px;
+        }
+
+        .add-vector {
+          margin-bottom: -4px;
+          margin-left: -3px;
+        }
+
+        .card-info {
+          p {
+            @include font-size($font-size-xs);
+
+            color: $txt-color-dk;
+            font-weight: $bold-md;
+            line-height: 14px;
+            margin: 0;
+            padding: 3px;
+            text-align: center;
+          }
+        }
+
+        ion-icon {
+          @include font-size($font-size-lg);
+
+          background: $white;
+          border-radius: 50%;
+          box-shadow: 0 2px 4px 0 $box-shadow-icon;
+          color: $app-accent-color;
+          position: absolute;
+          right: -5px;
+          top: -5px;
+          z-index: 1;
+        }
+      }
+    }
+  }
+}
+
+ion-card {
+  box-shadow: none !important;
+  background: $grey-xlt;
+}

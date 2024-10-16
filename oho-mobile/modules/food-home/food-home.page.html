@@ -1,0 +1,672 @@
+<ion-content
+  [class.background-white]="isSearchFocused"
+  [ngClass]="{'full-height': isSearchFocused}"
+  [scrollY]="!isSearchFocused"
+  [scrollEvents]="true"
+  (ionScroll)="getScrollPosition($event.detail.scrollTop)"
+>
+  <ion-refresher
+    *ngIf="!isSearchFocused"
+    [ngClass]="{'full-height': isSearchFocused}"
+    slot="fixed"
+    (ionRefresh)="doRefresh($event)"
+  >
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <app-top-header
+    (searchFocus)="setIsSearchFocused($event)"
+    title="food"
+    icon="icon-food-outline"
+  ></app-top-header>
+
+  <section
+    [ngClass]="{'background-white':isSearchFocused}"
+    *ngIf="!isSearchFocused"
+    class="all-content"
+  >
+
+  <!-- Top Categories Section -->
+  <app-categories [categories]="categories" (navigateToCategory)="goToCategory($event)"></app-categories>
+
+    <!-- First Banner Below the Categories Section -->
+    <section class="header-slider" *ngIf="!bannerLoad">
+      <ion-slides pager="true" [options]="headerSlideOpts">
+        <ion-slide *ngFor="let item of bannerList">
+          <ion-img [src]="utility.getImage(item.imageUrl)"></ion-img>
+        </ion-slide>
+      </ion-slides>
+    </section>
+
+    <!-- skeleton for banner -->
+    <section class="header-slider" *ngIf="bannerLoad">
+      <ion-slides>
+        <ion-slide>
+          <ion-skeleton-text [animated]="true" style="width: 100%; height: 130px;"></ion-skeleton-text>
+        </ion-slide>
+      </ion-slides>
+    </section>
+
+    <!--
+      TODO: this code needs to be removed after banner confirmation
+      <section class="categories-slider">
+      <ion-slides #slider pager="true" [options]="headerSlideOpts">
+        <ion-slide *ngFor="let item of categoriesBannerList">
+          <ion-img [src]="utility.getImage(item.imageUrl)"></ion-img>
+        </ion-slide>
+      </ion-slides>
+    </section> -->
+
+    <!-- code commented for phase 1: starts -->
+    <!-- Top Deals Section -->
+    <!-- <section
+      class="list-with-banner"
+      *ngIf="topDealsProducts && topDealsProducts.length"
+    >
+      <div class="listing">
+        <div class="list-title">
+          <div>{{ topDealsTitle }}</div>
+          <div
+            class="link ion-activatable"
+            (click)="shopMore(productType.TopDeals)"
+          >
+            View All
+          </div>
+        </div>
+        <div class="slide-div">
+          <ion-slides pager="false" [options]="listSlideOpts">
+            <ion-slide *ngFor="let item of topDealsProducts">
+              <app-food-slide-item
+                [food]="item"
+                [showRating]="false"
+              ></app-food-slide-item>
+            </ion-slide>
+          </ion-slides>
+        </div>
+      </div>
+    </section> -->
+
+     <!-- skeleton loading for top deals -->
+    <!-- <section
+      *ngIf="isLoading[productTypes.TopDeals]"
+      class="list-with-banner"
+    >
+      <div class="listing">
+        <div class="list-title">
+          <div>
+            <ion-skeleton-text [animated]="true" style="width: 80px;"></ion-skeleton-text>
+          </div>
+          <div
+            class="link ion-activatable"
+          >
+            <ion-skeleton-text [animated]="true" style="width: 40px;"></ion-skeleton-text>
+          </div>
+        </div>
+
+        <div class="slide-div">
+          <ion-slides pager="false" [options]="listSlideOpts">
+            <ion-slide *ngFor="let i of 4 | staticArray">
+              <app-food-slide-item
+                [isLoading]="true"
+                [showRating]="false"
+              ></app-food-slide-item>
+            </ion-slide>
+          </ion-slides>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- Best Seller Section -->
+    <!-- <section
+      class="list-with-banner"
+      *ngIf="topSellingProducts && topSellingProducts.length else sellerLoad"
+    >
+      <div class="listing">
+        <div class="list-title">
+          <div>{{ topSellingTitle }}</div>
+          <div
+            class="link ion-activatable"
+            (click)="shopMore(productType.BestSelling)"
+          >
+            View All
+          </div>
+        </div>
+        <div class="slide-div">
+          <ion-slides pager="false" [options]="listSlideOpts">
+            <ion-slide *ngFor="let item of topSellingProducts">
+              <app-food-slide-item
+                [isLoading]="false"
+                [food]="item"
+                [showRating]="false"
+              ></app-food-slide-item>
+            </ion-slide>
+          </ion-slides>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- skeleton loading for best seller -->
+    <!-- <ng-template #sellerLoad>
+      <section
+        class="list-with-banner"
+      >
+        <div class="listing">
+          <div class="list-title">
+            <div>
+              <ion-skeleton-text [animated]="true" style="width: 80px;"></ion-skeleton-text>
+            </div>
+            <div
+              class="link ion-activatable"
+            >
+              <ion-skeleton-text [animated]="true" style="width: 40px;"></ion-skeleton-text>
+            </div>
+          </div>
+
+          <div class="slide-div">
+            <ion-slides pager="false" [options]="listSlideOpts">
+              <ion-slide *ngFor="let i of 4 | staticArray">
+                <app-food-slide-item
+                  [isLoading]="true"
+                  [showRating]="false"
+                ></app-food-slide-item>
+              </ion-slide>
+            </ion-slides>
+          </div>
+        </div>
+      </section>
+    </ng-template> -->
+    <!-- code commented for phase 1: ends -->
+
+    <!-- Second Banner below the Best Seller Section -->
+    <section class="header-slider" *ngIf="bannerBelowBestSeller?.length && !bannerLoad">
+      <ion-slides pager="true" [options]="headerSlideOpts">
+        <ion-slide *ngFor="let item of bannerBelowBestSeller">
+          <ion-img [src]="utility.getImage(item?.imageUrl)"></ion-img>
+        </ion-slide>
+      </ion-slides>
+    </section>
+
+    <!-- skeleton for banner -->
+    <section class="header-slider" *ngIf="bannerLoad">
+      <ion-slides>
+        <ion-slide>
+          <ion-skeleton-text [animated]="true" style="width: 100%; height: 130px;"></ion-skeleton-text>
+        </ion-slide>
+      </ion-slides>
+    </section>
+
+    <!-- Trending Restaurant Section -->
+    <section
+      class="featured-restaurant-list"
+      *ngIf="trendingRestaurant && trendingRestaurant?.length"
+    >
+      <div class="list-title">
+        <div>Trending Restaurants</div>
+        <div
+          class="link ion-activatable"
+          (click)="navigateToRestaurants(false, storeSectionType?.TrendingRestaurants)"
+        >
+          View All
+        </div>
+      </div>
+      <div class="slide-div">
+        <ion-slides pager="false" [options]="vegStoresSlideOpts">
+          <ion-slide *ngFor="let restaurant of trendingRestaurant">
+            <app-restaurant-item
+              [pickAddress]="pickupAddress"
+              [isSlideItem]="true"
+              [restaurant]="restaurant"
+            ></app-restaurant-item>
+          </ion-slide>
+        </ion-slides>
+      </div>
+    </section>
+
+    <!-- skeleton loading for trending restaurant -->
+    <app-restaurant-skeleton-section [newRestaurantLoader]="trendingLoader"></app-restaurant-skeleton-section>
+
+    <!-- Popular Restaurant Section -->
+    <section
+      class="featured-restaurant-list"
+      *ngIf="popularRestaurant && popularRestaurant?.length"
+    >
+      <div class="list-title">
+        <div>Popular Restaurants</div>
+        <div
+          class="link ion-activatable"
+          id="viewAllPopular"
+          (click)="navigateToRestaurants(false, storeSectionType?.PopularRestaurants)"
+        >
+          View All
+        </div>
+      </div>
+      <div class="slide-div">
+        <ion-slides pager="false" [options]="vegStoresSlideOpts">
+          <ion-slide *ngFor="let restaurant of popularRestaurant">
+            <app-restaurant-item
+              [pickAddress]="pickupAddress"
+              [isSlideItem]="true"
+              [restaurant]="restaurant"
+            ></app-restaurant-item>
+          </ion-slide>
+        </ion-slides>
+      </div>
+    </section>
+
+    <!-- skeleton loading for popular restaurant -->
+    <app-restaurant-skeleton-section [newRestaurantLoader]="popularLoader"></app-restaurant-skeleton-section>
+
+    <!-- Feature Offer Section -->
+    <section
+      class="list-with-banner"
+      *ngIf="featuredOffer && featuredOffer.products.length > 0"
+    >
+      <div class="listing">
+        <div class="banner" *ngIf="featuredOffer.mobileBannerImage">
+          <ion-img [src]="featuredOffer.mobileBannerImage"></ion-img>
+        </div>
+        <div class="list-title">
+          <div>{{ featuredTitle }}</div>
+          <div
+            class="link ion-activatable"
+            (click)="shopMore(productType.FeaturedProducts)"
+          >
+            View All
+          </div>
+        </div>
+        <div class="slide-div">
+          <ion-slides pager="false" [options]="listSlideOpts">
+            <ion-slide *ngFor="let item of featuredOffer">
+              <app-food-slide-item
+                [food]="item"
+                [showRating]="false"
+              ></app-food-slide-item>
+            </ion-slide>
+          </ion-slides>
+        </div>
+      </div>
+    </section>
+
+    <!-- skeleton loading for featured restaurant -->
+    <app-restaurant-skeleton-section [newRestaurantLoader]="featuredLoader"></app-restaurant-skeleton-section>
+
+
+    <!-- New Arrival Section -->
+    <section
+      class="list-with-banner"
+      *ngIf="newArrivalOffer && newArrivalOffer.products.length > 0"
+    >
+      <div class="listing">
+        <div class="banner" *ngIf="newArrivalOffer.mobileBannerImage">
+          <ion-img [src]="newArrivalOffer.mobileBannerImage"></ion-img>
+        </div>
+        <div class="list-title">
+          <div>{{ newArrivalTitle }}</div>
+          <div
+            class="link ion-activatable"
+            (click)="shopMore(productType.NewArrivals)"
+          >
+            View All
+          </div>
+        </div>
+        <div class="slide-div">
+          <ion-slides pager="false" [options]="listSlideOpts">
+            <ion-slide *ngFor="let item of newArrivalOffer">
+              <app-food-slide-item
+                [food]="item"
+                [showRating]="false"
+              ></app-food-slide-item>
+            </ion-slide>
+          </ion-slides>
+        </div>
+      </div>
+    </section>
+
+    <!-- Offer List Section -->
+    <section *ngIf="offersList && offersList.length > 0">
+      <section *ngFor="let offer of offersList">
+        <section
+          class="list-with-banner"
+          *ngIf="offer.products.length > 0 && offer.name.toLowerCase() !== 'new arrivals' &&
+          offer.name.toLowerCase() !== 'featured'"
+        >
+          <div class="banner" *ngIf="offer.mobileBannerImage">
+            <ion-img [src]="offer.mobileBannerImage"></ion-img>
+          </div>
+          <div class="listing">
+            <div class="list-title">
+              <div>{{ offer.name }}</div>
+              <div
+                class="link ion-activatable"
+                (click)="shopMore(productType.All, offer.name)"
+              >
+                View All
+              </div>
+            </div>
+            <div class="slide-div">
+              <ion-slides pager="false" [options]="listSlideOpts">
+                <ion-slide *ngFor="let item of offer.products">
+                  <app-food-slide-item
+                    [food]="item"
+                    [showRating]="false"
+                  ></app-food-slide-item>
+                </ion-slide>
+              </ion-slides>
+            </div>
+          </div>
+        </section>
+      </section>
+    </section>
+
+    <!-- Third Banner below Recommended Section -->
+    <section class="header-slider" *ngIf="bannerBelowPopular?.length && !bannerLoad">
+      <ion-slides pager="true" [options]="headerSlideOpts">
+        <ion-slide *ngFor="let item of bannerBelowPopular">
+          <ion-img [src]="utility.getImage(item?.imageUrl)"></ion-img>
+        </ion-slide>
+      </ion-slides>
+    </section>
+
+    <!-- skeleton for banner -->
+    <section class="header-slider" *ngIf="bannerLoad">
+      <ion-slides>
+        <ion-slide>
+          <ion-skeleton-text [animated]="true" style="width: 100%; height: 130px;"></ion-skeleton-text>
+        </ion-slide>
+      </ion-slides>
+    </section>
+
+    <!-- Featured Restaurant Section -->
+    <section
+      class="featured-restaurant-list"
+      *ngIf="featuredRestaurants && featuredRestaurants.stores && featuredRestaurants.stores.length > 0"
+    >
+      <div class="list-title">
+        <div>Featured Restaurants</div>
+        <div
+          class="link ion-activatable"
+          (click)="navigateToRestaurants(false, storeSectionType.FeaturedRestaurants)"
+        >
+          View All
+        </div>
+      </div>
+      <div class="slide-div">
+        <ion-slides pager="false" [options]="vegStoresSlideOpts">
+          <ion-slide *ngFor="let restaurant of featuredRestaurants.stores">
+            <app-restaurant-item
+              [pickAddress]="pickupAddress"
+              [isSlideItem]="true"
+              [restaurant]="restaurant"
+            ></app-restaurant-item>
+          </ion-slide>
+        </ion-slides>
+      </div>
+    </section>
+
+    <!-- skeleton loading for recommended restaurant -->
+    <app-restaurant-skeleton-section [newRestaurantLoader]="newRestaurantLoader"></app-restaurant-skeleton-section>
+
+    <!-- Recommended Restaurant Section -->
+    <section
+      class="featured-restaurant-list"
+      *ngIf="recommendedRestaurant && recommendedRestaurant?.length" && !recommendedLoader
+    >
+    <div class="list-title">
+      <div>Recommended Restaurants</div>
+      <div
+        class="link ion-activatable"
+        id="viewAllRecommended"
+        (click)="navigateToRestaurants(false, storeSectionType?.RecommendedRestaurants)"
+      >
+        View All
+      </div>
+    </div>
+    <div class="slide-div">
+      <ion-slides pager="false" [options]="vegStoresSlideOpts">
+        <ion-slide *ngFor="let restaurant of recommendedRestaurant">
+          <app-restaurant-item
+            [pickAddress]="pickupAddress"
+            [isSlideItem]="true"
+            [restaurant]="restaurant"
+          ></app-restaurant-item>
+        </ion-slide>
+      </ion-slides>
+    </div>
+    </section>
+
+    <!-- skeleton loading for recommended restaurant -->
+    <app-restaurant-skeleton-section [newRestaurantLoader]="recommendedLoader"></app-restaurant-skeleton-section>
+
+    <!-- Fourth Banner below Recommended Section -->
+    <section class="header-slider" *ngIf="bannerBelowRecommended?.length && !bannerLoad">
+      <ion-slides pager="true" [options]="headerSlideOpts">
+        <ion-slide *ngFor="let item of bannerBelowRecommended">
+          <ion-img [src]="utility.getImage(item?.imageUrl)"></ion-img>
+        </ion-slide>
+      </ion-slides>
+    </section>
+
+    <!-- skeleton for banner -->
+    <section class="header-slider" *ngIf="bannerLoad">
+      <ion-slides>
+        <ion-slide>
+          <ion-skeleton-text [animated]="true" style="width: 100%; height: 130px;"></ion-skeleton-text>
+        </ion-slide>
+      </ion-slides>
+    </section>
+
+    <!-- Vegetarian Section -->
+    <section class="veg-restaurant-list" *ngIf="vegStoreList.length">
+      <div class="list-title">
+        <div>Pure Vegetarian</div>
+        <div class="link ion-activatable" (click)="navigateToRestaurants(true)">
+          View All
+        </div>
+      </div>
+      <div class="slide-div">
+        <ion-slides pager="false" [options]="vegStoresSlideOpts">
+          <ion-slide *ngFor="let restaurant of vegStoreList">
+            <app-restaurant-item
+              [pickAddress]="pickupAddress"
+              [isSlideItem]="true"
+              [restaurant]="restaurant"
+            ></app-restaurant-item>
+          </ion-slide>
+        </ion-slides>
+      </div>
+    </section>
+
+    <!-- skeleton loading for veg store restaurant -->
+    <app-restaurant-skeleton-section [newRestaurantLoader]="vegStoreLoader"></app-restaurant-skeleton-section>
+
+    <!-- New Restaurant Section -->
+    <section
+      class="new-restaurant-list"
+      *ngIf="newRestaurants && newRestaurants?.stores && newRestaurants?.stores?.length"
+    >
+      <div class="list-title">
+        <div>New Restaurants</div>
+        <div
+          class="link ion-activatable"
+          (click)="navigateToRestaurants(false, storeSectionType?.NewRestaurants)"
+        >
+          View All
+        </div>
+      </div>
+      <div class="slide-div">
+        <ion-slides pager="false" [options]="vegStoresSlideOpts">
+          <ion-slide *ngFor="let restaurant of newRestaurants?.stores">
+            <app-restaurant-item
+              [pickAddress]="pickupAddress"
+              [isSlideItem]="true"
+              [restaurant]="restaurant"
+            ></app-restaurant-item>
+          </ion-slide>
+        </ion-slides>
+      </div>
+    </section>
+
+    <!-- skeleton loading for new restaurant -->
+    <app-restaurant-skeleton-section [newRestaurantLoader]="newRestaurantLoader"></app-restaurant-skeleton-section>
+
+    <!-- Spotlight Section -->
+    <section
+      class="list-with-banner spotlight"
+      *ngIf="spotlightProducts && spotlightProducts?.length"
+    >
+      <div class="listing">
+        <!-- <div class="banner" *ngIf="newArrivalOffer.mobileBannerImage">
+          <ion-img [src]="newArrivalOffer.mobileBannerImage"></ion-img>
+        </div> -->
+        <ion-badge>In the spotlight</ion-badge>
+        <div class="list-title">
+          <div class="spotlight-title">{{ spotlightStore }}</div>
+          <div
+            class="link ion-activatable"
+            id="viewAlSpotlight"
+            (click)="shopMore(productType?.Spotlight)"
+          >
+            View All
+          </div>
+        </div>
+        <div class="slide-div">
+          <ion-slides pager="false" [options]="listSlideOpts">
+            <ion-slide>
+              <img src="/assets/spotlight-man.svg"/>
+            </ion-slide>
+            <ion-slide *ngFor="let item of spotlightProducts">
+              <app-food-slide-item
+                [food]="item"
+                [showRating]="false"
+              ></app-food-slide-item>
+            </ion-slide>
+          </ion-slides>
+        </div>
+      </div>
+    </section>
+
+    <!-- skeleton loading for spotlight restaurant -->
+    <section
+      *ngIf="spotlightLoader"
+      class="list-with-banner spotlight"
+    >
+      <div class="listing">
+        <ion-badge>
+          <ion-skeleton-text style="width: 80px;"></ion-skeleton-text>
+        </ion-badge>
+        <div class="list-title">
+          <div class="spotlight-title">
+            <ion-skeleton-text style="width: 120px;"></ion-skeleton-text>
+          </div>
+          <div
+            class="link ion-activatable"
+          >
+            <ion-skeleton-text style="width: 40px;"></ion-skeleton-text>
+          </div>
+        </div>
+        <div class="slide-div">
+          <ion-slides pager="false" [options]="listSlideOpts">
+            <ion-slide *ngFor="let i of 4 | staticArray">
+              <app-food-slide-item
+                [isLoading]="true"
+                [showRating]="false"
+              ></app-food-slide-item>
+            </ion-slide>
+          </ion-slides>
+        </div>
+      </div>
+    </section>
+
+    <!-- All Restaurant Section -->
+    <section class="restaurant-list" *ngIf="restaurantList.length > 0">
+      <div class="list-title">
+        <div>All Restaurants</div>
+        <div class="link ion-activatable" (click)="navigateToRestaurants()">
+          View All
+        </div>
+      </div>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" *ngFor="let restaurant of restaurantList">
+            <app-restaurant-item
+              [pickAddress]="pickupAddress"
+              [restaurant]="restaurant"
+            ></app-restaurant-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </section>
+
+    <!-- skeleton loading for all restaurant -->
+    <section
+      *ngIf="vegStoreLoader"
+      class="restaurant-list"
+    >
+      <div class="list-title">
+        <div>
+          <ion-skeleton-text style="width: 80px;"></ion-skeleton-text>
+        </div>
+        <div class="link ion-activatable">
+          <ion-skeleton-text style="width: 40px;"></ion-skeleton-text>
+        </div>
+      </div>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" *ngFor="let i of 4 | staticArray">
+            <app-restaurant-item
+              [pickAddress]="pickupAddress"
+              [isSlideItem]="true"
+              [isLoading]="true"
+            ></app-restaurant-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </section>
+
+    <!-- Category Product Section -->
+    <section
+      class="categories-products"
+      *ngIf="categoryProductList && categoryProductList?.length"
+    >
+      <div
+        class="category-products"
+        *ngFor="let category of categoryProductList"
+      >
+        <div
+          class="category-banner"
+          *ngIf="category && category?.mobileBannerImage"
+        >
+          <ion-img
+            [src]="utility.getImage(category?.mobileBannerImage)"
+          ></ion-img>
+        </div>
+        <div class="title" *ngIf="category?.products?.length">
+          <div>{{ category?.name }}</div>
+          <div class="link ion-activatable" (click)="goToTaxon(category)">
+            View All
+          </div>
+        </div>
+        <div class="slide-div" *ngIf="category?.products?.length">
+          <ion-slides pager="false" [options]="listSlideOpts">
+            <ion-slide *ngFor="let item of category?.products">
+              <app-food-slide-item
+                [food]="item"
+                [showRating]="false"
+              ></app-food-slide-item>
+            </ion-slide>
+          </ion-slides>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <section class="fixed" *ngIf="!isSearchFocused">
+    <app-floating-cart-button
+      [backToTop]="backToTop"
+      [content]="content"
+      [cartCount]="cartCount"
+      [isHome]="true"
+      (openCartEvent)="navigateToStores()"
+    ></app-floating-cart-button>
+  </section>
+</ion-content>

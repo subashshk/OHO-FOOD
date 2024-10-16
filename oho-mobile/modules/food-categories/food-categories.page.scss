@@ -1,0 +1,129 @@
+@import "../../../global.scss";
+
+ion-header {
+  ion-button {
+    @include font-size($font-size-lg);
+  }
+
+  app-search-bar {
+    &.full-height {
+      height: calc(100vh - 60px);
+      width: 100%;
+    }
+  }
+
+  .action-btns {
+    margin-right: 0;
+
+    ion-button {
+      --padding-start: 0 !important;
+      --padding-end: 0 !important;
+      --padding-top: 0 !important;
+      --padding-bottom: 0 !important;
+      height: fit-content;
+      @include no-leftover-ripple();
+    }
+
+    .more-options-btn {
+      height: 38px;
+      width: 38px;
+      @include font-size($font-size-sm);
+      margin-right: 0 !important;
+    }
+  }
+
+  .icon-cart {
+    @include font-size($font-size-xlg);
+    padding: 5px;
+    border-radius: 50%;
+    @include font-size($font-size-xxlg);
+    color: $txt-color-dk;
+  }
+}
+
+.header-slider {
+  ion-img {
+    width: 100%;
+  }
+}
+
+.search-section {
+  padding: 15px;
+  border-bottom: 1px solid $border-color;
+}
+
+.categories-section {
+  .categories {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+
+    .category {
+      display: flex;
+      background: $white;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      width: calc((100% - 40px) / 2);
+      margin: 10px;
+      position: relative;
+      overflow: hidden;
+
+      .img {
+        width: 100%;
+        img {
+          border-radius: 8px 8px 0 0;
+          overflow: hidden;
+          width: 100%;
+          object-fit: cover;
+          object-position: center;
+          height: 100%;
+        }
+      }
+
+      .category-name {
+        padding: 12px;
+        color: $txt-color-dk;
+        @include font-size($font-size-sm);
+        text-align: center;
+      }
+    }
+  }
+}
+
+.products-section {
+  padding: 10px 0;
+
+  .title {
+    padding: 0 10px;
+    color: $txt-color-dk;
+    font-weight: bold;
+    @include font-size($font-size-md);
+  }
+
+  .products {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.view-all-div {
+  text-align: center;
+  margin-bottom: 30px;
+
+  .view-all-btn {
+    --background: #ee001a; // $red-dk
+    --border-radius: 20px;
+    --box-shadow: none;
+    text-transform: none;
+  }
+}
+
+ion-searchbar {
+  --border-radius: 8px !important;
+}
+
+.full-height {
+  height: 100%;
+}

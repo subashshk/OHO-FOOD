@@ -1,0 +1,17 @@
+<div class="textarea">
+  <div class="textarea-content">
+    <ion-textarea
+      #textAreaInput
+      [placeholder]="placeholderText"
+      [attr.maxlength]="maxInput"
+      rows="4"
+      [disabled]="disabled"
+      (keyup)="onInputChange($event)"
+      nz-input
+    ></ion-textarea>
+    <span class="count"> {{ count }}/{{ maxInput }} </span>
+  </div>
+  <div class="error-msg mt-2" *ngIf="count > maxInput">
+    The text entered exceeds the maximum length
+  </div>
+</div>

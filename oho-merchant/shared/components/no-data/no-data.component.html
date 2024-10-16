@@ -1,0 +1,8 @@
+<div class="empty-cart">
+  <div class="empty-cart-content" [class.small]="small">
+    <img src="../../assets/images/{{ imgPath }}" />
+    <p class="title" [class.title-sm]="small" *ngIf="title">{{ title }}</p>
+    <p class="subtitle" [class.subtitle-sm]="small">{{ subtitle }}</p>
+    <p class="add-new-btn" (click)="btnClick()" *ngIf="btnLabel">{{ btnLabel }}</p>
+  </div>
+</div>

@@ -1,0 +1,291 @@
+<ion-refresher class="red" slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher-content></ion-refresher-content>
+</ion-refresher>
+
+<section *ngIf="isLoading; else LoadMessages">
+  <div class="notification" *ngFor="let i of 6 | staticArray">
+    <div>
+      <div class="notification-card" *ngFor="let i of 6 | staticArray">
+        <ion-thumbnail class="icon-div"></ion-thumbnail>
+        <div class="item">
+          <div class="notification-content">
+            <div>
+              <ion-skeleton-text
+                [animated]="true"
+                style="width: 70%"
+              ></ion-skeleton-text>
+            </div>
+            <div class="time-ago-div">
+              <ion-skeleton-text
+                [animated]="true"
+                style="width: 40%"
+              ></ion-skeleton-text>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #LoadMessages>
+  <section class="no-data" *ngIf="!notifications?.length">
+    <div class="no-content">
+      <app-no-data
+        [imgPath]="noDataImg"
+        [title]="noDataTitle"
+        [subtitle]="noDataSubTitle"
+      ></app-no-data>
+    </div>
+  </section>
+
+  <section *ngIf="notifications?.length">
+    <div class="notification">
+      <div
+        class="notification-card ion-activatable"
+        *ngFor="let item of notifications"
+        (click)="goToNotification(item)"
+      >
+        <div class="icon-div">
+          <div *ngIf="item.status === notificationStatus.Unread"></div>
+          <i [class]="item.icon"></i>
+        </div>
+        <div class="item">
+          <div class="time">{{ item.formattedCreatedAt }}</div>
+          <div
+            class="notification-content"
+            *ngIf="item.notificationType === notificationType.Low_stock"
+          >
+            {{ item.linkText }} has reached its stock threshold.
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="item.notificationType === notificationType.New_question"
+          >
+            There is a question for your product {{ item.linkText }}.
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="item.notificationType === notificationType.Answer_reply"
+          >
+            <div>
+              Store {{ item.details.storeName }} has replied to your question on
+              product - {{ item.linkText }}.
+            </div>
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="item.notificationType === notificationType.New_order"
+          >
+            You have a new order <span class="link">{{ item.linkText }}</span
+            >.
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="item.notificationType === notificationType.Store_status"
+          >
+            Your store{{ item.linkText }} has been
+            {{ item.details.verificationStatus }}.
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="
+              item.notificationType === notificationType.Customer_Alert ||
+              item.notificationType === notificationType.Vendor_Alert
+            "
+          >
+            <div [innerHTML]="item.details.body"></div>
+            <div class="link">
+              {{ item.linkText }}
+            </div>
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="
+              item.notificationType ===
+              notificationType.New_deal_product_request
+            "
+          >
+            <div>
+              {{ item.details.storeName }} has requested to add
+              {{ item.details.productName }} on {{ item.linkText }}.
+            </div>
+          </div>
+
+          <div
+            class="notification-content"
+            *ngIf="
+              item.notificationType === notificationType.Deal_Product_Status
+            "
+          >
+            <div>
+              Your request to add {{ item.details.productName }} on
+              {{ item.details.dealName }} has been {{ item.details.status }}.
+            </div>
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="item.notificationType === notificationType.Shipment_status"
+          >
+            <div>
+              Your order {{ item.details.orderNumber }} has been
+              {{
+                item.details.status === "ready"
+                  ? "confirmed"
+                  : item.details.status
+              }}.
+            </div>
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="item.notificationType === notificationType.New_Deal"
+          >
+            <div *ngIf="!item.details.recurrentType">
+              New deal{{ item.details.dealName | titlecase }} from
+              {{ formattedDate(item.details.startDate) }} to
+              {{ formattedDate(item.details.endDate) }} for
+              {{ item.details.serviceType | titlecase }} products.
+            </div>
+            <div *ngIf="item.details.recurrentType">
+              {{ item.details.recurrentType | titlecase }} Recurrent deal added
+              {{ item.details.dealName | titlecase }} for
+              {{ item.details.serviceType | titlecase }}
+              products.
+            </div>
+          </div>
+
+          <div
+            class="notification-content"
+            *ngIf="item.notificationType === notificationType.Line_item_status"
+          >
+            <div>
+              Order {{ item.details.orderNumber }} has been
+              {{ item.details.status }} by {{ item.details.user }}.
+            </div>
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="
+              item.notificationType === notificationType.Deal_Status &&
+              item.details.recurrentType === recurrentType.Daily
+            "
+          >
+            <div>
+              {{ item.details.dealName | titlecase }} deal is now updated to
+              daily recurrent.
+            </div>
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="
+              item.notificationType === notificationType.Deal_Status &&
+              item.details.recurrentType !== recurrentType.Daily
+            "
+          >
+            <div>
+              {{ item.details.dealName | titlecase }} is now active between
+              {{ formattedDate(item.details.startDate) }} to
+              {{ formattedDate(item.details.endDate) }} for
+              {{ item.details.serviceType | titlecase }} products.
+            </div>
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="item.notificationType === notificationType.Product_Status"
+          >
+            <div>
+              Your product {{ item.details.productName }} has been marked as
+              {{ item.details.status }}
+              by admin.
+            </div>
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="item.notificationType === notificationType.Order_Status"
+          >
+            <div>
+              Your shipment {{ item.details.shipmentNumber }} has been
+              {{ item.details.status }} by user.
+            </div>
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="item.notificationType === notificationType.New_store"
+          >
+            <div>
+              New store {{ item.details.storeName }} has been registered.
+            </div>
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="
+              item.notificationType ===
+              notificationType.New_Store_Section_Request
+            "
+          >
+            <div>
+              New request to add {{ item.details.storeName }} on
+              {{ item.details.storeSectionName | titlecase }} store section.
+            </div>
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="
+              item.notificationType ===
+              notificationType.Store_Section_Request_Status
+            "
+          >
+            <div>
+              Your request to add {{ item.details.storeName }} on
+              {{ item.details.storeSectionName | titlecase }} has been
+              {{ item.details.verificationStatus }}.
+            </div>
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="
+              item.notificationType ===
+              notificationType.New_Official_Store_Request
+            "
+          >
+            <div>
+              New request to verify {{ item.details.storeName | titlecase }} as
+              official store.
+            </div>
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="
+              item.notificationType ===
+              notificationType.Official_store_request_status
+            "
+          >
+            <div>
+              Your request to verify {{ item.details.storeName | titlecase }} as
+              official has been {{ item.details.officialStatus }}.
+            </div>
+          </div>
+          <div
+            class="notification-content"
+            *ngIf="
+              item.notificationType === notificationType.Delivery_request_status
+            "
+          >
+            <div>
+              Your request to deliver
+              <span class="link"> {{ item.details.shipmentNumber }} </span> has
+              been {{ item.details.status }}.
+            </div>
+          </div>
+        </div>
+      </div>
+      <ion-infinite-scroll
+        [disabled]="notifications.length >= totalCount"
+        (ionInfinite)="populateMoreNotifications($event)"
+      >
+        <ion-infinite-scroll-content loadingSpinner="circular">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </div>
+  </section>
+</ng-template>

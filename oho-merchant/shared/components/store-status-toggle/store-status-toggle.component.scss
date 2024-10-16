@@ -1,0 +1,12 @@
+ion-toggle {
+  --background-checked: #5fb500;
+  --handle-background-checked: #ffffff;
+}
+
+app-loader {
+  ::ng-deep {
+    .loader {
+      transform: translateY(-50%);
+    }
+  }
+}

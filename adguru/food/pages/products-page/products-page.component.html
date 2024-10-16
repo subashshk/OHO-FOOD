@@ -1,0 +1,136 @@
+<div class="products-page">
+  <app-header-breadcrumb
+    title="Products"
+    [breadcrumbs]="breadcrumbs"
+  ></app-header-breadcrumb>
+  <div class="search-bar mt-4">
+    <app-search-filter-bar
+      placeholder="Search by SKU or product name"
+      (searchTextEmit)="handleSearchString($event)"
+      (showFilter)="toggleFilter($event)"
+    ></app-search-filter-bar>
+    <div *ngIf="showFilter">
+      <div class="filter-row mt-4">
+        <div class="block mr-3">
+          <div class="label mb-2">Created At</div>
+          <nz-range-picker
+            [(ngModel)]="rangeFilter"
+            (ngModelChange)="setDateRange($event)"
+            [nzRanges]="ranges"
+            [nzDropdownClassName]="'preset-picker'"
+          ></nz-range-picker>
+        </div>
+        <div class="block mr-3">
+          <div class="label mb-2">Status Filter</div>
+          <app-filter-select [selectOptions]="orderStatusSelect" (searchString)="handleFilter($event)"></app-filter-select>
+        </div>
+        <div class="block mr-3">
+          <button class="btn btn-outline-primary reset" (click)="resetFilter()">
+            <i class="icon-reset mr-1"></i>
+            Reset
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table mt-4">
+    <div class="table-responsive">
+      <nz-table
+        [nzLoading]="isLoading"
+        [nzLoadingIndicator]="loader"
+        nzTableLayout="fixed"
+        [nzShowPagination]="false"
+        [nzData]="productsList"
+      >
+        <thead>
+          <th>SN</th>
+          <th>Product</th>
+          <th>SKU</th>
+          <th>List Price</th>
+          <th>Units Sold</th>
+          <th>Selling Price</th>
+          <th>Revenue</th>
+          <th>Net Profit</th>
+          <th>Status</th>
+          <th>Created Date</th>
+          <th>Actions</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of productsList; let i = index">
+            <td>
+              <div class="table-data mt-1 ml-2">
+                {{ (pageIndex-1) >= 1 ? ((pageIndex-1) * 10) + i + 1: i + 1 }}
+              </div>
+            </td>
+            <td>
+              <div class="table-data mt-1">
+                <div class="prod-image">
+                  <img [src]="data?.imageSrcMini ?? 'assets/images/no-image.png'">
+                  <p>{{ (data?.name | titlecase) ?? '--' }}</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="table-data mt-1 ml-2">
+                {{ data?.sku ?? '--' }}
+              </div>
+            </td>
+            <td>
+              <div class="table-data mt-1 ml-2">
+                {{ data?.originalPrice | nprCurrency | checkNull }}
+              </div>
+            </td>
+            <td>
+              <div class="table-data mt-1 ml-2">
+                {{ data?.unitSold ?? '--' }}
+              </div>
+            </td>
+            <td>
+              <div class="table-data mt-1 ml-2">
+                {{ data?.price | nprCurrency | checkNull }}
+              </div>
+            </td>
+            <td>
+              <div class="table-data mt-1 ml-2">
+                {{ data?.revenue ?? '--' }}
+              </div>
+            </td>
+            <td>
+              <div class="table-data mt-1 ml-2">
+                {{ (data?.price - data?.originalPrice) ?? '--' }}
+              </div>
+            </td>
+            <td>
+              <div class="table-data mt-1 ml-1">
+                <div class="status">
+                  <a class="{{ data?.status }}">
+                    {{ (data?.status | titlecase) ?? '--' }}
+                  </a>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="table-data mt-1 ml-2">
+                {{ (data?.createdAt | date) ?? '--' }}
+              </div>
+            </td>
+            <td>
+              <app-more-action></app-more-action>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+  <app-select-pagination
+    [perPage]="perPage"
+    [pageIndex]="pageIndex"
+    [totalPageCount]="totalCount"
+    (pageChanged)="pageChangeHandler($event)"
+    (perPageIndicator)="perPageChanged($event)"
+></app-select-pagination>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

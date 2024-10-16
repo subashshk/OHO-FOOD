@@ -1,0 +1,40 @@
+@import '../../../../global.scss';
+
+$len: 242.776657104492px;
+$time: 1.6s;
+
+#outline {
+  stroke-dasharray: $len * 0.01, $len;
+  stroke-dashoffset: 0;
+  animation: anim $time linear infinite;
+}
+
+@keyframes anim {
+  12.5% {
+    stroke-dasharray: $len * 0.14, $len;
+    stroke-dashoffset: -$len * 0.11;
+  }
+
+  43.75% {
+    stroke-dasharray: $len * 0.35, $len;
+    stroke-dashoffset: -$len * 0.35;
+  }
+
+  100% {
+    stroke-dasharray: $len * 0.01, $len;
+    stroke-dashoffset: -$len * 0.99;
+  }
+}
+
+.loader {
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%) matrix(1, 0, 0, 1, 0, 0);
+
+  .spinner-msg {
+    color: $txt-color-dk;
+    @include font-size($font-size-n);
+    text-align: center;
+  }
+}

@@ -1,0 +1,131 @@
+@import "../../../../global.scss";
+
+.stocks-section {
+  background: $white;
+  border-radius: 8px;
+  margin: 16px;
+  padding: 12px 12px 0;
+
+  p {
+    margin: 0;
+  }
+
+  .product {
+    display: flex;
+    justify-content: space-between;
+
+    &-details {
+      display: flex;
+    }
+
+    &-info {
+      padding-left: 12px;
+    }
+
+    &-sku,
+    &-name {
+      @include font-size($font-size-sm);
+
+      color: $solid-gray;
+      font-weight: $bold-md;
+      text-transform: uppercase;
+
+      span {
+        font-weight: $normal;
+      }
+    }
+
+    &-sku {
+      padding: 6px 0;
+    }
+
+    &-name {
+      color: $txt-color-dk;
+    }
+
+    &-image {
+      border-radius: 5px;
+      height: 56px;
+      width: 56px;
+
+      ion-img {
+        height: 100%;
+        width: 100%;
+
+        &::part(image) {
+          border-radius: 5px;
+          object-fit: cover;
+        }
+      }
+    }
+
+    .icon-Edit-filled {
+      @include font-size($font-size-md);
+
+      color: $solid-gray;
+      padding-top: 6px;
+    }
+  }
+
+  .variant {
+    border-bottom: 1px solid $yellow-light;
+    padding: 16px 0;
+
+    .header {
+      @include font-size(15px);
+
+      color: $txt-color-dk;
+      font-weight: $bold-md;
+      padding-bottom: 12px;
+    }
+
+    .option-type {
+      @include font-size($font-size-sm);
+
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 8px;
+      width: 100%;
+
+      .label {
+        color: $solid-gray;
+      }
+
+      .value {
+        color: $txt-color-dk;
+        font-weight: $bold-md;
+      }
+    }
+
+    .option-type:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  .actions {
+    @include font-size($font-size-sm);
+
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
+
+    .label {
+      color: $solid-gray;
+      width: 100%;
+
+      p {
+        padding-bottom: 12px;
+      }
+    }
+
+    .value {
+      color: $txt-color-dk;
+      font-weight: $bold-md;
+
+      p {
+        padding-bottom: 12px;
+      }
+    }
+  }
+}

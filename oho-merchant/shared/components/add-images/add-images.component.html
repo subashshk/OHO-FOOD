@@ -1,0 +1,57 @@
+<app-toolbar-arrow-text
+  [title]="isEdit ? 'Images' : 'Add Product'"
+  (backEvent)="dismiss()"
+></app-toolbar-arrow-text>
+<ion-content>
+  <app-circular-stepper
+    [stepCount]="2"
+    stepTitle="Product Images"
+    *ngIf="!isEdit"
+    [totalSteps]="6"
+  ></app-circular-stepper>
+  <section class="add-image">
+    <ion-text>
+      <p class="store-cover">
+        Upload images <span *ngIf="fileList">({{ fileList.length }}/10)</span>
+      </p>
+    </ion-text>
+    <div class="cards">
+      <ng-container *ngIf="fileList">
+        <ion-card class="card" *ngFor="let imgURL of fileList; index as i">
+          <ion-icon name="close-outline" (click)="removeImage(i)"></ion-icon>
+          <img
+            class="card-image"
+            [src]="imgURL"
+          />
+        </ion-card>
+      </ng-container>
+      <ion-card class="card" (click)="getCamera()">
+        <i class="icon-add-image"></i>
+        <div class="card-info">
+          <p class="classified-title">Add Photos</p>
+        </div>
+      </ion-card>
+      <ion-card class="card" (click)="getGallery()">
+        <i class="icon-add-video"></i>
+        <div class="card-info">
+          <p class="classified-title">Add Video</p>
+        </div>
+      </ion-card>
+    </div>
+    <ion-text>
+      <p class="store-cover-format">
+        Format: JPEG | Size: width - 1920px Height - 480px
+      </p>
+      <p class="store-cover-size">Max File size: 1MB</p>
+    </ion-text>
+  </section>
+</ion-content>
+<ion-footer>
+  <app-footer-button
+    [btnTitle]="isEdit ? 'Cancel' : 'Next'"
+    [isDisabled]="isAttemptingToSubmitImage"
+    (btnEvent)="isEdit ? dismiss() : goToPropertyTypes()"
+    [nextBtnTitle]="isEdit ? 'Save': ''"
+    (nextBtnEvent)="goToPropertyTypes()"
+  ></app-footer-button>
+</ion-footer>

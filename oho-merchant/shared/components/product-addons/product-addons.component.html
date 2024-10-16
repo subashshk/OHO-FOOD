@@ -1,0 +1,105 @@
+<app-toolbar-arrow-text
+  [title]="fromProductDetail ? 'Addons' : 'Add Product'"
+  (backEvent)="dismiss()"
+></app-toolbar-arrow-text>
+<ion-content>
+  <app-circular-stepper
+    [stepCount]="3"
+    stepTitle="Select Add-ons"
+    *ngIf="!fromProductDetail"
+    [totalSteps]="4"
+  ></app-circular-stepper>
+  <section class="product-variant" *ngIf="isLoading; else loadContent">
+    <ion-item lines="none" *ngFor="let i of 4 | staticArray">
+      <div class="header">
+        <ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text>
+      </div>
+      <ion-list class="choice-lists">
+        <div class="cover">
+          <ion-item-sliding>
+            <ion-item class="choice-item" lines="none" *ngFor="let i of 2 | staticArray">
+              <div class="top">
+                <ion-skeleton-text [animated]="true" style="width: 200px; height: 20px;"></ion-skeleton-text>
+              </div>
+            </ion-item>
+          </ion-item-sliding>
+        </div>
+      </ion-list>
+    </ion-item>
+  </section>
+  <ng-template #loadContent>
+    <section class="product-variant" *ngIf="selectedAddons?.length">
+      <ion-list>
+        <ion-item lines="none" *ngFor="let option of selectedAddons">
+          <div class="header">
+            <p class="property-name">
+              <i class="icon-grid-dots"></i>
+              {{ option?.name | titlecase }}
+            </p>
+            <div class="choice-btn" id="choice-btn" (click)="openChoiceModal(option)" *ngIf="option?.optionValues?.length">
+              Add Choice
+            </div>
+          </div>
+          <div class="empty-choice" *ngIf="!option?.optionValues?.length">
+            <i class="icon-food"></i>
+            <p class="choice-title">No add-on choice added</p>
+            <p
+              class="choice-click"
+              id="choice-btn-inner"
+              (click)="openChoiceModal(option)"
+            >
+              Add Choice
+            </p>
+          </div>
+          <ion-list class="choice-lists" *ngIf="option?.optionValues?.length">
+            <div class="cover" *ngFor="let optionValue of option?.optionValues">
+              <ion-item-sliding>
+                <ion-item class="choice-item" lines="none">
+                  <div class="top">
+                    <i class="icon-grid-dots"></i>
+                    <div class="text-section">
+                      <div class="title">{{ optionValue?.name }}</div>
+                      <div class="price">{{ optionValue?.price | nprCurrency }}</div>
+                    </div>
+                  </div>
+                </ion-item>
+                <ion-item-options side="end">
+                  <ion-item-option>
+                    <i
+                      class="icon-Edit-filled"
+                      id="edit-choice-btn"
+                      (click)="openChoiceModal(option, optionValue)"
+                    ></i>
+                  </ion-item-option>
+                  <ion-item-option
+                    class="delete"
+                    id="delete-confirm-btn"
+                    (click)="deleteChoiceModal(option?.id,optionValue?.id)"
+                  >
+                    <i class="icon-Delete-filled"></i>
+                  </ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+            </div>
+          </ion-list>
+        </ion-item>
+      </ion-list>
+    </section>
+    <section class="no-data" *ngIf="!selectedAddons?.length">
+      <div class="no-content">
+        <app-no-data
+          imgPath="empty-variants.svg"
+          subtitle="No Add-ons Selected, please select add-ons to your product"
+        ></app-no-data>
+      </div>
+    </section>
+  </ng-template>
+</ion-content>
+<ion-footer>
+  <app-footer-button
+    btnTitle="Select Add-ons"
+    (btnEvent)="selectAddons()"
+    [nextBtnTitle]="fromProductDetail ? 'Confirm' : 'Next'"
+    (nextBtnEvent)="next()"
+  ></app-footer-button>
+</ion-footer>

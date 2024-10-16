@@ -1,0 +1,30 @@
+@import "../../../../global.scss";
+
+.store-select {
+  ion-item {
+    --padding-start: 0;
+    --border-color: #ffffff;
+    min-width: 100%;
+    --background: none;
+    --ripple-color: transparent;
+
+    .selector {
+      text-transform: capitalize;
+      padding: 2px 15px;
+      @include font-size($font-size-md);
+      color: $txt-color-dk;
+      background: none;
+      width: 40px;
+    }
+
+    ion-label {
+      display: none;
+    }
+
+    ion-select {
+      max-width: 100%;
+      margin-left: -48px;
+      margin-bottom: 22px;
+    }
+  }
+}

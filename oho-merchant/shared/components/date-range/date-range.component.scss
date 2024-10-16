@@ -1,0 +1,38 @@
+@import '../../../../global.scss';
+
+.date-time {
+  .dt-header {
+    padding: 20px;
+    font-weight: 600;
+    color: $txt-color-dk;
+    @include font-size($font-size-xlg);
+  }
+  .dt-body {
+    padding: 20px;
+    padding-top: 5px;
+    color: $txt-color-dk;
+    @include font-size($font-size-md);
+    .rating {
+      margin-top: 10px;
+    }
+    .stars {
+      margin-top: 10px;
+    }
+  }
+  .dt-footer {
+    padding: 20px;
+    padding-top: 0;
+    display: flex;
+
+    ion-button {
+      width: 50%;
+    }
+
+    .confirm {
+      --background: #ee001a; // app accent color
+    }
+    .cancel {
+      --background: #adadad; // app accent color
+    }
+  }
+}

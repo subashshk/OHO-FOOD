@@ -1,0 +1,42 @@
+@import '../../../global.scss';
+
+.order-confirm {
+  padding: 50px 30px;
+  height: 100%;
+  .info-div {
+    text-align: center;
+    height: 70%;
+
+    .icon-div {
+      padding: 20px;
+      i {
+        @include font-size($font-size-xxxxlg);
+        color: $success-color;
+      }
+    }
+    .message-title {
+      @include font-size($font-size-md);
+      font-weight: $bold-n;
+    }
+    .message-sub {
+      margin-top: 20px;
+      @include font-size($font-size-lg);
+      font-weight: bold;
+    }
+  }
+  .btn-div {
+    text-align: center;
+    margin-top: 30px;
+
+    ion-button {
+      --border-radius: 25px;
+      --padding-top: 20px;
+      --padding-bottom: 20px;
+    }
+
+    .btn-shop {
+      margin-top: 25px;
+      --background: #ee001a;
+    }
+  }
+}

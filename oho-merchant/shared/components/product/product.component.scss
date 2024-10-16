@@ -1,0 +1,41 @@
+@import "../../../../global.scss";
+
+ion-item {
+  --inner-padding-bottom: 12px;
+  --inner-padding-top: 12px;
+
+  .img-div,
+  .no-img {
+    height: 72px;
+    width: 72px;
+    min-width: 72px;
+
+    img {
+      border-radius: 5px;
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .classified-info {
+    padding-left: 12px;
+
+    p {
+      @include font-size(15px);
+
+      color: $red-dk;
+      font-weight: $bold-md;
+      margin: 0;
+    }
+
+    .product-name {
+      color: $txt-color-dk;
+      padding-bottom: 6px;
+    }
+
+    .product-price {
+      color: $red-dk;
+    }
+  }
+}

@@ -1,0 +1,104 @@
+@import "../../../../../styles.scss";
+
+.store-store-listing {
+  padding: 24px;
+
+  .table {
+    background: $white;
+    border-radius: 8px;
+    padding: 24px 24px 12px 24px;
+
+    .table-responsive {
+      nz-table {
+        .table-header {
+          float: left;
+          margin-right: 10px;
+        }
+
+        th {
+          @include font-size($font-size-sm);
+
+          background-color: $grey-xlgt;
+          border: none;
+          color: $txt-color-dk;
+          cursor: pointer;
+          font-weight: bold;
+          padding: 20px;
+          text-align: center;
+
+          &:hover {
+            background-color: $grey-xxlt;
+          }
+        }
+
+        tbody {
+          tr {
+            @include font-size($font-size-sm);
+
+            td {
+              border-bottom: 1px solid $border-color;
+              border-top: 0;
+              text-align: center;
+
+              .prod-image {
+                align-items: center;
+                display: flex;
+                gap: 1rem;
+
+                img {
+                  height: calculateRem(40px);
+                  width: calculateRem(40px);
+                }
+
+                p {
+                  @include font-size($font-size-sm);
+
+                  color: $black-dk;
+                  font-weight: $bold-md;
+                }
+              }
+
+              .status {
+                a {
+                  @include font-size($font-size-xs);
+
+                  align-items: center;
+                  border-radius: 8px;
+                  font-weight: $bold-md;
+                  padding: 4px 12px;
+
+                  &.pending {
+                    border: 1px solid $green-pop;
+                    color: $green-pop;
+                  }
+
+                  &.rejected {
+                    border: 1px solid $red-dk;
+                    color: $red-dk;
+                  }
+
+                  &.active {
+                    border: 1px solid $green-500;
+                    color: $green-500;
+                  }
+
+                  &.approved {
+                    border: 1px solid $orange-md;
+                    color: $orange-md;
+                  }
+                }
+              }
+
+              .icons {
+                align-items: center;
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+@import '../../../../global.scss';
+
+.rating {
+  background-color: $rating-star-color;
+  color: $white;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  padding: 2px 8px;
+  border-radius: 15px;
+
+  ion-icon {
+    margin-right: 5px;
+  }
+
+  .value {
+    font-weight: $bold-md;
+    margin-top: 4px;
+  }
+
+  &.large {
+    padding: 3px 15px;
+    border-radius: 25px;
+    @include font-size($font-size-xlg);
+
+    ion-icon {
+      margin-right: 6px;
+    }
+  }
+
+  &.small {
+    padding: 0 4px;
+    border-radius: 25px;
+    @include font-size($font-size-xs);
+
+    ion-icon {
+      margin-right: 2px;
+    }
+
+    .value {
+      margin-bottom: 2px;
+    }
+  }
+}

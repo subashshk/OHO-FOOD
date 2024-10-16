@@ -1,0 +1,119 @@
+@import "src/global.scss";
+
+ion-content {
+  .empty-state {
+    align-items: center;
+    background: $white;
+    display: flex;
+    height: -webkit-fill-available;
+    justify-content: center;
+    margin-top: 8px;
+    margin: 16px;
+    padding: 16px;
+  }
+
+  .content {
+    text-align: center;
+  }
+
+  .img-container {
+    img {
+      height: 180px;
+      width: 250px;
+    }
+  }
+
+  .detail {
+    margin-top: 32px;
+
+    .message {
+      @include font-size(15px);
+
+      color: $solid-gray;
+      font-weight: $normal;
+    }
+
+    .add-btn {
+      @include font-size($font-size-n);
+
+      color: $red-dk;
+      font-weight: $bold-md;
+      margin-top: 12px;
+    }
+  }
+
+  .add-ons-lists {
+    .add-ons-item {
+      .item {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+
+        ion-checkbox {
+          --background-checked: #ee001a;
+          --border-color-checked: #ee001a;
+          --size: 18px;
+
+          margin: 0;
+        }
+
+        ion-checkbox::part(container) {
+          border-radius: 6px;
+          border: 1px solid $grey-dk;
+        }
+      }
+
+      background: $white;
+      border-radius: 8px;
+      margin: 16px;
+      padding: 12px 16px;
+
+      &:first-child {
+        margin-top: 8px;
+      }
+
+      .top-section {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+
+        .title {
+          @include font-size(15px);
+
+          color: $black-dk;
+          font-weight: $bold-md;
+        }
+
+        .actions {
+          display: flex;
+
+          i {
+            @include font-size($font-size-n);
+
+            color: $grey-xmd;
+
+            &:first-child {
+              margin-right: 12px;
+            }
+          }
+        }
+      }
+
+      .body {
+        margin-top: 12px;
+
+        .option-type,
+        .max-choice {
+          @include font-size(13px);
+
+          color: $solid-gray;
+          font-weight: $normal;
+        }
+
+        .max-choice {
+          margin-top: 8px;
+        }
+      }
+    }
+  }
+}

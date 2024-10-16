@@ -1,0 +1,180 @@
+@import "src/global.scss";
+
+.no-data {
+  height: 100%;
+
+  .no-content {
+    background-color: $white;
+    border-radius: 8px;
+    height: 89%;
+    margin: 0 16px 16px;
+  }
+}
+
+.product-variant {
+  ion-list {
+    background: $grey-xlt;
+    padding: 0;
+  }
+
+  ion-item:first-child {
+    margin-top: 0;
+  }
+
+  ion-item::part(native) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  ion-item {
+    border-radius: 8px;
+    margin: 16px;
+
+    &::part(native) {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 0 16px 16px;
+    }
+
+    .icons {
+      color: $grey-xmd;
+
+      .icon-Edit-filled {
+        padding-right: 10px;
+      }
+    }
+  }
+
+  .header {
+    align-items: center;
+    border-bottom: 1px solid $yellow-light;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    width: 100%;
+
+    p {
+      margin: 0;
+    }
+
+    .property-name {
+      @include font-size($font-size-n);
+
+      color: $txt-color-dk;
+      font-weight: $bold-n;
+
+      i {
+        @include font-size($font-size-md);
+
+        color: $solid-gray;
+        margin-right: 10px;
+      }
+    }
+
+    .choice-btn {
+      @include font-size($font-size-sm);
+
+      color: $red-dk;
+      font-weight: $bold-md;
+    }
+  }
+
+  .empty-choice {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 12px;
+
+    i {
+      @include font-size($font-size-xxlg);
+
+      color: $black-xxlt;
+    }
+
+    p {
+      @include font-size($font-size-sm);
+
+      line-height: 20px;
+      margin: 0;
+      margin-top: 8px;
+
+      &.choice-title {
+        color: $solid-gray;
+        font-weight: $normal;
+      }
+
+      &.choice-click {
+        color: $red-dk;
+        font-weight: $bold-md;
+      }
+    }
+  }
+
+  .choice-lists {
+    background: $white;
+    width: 100%;
+
+    .cover {
+      border-bottom: 1px solid $yellow-light;
+      padding: 12px 0 12px 0;
+
+      &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+    }
+
+    .choice-item {
+      height: 38px;
+      margin: 0;
+
+      &::part(native) {
+        padding: 0;
+      }
+
+      .top {
+        @include font-size($font-size-sm);
+
+        align-items: baseline;
+        color: $black-dk;
+        display: flex;
+        font-weight: $bold-md;
+        justify-content: start;
+        width: 100%;
+
+        i {
+          @include font-size($font-size-n);
+
+          color: $solid-gray;
+          margin-right: 8px;
+        }
+
+        .price {
+          @include font-size(13px);
+
+          color: $solid-gray;
+          font-weight: $bold-md;
+          margin-top: 6px;
+        }
+      }
+
+      &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+    }
+
+    ion-item-option {
+      --background: #808080;
+
+      width: 44px;
+
+      &:last-child {
+        --background: #ee001a;
+
+        border-radius: 0 8px 8px 0;
+      }
+    }
+  }
+}

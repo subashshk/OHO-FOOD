@@ -1,0 +1,162 @@
+<div
+  class="order-list"
+  [ngClass]="orderList?.length ? 'add-padding' : ''"
+  *ngIf="!isLoading; else showLoader"
+>
+  <ion-refresher class="red" slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div
+    class="filter-applied"
+    *ngIf="dateRange.length || storeAddressId || rangeTypeName"
+  >
+    <div class="filter-div">
+      <div *ngIf="storeAddressId">
+        {{ storeAddressName }}
+      </div>
+      <div *ngIf="rangeTypeName && rangeTypeName !== 'Custom Date'">
+        {{ rangeTypeName }}
+      </div>
+      <div *ngIf="rangeTypeName && rangeTypeName === 'Custom Date'">
+        {{ customDate }}
+      </div>
+    </div>
+    <div class="btn-div">
+      <ion-button (click)="clearFilter()">Clear</ion-button>
+    </div>
+  </div>
+  <div class="order-cards" *ngIf="orderList?.length">
+    <div
+      class="order-card"
+      (click)="navigateToDetail(order?.shipmentNumber ? order?.shipmentNumber : order?.id)"
+      *ngFor="let order of orderList"
+      id="navigate-to-order-detail"
+    >
+      <div class="order-header">
+        <div class="order-id">
+          Order <span># {{ order?.number }}</span>
+        </div>
+        <div class="detail-btn">Order Details</div>
+      </div>
+      <div class="order-content">
+        <div class="details">
+          <div class="img-container">
+            <ion-img src="assets/images/no-image.png"></ion-img>
+          </div>
+          <div class="order-detail">
+            <div class="name">{{ order?.customer?.name }}</div>
+            <div
+              class="refund-method"
+              *ngIf="order?.refundMethod"
+            >{{ order?.refundMethod }}</div>
+            <div class="address">{{ order?.storeAddress?.formattedAddress }}</div>
+            <div class="total">{{ (order?.total || order?.returnAmount) | nprCurrency }}</div>
+          </div>
+        </div>
+        <div class="payment">
+          <ion-img src="assets/images/esewa.svg"></ion-img>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="order-footer">
+        <div class="delivery-type normal" *ngIf="type !== orderStatus.Returns">
+          <i class="icon-delivery"></i>
+          Normal Delivery
+        </div>
+        <div class="delivery-type normal" *ngIf="type === orderStatus.Returns">
+          <div class="dot">Pending</div>
+        </div>
+        <div class="date">
+          {{
+            type === orderStatus.Shipping
+              ? order.formattedShippingDateTime
+              : order.formattedDateTime
+          }}
+        </div>
+        <div class="date" *ngIf="type === orderStatus.Returns || type === ''">
+          {{ order?.formattedCreatedDate }},{{ order?.formattedCreatedTime }}
+        </div>
+      </div>
+    </div>
+    <ion-infinite-scroll
+      [disabled]="orderList.length >= totalCount"
+      (ionInfinite)="getMoreStores($event)"
+    >
+      <ion-infinite-scroll-content loadingSpinner="circular">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+</div>
+<ng-template #showLoader>
+  <section *ngFor="let i of 5 | staticArray" class="skeleton-loader">
+    <div class="header">
+      <ion-skeleton-text
+        [animated]="true"
+        style="width: 30%; height: 15px"
+      ></ion-skeleton-text>
+      <ion-skeleton-text
+        [animated]="true"
+        style="width: 20%; height: 15px"
+      ></ion-skeleton-text>
+    </div>
+    <div class="content">
+      <div class="info">
+        <ion-skeleton-text
+          class="img"
+          [animated]="true"
+          style="width: 44px; height: 44px"
+        ></ion-skeleton-text>
+        <div class="user-info">
+          <ion-skeleton-text
+            [animated]="true"
+            style="width: 100%; height: 18px"
+          ></ion-skeleton-text>
+          <ion-skeleton-text
+            [animated]="true"
+            style="width: 100%; height: 18px"
+          ></ion-skeleton-text>
+          <ion-skeleton-text
+            [animated]="true"
+            style="width: 100%; height: 18px"
+          ></ion-skeleton-text>
+        </div>
+      </div>
+      <ion-skeleton-text
+        [animated]="true"
+        style="width: 72px; height: 28px"
+      ></ion-skeleton-text>
+    </div>
+    <div class="footer">
+      <ion-skeleton-text
+        [animated]="true"
+        style="width: 100%; height: 16px"
+      ></ion-skeleton-text>
+    </div>
+  </section>
+</ng-template>
+<div class="filters" *ngIf="!isInitial && orderList?.length">
+  <div class="wrap">
+    <div class="date ion-activatable" (click)="presentDateActionSheet()">
+      Filter By Date
+    </div>
+    <div
+      class="location ion-activatable"
+      (click)="presentLocationActionSheet()"
+    >
+      Filter By Location
+    </div>
+  </div>
+</div>
+
+<ion-content *ngIf="!orderList?.length && !isLoading">
+  <ion-refresher class="red" slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div class="no-data">
+    <app-no-data
+      [title]="'No Orders!'"
+      [subtitle]="'Currently there are no orders to show'"
+      imgPath="no-orders.svg"
+    ></app-no-data>
+  </div>
+</ion-content>

@@ -1,0 +1,17 @@
+<div class="store-select">
+  <ion-item lines="none" slot="start" class="selector">
+    <ion-label>Store</ion-label>
+    <ion-select
+      okText="Save"
+      cancelText="Cancel"
+      class="selector"
+      (ionChange)="setStore($event)"
+    >
+      <div *ngFor="let store of stores">
+        <ion-select-option [value]="store.id">
+          {{ store.name }}
+        </ion-select-option>
+      </div>
+    </ion-select>
+  </ion-item>
+</div>

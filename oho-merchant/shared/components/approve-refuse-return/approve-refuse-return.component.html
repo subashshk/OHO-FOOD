@@ -1,0 +1,44 @@
+<section class="confirm-modal">
+  <div class="header">
+    <p class="header-title">{{ getModalHeader() }}</p>
+    <i class="icon-close" (click)="dismiss()" id="close-confirm-modal"></i>
+  </div>
+  <div class="help-text">
+    Are you sure you want to approve the refund ? Please, note you cannot undo
+    this action.
+  </div>
+  <form [formGroup]="remarkForm">
+    <ion-item lines="none">
+      <div class="title">
+        <ion-label position="stacked"
+          >Remark
+          <p class="required">*</p></ion-label
+        >
+      </div>
+      <ion-textarea
+        formControlName="remark"
+        inputmode="text"
+        placeholder="Add your remark here..."
+        rows="4"
+      ></ion-textarea>
+      <div class="error">
+        <ion-text
+          class="error"
+          color="danger"
+          *ngIf="
+            remarkForm.get('remark').invalid &&
+            (remarkForm.get('remark').dirty || remarkForm.get('remark').touched)
+          "
+        >
+          Remark is required
+        </ion-text>
+      </div>
+    </ion-item>
+  </form>
+  <app-footer-button
+    btnTitle="Cancel"
+    (btnEvent)="dismiss()"
+    nextBtnTitle="Confirm"
+    (nextBtnEvent)="save()"
+  ></app-footer-button>
+</section>

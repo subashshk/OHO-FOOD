@@ -1,0 +1,76 @@
+<app-toolbar-arrow-text
+  (backEvent)="back()"
+  title="My Cart"
+  endButtonLabel="Delete"
+  [showEndButton]="showDeleteButton"
+  (closeEvent)="deleteSelectedOrders()"
+></app-toolbar-arrow-text>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <section class="store-list" *ngIf="isLoading; else loadContent">
+    <ion-item-sliding *ngFor="let i of 4 | staticArray">
+      <div class="checkbox-store" style="width: 4%; border-radius: 50%;">
+        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+      </div>
+      <ion-item
+        lines="none"
+        class="store"
+      >
+      <div class="image">
+        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+      </div>
+        <div class="content">
+          <ion-skeleton-text [animated]="true" style="width: 70%;"></ion-skeleton-text>
+          <ion-skeleton-text [animated]="true" style="width: 50%;"></ion-skeleton-text>
+          <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
+          <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
+        </div>
+      </ion-item>
+    </ion-item-sliding>
+  </section>
+
+  <ng-template #loadContent>
+    <section class="store-list" *ngIf="orders?.length; else noData">
+      <ion-item-sliding *ngFor="let order of orders; let i = index">
+        <div class="checkbox-store">
+          <ion-checkbox slot="start" mode="ios" [checked]="order.selected" (ionChange)="toggleProductSelection(order)"></ion-checkbox>
+        </div>
+        <ion-item
+          lines="none"
+          class="store"
+          (click)="navigateToCartPage(order?.products?.[0]?.storeId)"
+          id="navigate-to-cart"
+        >
+          <div class="image">
+            <ion-img [src]="order?.imgUrl ?? 'assets/images/no-image.png'"></ion-img>
+          </div>
+          <div class="content">
+            <div class="title">{{ order?.storeName }}</div>
+            <div class="cuisine">{{ order?.cuisineType }}</div>
+            <div class="hours">{{ order?.deliveryTime ?? '--' }}</div>
+            <div class="price">{{ order?.itemTotal}} ({{ order?.totalQuantity }} items)</div>
+          </div>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option class="delete" (click)="deleteSelectedOrders(order)" id="delete-confirm-btn">
+            <i class="icon-delete"></i>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </section>
+    <ng-template #noData>
+      <app-no-data
+        imgPath="empty-cart-new.svg"
+        title="Your Cart Is Empty!"
+        subtitle="Add some amazing foods. Happy eating!"
+        [btnBText]="'continue shopping'"
+        (buttonClickB)="back()"
+        [isCart]="true"
+      >
+      </app-no-data>
+    </ng-template>
+  </ng-template>
+</ion-content>

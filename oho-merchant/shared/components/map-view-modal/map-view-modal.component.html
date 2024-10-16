@@ -1,0 +1,98 @@
+<div class="back">
+  <div class="icon-div ion-activatable" (click)="closeModal()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </div>
+</div>
+<ion-content>
+  <section [ngClass]="isDragging ? 'map marker' : 'map halo-marker'">
+    <div *ngIf="!isDragging" class="ripple"></div>
+    <app-google-maps
+      [apiKey]="apiKey"
+      [showDirection]="showDirection"
+      [storeAddress]="storeAddress"
+      [shipAddress]="shipAddress"
+      [deliveryId]="deliveryId"
+      [showDropOffMarker]="showDropOffMarker"
+      (distanceInMetersEmitter)="setDistanceInKm($event)"
+      (dragEmitter)="setMarker($event)"
+      (locationEmitter)="getLocation($event)"
+      [placeId]="placeId"
+    ></app-google-maps>
+    <div class="search-location" *ngIf="selectLocation">
+      <ion-searchbar
+        mode="ios"
+        placeholder="Search for an address"
+        (ionFocus)="onFocus()"
+        (ionChange)="initService($event)"
+        [(ngModel)]="searchText"
+        (ionClear)="panToCurrentLocation()"
+      ></ion-searchbar>
+
+      <div
+        class="search-result"
+        *ngIf="autoCompleteLocation.length && inputFocused"
+      >
+        <div
+          *ngFor="let address of autoCompleteLocation; last as isLast"
+          class="list"
+          [class.last]="isLast"
+          (click)="searchClick(address)"
+          id="search-location"
+        >
+          <i class="icon-location-updated"></i>
+          {{ address?.description.toString().replace(", Nepal", "") }}
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="selector" *ngIf="showVehicleSelector && distanceInKm">
+    <app-ride-selector
+      [order]="order"
+      [distanceInKm]="distanceInKm"
+      (vehicleTypeEmitter)="selectVehicleType($event)"
+      (availableRidersEmitter)="showAvailableRiders($event)"
+      (assignComplete)="closeModal(true)"
+      [routeDistanceInKm]="routeDistanceInKm"
+    >
+    </app-ride-selector>
+  </section>
+  <div class="rider">
+    <app-order-user-card
+      *ngIf="rider"
+      [user]="rider"
+      [status]="status"
+      [hideMap]="true"
+    ></app-order-user-card>
+  </div>
+</ion-content>
+
+<ion-footer *ngIf="selectLocation" class="ion-no-border">
+  <div class="footer-button">
+    <ion-button
+      class="current-location-footer"
+      (click)="panToCurrentLocation()"
+      id="current-location"
+    >
+      <ion-icon name="locate"></ion-icon>
+    </ion-button>
+  </div>
+  <div class="footer-content">
+    <div class="title">Add storefront Location</div>
+    <div class="footer-container">
+      <ion-item lines="none">
+        <i class="icon-location-updated" slot="start"></i>
+        <ion-input
+          readonly="true"
+          [value]="isDragging ? 'Searching...' : (location | removePlusCode)"
+        >
+        </ion-input>
+      </ion-item>
+    </div>
+
+    <section class="btn">
+      <ion-button (click)="saveLocation()" id="save-location">
+        Save Location
+      </ion-button>
+    </section>
+  </div>
+</ion-footer>

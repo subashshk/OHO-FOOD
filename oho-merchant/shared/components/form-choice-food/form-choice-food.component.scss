@@ -1,0 +1,151 @@
+@import "/src/global.scss";
+
+.alert-container {
+  background: $white;
+  border-radius: 8px;
+  margin: 20vh 20px 0 20px;
+  padding: 20px 16px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .title {
+      @include font-size($font-size-md);
+
+      color: $black-dk;
+      font-weight: $bold-n;
+    }
+
+    i {
+      @include font-size($font-size-xllg);
+
+      color: $solid-gray;
+    }
+  }
+
+  .btn {
+    display: flex;
+    gap: 17px;
+    justify-content: space-between;
+    margin-top: 24px;
+
+    ion-button {
+      @include font-size($font-size-n);
+
+      --background: #ee001a;
+      --border-radius: 8px;
+      --box-shadow: none;
+
+      font-weight: $bold-n;
+      height: 44px;
+      margin: 0;
+      text-transform: capitalize;
+      width: 100%;
+    }
+
+    .cancel-btn {
+      --background: #ffffff;
+
+      color: $red-dk;
+
+      &::part(native) {
+        border: 1px solid $red-dk;
+      }
+    }
+
+    .confirm-btn {
+      color: $white;
+    }
+  }
+
+  form {
+    ion-item::part(native) {
+      --padding-start: 0;
+    }
+
+    ion-item:last-child {
+      margin-bottom: 0;
+    }
+
+    ion-item:first-child {
+      margin-bottom: 11px;
+    }
+
+    ion-item {
+      --background-activated: transparent;
+      --background-focused: transparent;
+      --background-hover: transparent;
+      --inner-padding-end: 0;
+      --ripple-color: transparent;
+
+      margin-bottom: 20px;
+
+      .title {
+        display: flex;
+
+        ion-label {
+          @include font-size($font-size-n);
+
+          color: $solid-gray;
+          display: flex;
+          font-weight: $bold-md;
+          letter-spacing: 1px;
+          margin-bottom: 12px;
+          text-transform: uppercase;
+
+          .required {
+            color: $red-dk;
+            line-height: 1;
+          }
+        }
+      }
+
+      ion-input {
+        @include font-size(15px);
+
+        --background: $grey-xlt;
+        --padding-bottom: 13px;
+        --padding-start: 16px;
+        --padding-top: 13px;
+        --placeholder-color: #808080; //grey-xlt
+
+        border-radius: 8px;
+        border: 1px solid $grey-dk;
+        box-sizing: border-box;
+        color: $solid-gray;
+        margin: auto;
+        width: 100%;
+      }
+
+      .error {
+        @include font-size($font-size-sm);
+
+        padding: 6px;
+      }
+    }
+  }
+}
+
+::ng-deep {
+  ion-popover {
+    ion-select-popover {
+      ion-list {
+        ion-radio-group {
+          ion-item {
+            @include font-size(15px);
+
+            --background-activated: #fff0f1 !important;
+            --background-focused: #fff0f1 !important;
+            --color-activated: #ee001a !important;
+            --color-focused: #ee001a !important;
+
+            line-height: 22px;
+            padding: 0 8px !important;
+          }
+        }
+      }
+    }
+  }
+}

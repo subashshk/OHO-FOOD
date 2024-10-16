@@ -1,0 +1,67 @@
+<section
+    class="order-block"
+  >
+    <div class="address-container">
+      <div class="left">
+        <app-pickup-dropoff-image></app-pickup-dropoff-image>
+      </div>
+      <div class="right">
+        <!--store address start-->
+
+        <ion-label>Store Address</ion-label>
+        <div
+          class="text-md pickup"
+          *ngIf="address"
+        >
+          {{ address }}
+        </div>
+        <!--store address end-->
+
+        <!--delivery address start-->
+        <ion-label>Delivery Address</ion-label>
+        <div
+          class="text-md"
+          *ngIf="address"
+        >
+          {{ address }}
+        </div>
+        <!--delivery address end-->
+      </div>
+    </div>
+
+    <!--delivery note start-->
+    <div class="delivery-note">
+      <div class="icon-div">
+        <i class="icon-note"></i>
+      </div>
+      <div>
+        <ion-label>Reason for return</ion-label>
+        <div class="text-sm">
+          Damaged Piece
+        </div>
+      </div>
+    </div>
+    <!--delivery note end-->
+    <div class="delivery-note">
+      <div class="icon-div">
+        <i class="icon-note"></i>
+      </div>
+      <div>
+        <ion-label>comments</ion-label>
+        <div class="text-sm">
+          Item is defected there is hole in bag
+        </div>
+      </div>
+    </div>
+    <!--Expected Delivery start-->
+    <div class="expected-delivery">
+      <div class="icon-div">
+        <i class="icon-expected-delivery"></i>
+      </div>
+      <div>
+        <ion-label>Requested Date</ion-label>
+        <div class="text-md">Sep 11, 2020</div>
+      </div>
+    </div>
+    <!--Expected Delivery end-->
+  </section>

@@ -1,0 +1,67 @@
+@import "/src/global.scss";
+
+.alert-container {
+  background: $white;
+  border-radius: 8px;
+  margin: 30vh 20px 0 20px;
+  padding: 24px 16px;
+
+  .img-section {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 24px;
+  }
+  .text {
+    @include font-size($font-size-n);
+
+    color: $black-dk;
+    font-weight: $bold-n;
+    text-align: center;
+  }
+
+  .sub-text {
+    @include font-size($font-size-sm);
+
+    color: $solid-gray;
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  .btn {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 24px;
+
+    ion-button {
+      @include font-size($font-size-sm);
+
+      --box-shadow: none;
+
+      margin: 0;
+      min-width: 113px;
+      width: fit-content;
+    }
+
+    .confirm-btn {
+      --background: #ee001a;
+      --border-radius: 8px;
+
+      color: $white;
+      font-weight: $bold-n;
+      height: 40px;
+      text-transform: capitalize;
+    }
+
+    .secondary-btn {
+      --background: transparent;
+
+      color: $red-dk;
+      height: fit-content;
+      text-transform: none;
+    }
+  }
+}

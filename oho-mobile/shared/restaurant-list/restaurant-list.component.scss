@@ -1,0 +1,12 @@
+ion-grid {
+    padding: 0;
+}
+
+ion-col {
+    padding: 16px;
+    padding-bottom: 0;
+}
+
+ion-col:last-child {
+    padding-bottom: 16px;
+}

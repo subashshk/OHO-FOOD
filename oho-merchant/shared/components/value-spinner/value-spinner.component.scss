@@ -1,0 +1,32 @@
+@import "../../../../global.scss";
+
+.value-spinner {
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid $solid-gray;
+  display: flex;
+  justify-content: space-between;
+  max-width: 68px;
+  padding: 2px 6px;
+  width: 100%;
+}
+
+.add-icon, .subtract-icon {
+  @include font-size(15px);
+
+  --background: #ffffff;
+
+  color: $txt-color-dk;
+  font-weight: $bold-md;
+}
+
+ion-input {
+  color: $txt-color-dk;
+  text-align: center;
+
+  ::ng-deep {
+    input {
+      padding: 0 !important;
+    }
+  }
+}

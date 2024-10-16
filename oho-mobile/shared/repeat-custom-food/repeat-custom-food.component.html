@@ -1,0 +1,40 @@
+<section class="body">
+  <div class="header">
+    <div class="title">Repeat Customization</div>
+    <div class="close-btn" (click)="dismiss()" id="dismiss-btn">
+      <i class="icon-close-updated"></i>
+    </div>
+  </div>
+  <div>
+    <div class="content" *ngFor="let variant of product.variants">
+      <div class="left-section">
+        <div class="food-type-badge" [class.non-veg]="variant?.productType === FoodType.NONVEG">
+          <i
+            class="icon-food-signs"
+          ></i>
+        </div>
+        <div class="content-section">
+          <div class="title">{{ variant?.productName }}</div>
+          <div class="price">{{ variant?.price | nprCurrency }}</div>
+          <div class="details">
+            <span *ngFor="let addons of variant.optionValues; let isLast = last">
+              {{ addons?.name }}
+              {{ !isLast ? "," : "" }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="right-section">
+        <form [formGroup]="form">
+          <app-value-spinner [formControlName]="variant?.id" [minValue]="0" [currentValue]="0"></app-value-spinner>
+        </form>
+        <!-- todo: might need this need verification from designer -->
+        <!-- <div class="price-end">Rs. 500</div> -->
+      </div>
+    </div>
+  </div>
+</section>
+<section class="footer">
+  <ion-button id="add-new-btn" (click)="showOrderModal()"> Add New </ion-button>
+  <ion-button id="apply-btn" (click)="apply()"> Apply </ion-button>
+</section>

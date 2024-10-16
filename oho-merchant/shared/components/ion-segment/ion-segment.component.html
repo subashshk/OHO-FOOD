@@ -1,0 +1,12 @@
+<ion-segment
+  [scrollable]="true"
+  (ionChange)="changeEvent($event)"
+  [(ngModel)]="segmentValue"
+  class="tab-segment"
+>
+  <ion-segment-button *ngFor="let item of value" [value]="item?.value">
+    <ion-label>
+      {{ item?.label }}
+    </ion-label>
+  </ion-segment-button>
+</ion-segment>

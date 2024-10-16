@@ -1,0 +1,128 @@
+@import "../../../../global.scss";
+
+ion-content {
+  --background: #f7f7f7;
+  --padding-bottom: 80px;
+
+  form {
+    background: $white;
+    border-radius: 8px;
+    margin: 16px;
+    padding: 6px 16px 16px;
+
+    .sub-div-title {
+      @include font-size($font-size-n);
+
+      color: $txt-color-dk;
+      font-weight: $bold-n;
+      padding: 4px 0 10px;
+    }
+
+    ion-item::part(native) {
+      --padding-start: 0;
+    }
+
+    ion-item:last-child {
+      margin-bottom: 0;
+    }
+
+    ion-item:first-child {
+      margin-bottom: 11px;
+    }
+
+    .checkbox {
+      margin-bottom: 4px;
+
+      ion-label {
+        @include font-size(15px);
+
+        color: $txt-color-dk;
+        padding-left: 12px;
+        text-transform: capitalize;
+      }
+    }
+
+    ion-item {
+      --background-activated: transparent;
+      --background-focused: transparent;
+      --background-hover: transparent;
+      --inner-padding-end: 0;
+      --ripple-color: transparent;
+
+      margin-bottom: 20px;
+
+      .title {
+        display: flex;
+
+        ion-label {
+          @include font-size($font-size-n);
+
+          color: $solid-gray;
+          display: flex;
+          font-weight: $bold-md;
+          letter-spacing: 1px;
+          margin-bottom: 12px;
+          text-transform: uppercase;
+
+          .required {
+            color: $red-dk;
+            line-height: 1;
+          }
+        }
+      }
+
+      ion-input,
+      ion-select {
+        @include font-size(15px);
+
+        --background: $grey-xlt;
+        --padding-bottom: 13px;
+        --padding-start: 16px;
+        --padding-top: 13px;
+        --placeholder-color: #808080; //grey-xlt
+
+        border-radius: 8px;
+        border: 1px solid $grey-dk;
+        box-sizing: border-box;
+        color: $solid-gray;
+        margin: auto;
+        width: 100%;
+      }
+
+      ion-checkbox {
+        --background-checked: #ee001a;
+        --border-color-checked: #ee001a;
+        --size: 20px;
+
+        margin: 0;
+      }
+
+      ion-checkbox::part(container) {
+        border-radius: 6px;
+        border: 1px solid $grey-dk;
+      }
+
+      .error {
+        @include font-size($font-size-sm);
+
+        padding: 6px;
+      }
+
+      ion-select::part(icon) {
+        content: url("../../../../assets/icon/dropdown.svg");
+        margin-bottom: -16px;
+        padding-right: 12px;
+        transform: translateY(-50%);
+        width: 12px;
+      }
+
+      ion-select.select-expanded::part(icon) {
+        content: url("../../../../assets/icon/chevron-up.svg");
+        margin-bottom: -16px;
+        padding-right: 10px;
+        transform: translateY(-50%);
+        width: 16px;
+      }
+    }
+  }
+}

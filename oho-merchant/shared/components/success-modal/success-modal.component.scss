@@ -1,0 +1,59 @@
+@import "../../../../global.scss";
+
+.success-modal {
+  background: $white;
+  border-radius: 8px;
+  box-shadow: none;
+  margin: 26vh 20px 0 20px;
+  padding: 20px 16px;
+
+  ion-img {
+    padding: 0 27px;
+  }
+
+  .title {
+    @include font-size($font-size-md);
+
+    color: $black-dk;
+    display: flex;
+    font-weight: $bold-n;
+    justify-content: center;
+    line-height: 24px;
+    margin-top: 24px;
+  }
+
+  .description {
+    @include font-size($font-size-sm);
+
+    color: $solid-gray;
+    font-weight: $normal;
+    line-height: 20px;
+    margin: 0;
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  .div-btn {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    .success-modal-btn {
+      @include font-size($font-size-sm);
+
+      --background: #ee001a;
+      --border-radius: 8px;
+      --box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+
+      color: $white;
+      font-weight: $bold-n;
+      height: 40px;
+      letter-spacing: normal;
+      line-height: 16px;
+      margin: 24px 0 4px;
+      max-width: 182px;
+      min-width: 182px;
+      text-transform: capitalize;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+<div class="report-filter-bar">
+  <div class="filter-div">
+    <div class="date-range">
+      <label>Date Range</label>
+      <nz-range-picker
+        [(ngModel)]="salesDateRange"
+        [nzRanges]="ranges"
+        (ngModelChange)="dateEmitter($event)"
+        [nzDropdownClassName]="'preset-picker'"
+        [nzAllowClear]="true"
+      ></nz-range-picker>
+    </div>
+    <div class="select-filter" *ngFor="let data of selectFields">
+      <label>{{ data.title }}</label>
+      <app-filter-select
+        [selectOptions]="data.option"
+        (searchString)="handleSearchStr($event)"
+      ></app-filter-select>
+    </div>
+    <div class="select-filter" *ngFor="let data of categoryFields">
+      <label>{{ data.title }}</label>
+      <app-filter-select
+        [selectOptions]="data.option"
+        (searchString)="handleCategoryChange($event)"
+      ></app-filter-select>
+    </div>
+  </div>
+  <div class="export-btn">
+    <button class="btn btn-export" (click)="handleExportClicked()">
+      <i class="icon-export"></i>
+      Export
+    </button>
+  </div>
+</div>

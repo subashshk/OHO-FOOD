@@ -1,0 +1,124 @@
+@import "src/global.scss";
+
+.body {
+  padding: 20px 16px 16px;
+
+  .header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+
+    .title {
+      @include font-size($font-size-md);
+
+      color: $black-dk;
+      font-weight: $bold-n;
+    }
+
+    .close-btn {
+      i {
+        @include font-size($font-size-xlg);
+
+        color: $solid-gray;
+      }
+    }
+  }
+
+  .content {
+    align-items: start;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .left-section {
+      align-items: start;
+      display: flex;
+      justify-content: start;
+
+      .food-type-badge {
+        @include font-size($font-size-sm);
+
+        color: $veg-color;
+        margin-right: 8px;
+
+        &.non-veg {
+          color: $non-veg-color;
+        }
+      }
+    }
+
+    .content-section {
+      .title {
+        @include font-size($font-size-sm);
+
+        color: $black-dk;
+        font-weight: $bold-md;
+      }
+
+      .price {
+        @include font-size($font-size-sm);
+
+        color: $red-dk;
+        font-weight: $bold-md;
+        margin-top: 6px;
+      }
+
+      .details {
+        @include font-size($font-size-sm);
+
+        color: $solid-gray;
+        display: -webkit-box;
+        font-weight: $normal;
+        margin-top: 6px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+      }
+    }
+
+    .price-end {
+      @include font-size($font-size-sm);
+
+      color: $red-dk;
+      font-weight: $bold-md;
+      margin-top: 6px;
+      text-align: end;
+    }
+  }
+}
+
+.footer {
+  background: $white;
+  box-shadow: 0 1px 0 0 $ghost-white1 inset;
+  display: flex;
+  padding: 16px;
+
+  ion-button {
+    @include font-size($font-size-n);
+
+    --background: #ee001a;
+    --border-radius: 8px;
+    --box-shadow: none;
+
+    color: $white;
+    font-weight: $bold-n;
+    height: 44px;
+    margin: 0;
+    width: 100%;
+
+    &:first-child {
+      --background: #ffffff;
+
+      border-radius: 8px;
+      border: 1px solid $red-dk;
+      color: $red-dk;
+      margin-right: 17px;
+    }
+  }
+}

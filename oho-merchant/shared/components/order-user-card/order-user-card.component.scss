@@ -1,0 +1,149 @@
+@import '../../../../global.scss';
+
+.customer-card {
+  padding: 16px 16px 0 16px;
+
+  .wrap {
+    background: white;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .head {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      margin: 16px 16px 0;
+
+      .icon-name {
+        display: flex;
+        align-items: center;
+        .icon-div {
+          height: 44px;
+          width: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+
+          .icon-user {
+            @include font-size($font-size-xxlg);
+          }
+
+          .rate {
+            display: flex;
+            position: absolute;
+            align-items: center;
+            bottom: -5px;
+            border-radius: 15px;
+            padding: 2px 6px;
+            background: $warning-color;
+            color: white;
+            @include font-size($font-size-xs);
+            font-weight: 600;
+
+            i {
+              @include font-size($font-size-xs);
+              margin-right: 2px;
+            }
+          }
+
+          ion-img {
+            overflow: hidden;
+            border-radius: 12px;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+          }
+
+          i {
+            @include font-size($font-size-xxlg);
+          }
+        }
+        .name {
+          @include font-size(15px);
+
+          color: $txt-color-dk;
+          font-weight: $bold-n;
+          margin-left: 16px;
+        }
+      }
+      .status {
+        div {
+          @include font-size($font-size-sm);
+
+          background: $success-color-lt;
+          border-radius: 8px;
+          color: $white;
+          font-weight: $bold-n;
+          padding: 6px 8px;
+          text-transform: uppercase;
+        }
+
+        ion-img {
+          height: 28px;
+          width: 72px;
+        }
+
+        .approved {
+          background: $status-green-text;
+        }
+
+        .started {
+          background: $app-alternate-color;
+        }
+
+        .pending {
+          background: $warning-color;
+        }
+        .cancelled,
+        .rejected,
+        .refused {
+          background: $app-accent-color;
+        }
+      }
+    }
+
+    .tail {
+      display: flex;
+      justify-content: space-between;
+      margin: 0 16px 16px;
+
+      .icon-text {
+        display: flex;
+        align-items: center;
+
+        .text {
+          @include font-size(13px);
+
+          color: $solid-gray;
+          font-weight: $bold-md;
+        }
+
+        .icon-div {
+          margin-right: 10px;
+          height: 38px;
+          width: 38px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+          position: relative;
+          overflow: hidden;
+
+          a {
+            text-decoration: none !important;
+          }
+
+          i {
+            @include font-size($font-size-mdlg);
+
+            color: $app-accent-color;
+          }
+        }
+      }
+    }
+  }
+}

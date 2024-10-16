@@ -1,0 +1,86 @@
+<div class="orders-page">
+  <app-header-breadcrumb
+    title="Orders"
+    [breadcrumbs]="breadcrumbs"
+  ></app-header-breadcrumb>
+  <div class="search-bar mt-4">
+    <app-search-filter-bar
+      placeholder="Search by Order ID or Customer Name"
+      (showFilter)="toggleFilter($event)"
+      (searchTextEmit)="searchTextStatus($event)"
+    ></app-search-filter-bar>
+    <div *ngIf="showFilter">
+      <div class="filter-row mt-4">
+        <div class="block mr-3">
+          <div class="label mb-2">Status Filter</div>
+          <app-filter-select [selectOptions]="orderStatusSelect" (searchString)="handleFilter($event)"></app-filter-select>
+        </div>
+        <div class="block mr-3">
+          <button class="btn btn-outline-primary reset" (click)="resetFilter()">
+            <i class="icon-reset mr-1"></i>
+            Reset
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table mt-4">
+    <div class="table-responsive">
+      <nz-table
+        [nzLoading]="isLoading"
+        [nzLoadingIndicator]="loader"
+        nzTableLayout="fixed"
+        [nzShowPagination]="false"
+        [nzData]="ordersList"
+      >
+        <thead>
+          <th>SN</th>
+          <th>
+            <div class="header-arrow">
+              Order ID
+              <div class="ml-2">
+                <app-sort-arrows></app-sort-arrows>
+              </div>
+            </div>
+          </th>
+          <th>Customer</th>
+          <th>Restaurant</th>
+          <th>Pickup Address</th>
+          <th>Dropoff Address</th>
+          <th>Date</th>
+          <th>Total(Rs)</th>
+          <th>Status</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of ordersList; let i = index">
+            <td>{{ (pageIndex-1) >= 1 ? ((pageIndex-1) * 10) + i + 1: i + 1 }}</td>
+            <td><p class="name">{{ ('#' + order?.number) ?? '--' }}</p></td>
+            <td>{{ ((order?.customer?.name) | titlecase) ?? '--' }}</td>
+            <td>{{ order?.storeAddress?.firstName ?? '--' | titlecase }}</td>
+            <td>{{ order?.rideRequest?.pickUp?.formattedAddress ?? '--' }}</td>
+            <td>{{ order?.rideRequest?.dropOff?.formattedAddress ?? '--' }}</td>
+            <td>{{ (order?.date | date) ?? '--' }}</td>
+            <td>{{ order?.payment?.amount ?? '--' }}</td>
+            <td>
+              <div class="status">
+                <a class="status {{order?.status}}">{{ (order?.status | titlecase) ?? '--' }}
+                </a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+  <app-select-pagination
+    [pageIndex]="pageIndex"
+    [perPage]="perPage"
+    [totalPageCount]="totalCount"
+    (perPageIndicator)="handlePerPageChanged($event)"
+    (pageChanged)="handlePageChange($event)"
+  ></app-select-pagination>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

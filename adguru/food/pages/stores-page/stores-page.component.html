@@ -1,0 +1,132 @@
+<div class="stores-page">
+  <app-header-breadcrumb
+    title="Stores"
+    [breadcrumbs]="breadcrumbs"
+  ></app-header-breadcrumb>
+  <div class="search-bar mt-4">
+    <app-search-filter-bar
+      placeholder="Search by Store Name or Owner Name"
+      (searchTextEmit)="handleSearch($event)"
+      (showFilter)="toggleFilter($event)"
+    ></app-search-filter-bar>
+    <div *ngIf="showFilter">
+      <div class="filter-row mt-4">
+        <div class="block mr-3">
+          <div class="label mb-2">Status Filter</div>
+          <app-filter-select
+            [selectOptions]="orderStatusSelect"
+            (searchString)="handleFilter($event)"
+          ></app-filter-select>
+        </div>
+        <div class="block mr-3">
+          <button class="btn btn-outline-primary reset" (click)="resetFilter()">
+            <i class="icon-reset mr-1"></i>
+            Reset
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table mt-4">
+    <div class="table-responsive">
+      <nz-table
+        [nzLoading]="isLoading"
+        [nzLoadingIndicator]="loader"
+        [nzData]="storesList"
+        nzTableLayout="fixed"
+        [nzShowPagination]="false"
+      >
+        <thead>
+          <th>SN</th>
+          <th>Store Name</th>
+          <th>Owner Name</th>
+          <th>Rating</th>
+          <th>Revenue</th>
+          <th>Net Profit</th>
+          <th>Status</th>
+          <th>Joined Date</th>
+          <th>Actions</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let store of storesList; let i = index">
+            <td>
+              {{ pageIndex - 1 >= 1 ? (pageIndex - 1) * 10 + i + 1 : i + 1 }}
+            </td>
+            <td>
+              <div class="table-data mt-1">
+                <div class="store-col">
+                  <div class="img">
+                    <img
+                      [src]="store?.logoMini ?? 'assets/images/no-image.png'"
+                    />
+                  </div>
+                  <div class="name">
+                    <h6>{{ (store?.name | titlecase) ?? '--' }}</h6>
+                    <p>{{ (store?.companyName | titlecase) ?? '--' }}</p>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="table-data mt-1">
+                <p>{{ (store?.owner | titlecase) ?? '--' }}</p>
+              </div>
+            </td>
+            <td>
+              <div class="table-data ratings-container mt-1">
+                <div class="ratings ml-4">
+                  <i class="icon-star-grade"></i>
+                  <a>{{ store?.avgRating ?? '--' }}</a>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="table-data mt-1">
+                {{ (store?.revenue | nprCurrency) ?? '--' }}
+              </div>
+            </td>
+            <td>
+              <div class="table-data mt-1">
+                {{ (store?.netProfit | nprCurrency) ?? '--' }}
+              </div>
+            </td>
+            <td>
+              <div class="table-data mt-1">
+                <div class="status">
+                  <a class="{{ store?.status }}">{{
+                    (store?.status | titlecase) ?? '--'
+                  }}</a>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="table-data mt-1">
+                {{ (store?.createdAt | date) ?? '--' }}
+              </div>
+            </td>
+            <td>
+              <div class="actions">
+                <app-more-action
+                  class="btn-more"
+                  [menuItems]="listActions()"
+                  (clickEvent)="moreAction($event, store)"
+                ></app-more-action>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+  <app-select-pagination
+    [pageIndex]="pageIndex"
+    [perPage]="perPage"
+    [totalPageCount]="totalCount"
+    (pageChanged)="handlePageChange($event)"
+    (perPageIndicator)="handlePerPageChanged($event)"
+  ></app-select-pagination>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

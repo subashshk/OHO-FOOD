@@ -1,0 +1,97 @@
+<div class="search">
+  <ion-searchbar
+    #searchBar
+    mode="ios"
+    placeholder="Search Foods or Restaurants...."
+    [(ngModel)]="searchText"
+    (ionClear)="searchText = ''"
+    (ionFocus)="onFocus()"
+    [ngClass]="{ expanded: searchBarIsExpanded }"
+    [class]="inputFocused ? 'show-border' : ''"
+    (ionChange)="showSearchedList($event)"
+    [showCancelButton]="searchBarIsExpanded ? 'always' : 'never'"
+    (ionClear)="clearSearch()"
+    (ionCancel)="searchBarExpanded(false)"
+    id="open-search-bar"
+    searchIcon="search"
+  >
+  </ion-searchbar>
+  <ion-buttons class="buttons">
+    <ion-button
+      (click)="searchBarExpanded(false)"
+      class="searchbar-cancel-button"
+      id="searchbar-cancel-btn"
+      *ngIf="inputFocused"
+    >
+      Cancel
+    </ion-button>
+  </ion-buttons>
+</div>
+<div class="result" [ngClass]="{ expanded: inputFocused }" *ngIf="inputFocused">
+  <div class="segment">
+    <div class="segment-section">
+      <app-ion-segment
+        [value]="foodSegmentList"
+        [segmentValue]="currentSegment"
+        (onChangeEvent)="foodSegmentChanged($event)"
+      >
+      </app-ion-segment>
+    </div>
+  </div>
+
+  <div
+    class="restaurant-lists"
+    *ngIf="currentSegment === this.searchSegments.Restaurant; else itemList"
+  >
+    <ng-container *ngIf="storeAutoCompleteData?.length">
+      <div class="list" *ngFor="let store of storeAutoCompleteData">
+        <app-food-item
+          [store]="store"
+          [isSearchItem]="false"
+          [showStore]="true"
+          [showDesc]="false"
+          [isRestaurantCard]="true"
+          [listDesign]="true"
+          [isFoodSearch]="true"
+        ></app-food-item>
+      </div>
+    </ng-container>
+
+    <div
+      class="no-results-txt"
+      *ngIf="!storeAutoCompleteData?.length && searchText?.length > 1"
+    >
+      <div class="no-content">
+        <app-no-data
+          [isSearch]="true"
+          [isKeyboardOpen]="isKeyboardOpen"
+          imgPath="empty-search-product.svg"
+          title="No result found."
+        ></app-no-data>
+      </div>
+    </div>
+  </div>
+  <ng-template #itemList>
+    <div class="all-items">
+      <ng-container *ngIf="autoProductCompleteData?.length">
+        <div class="item-lists" *ngFor="let store of autoProductCompleteData">
+          <app-food-items-search [store]="store"></app-food-items-search>
+        </div>
+      </ng-container>
+
+      <div
+        class="no-results-txt"
+        *ngIf="!autoProductCompleteData?.length && searchText?.length > 1"
+      >
+        <div class="no-content">
+          <app-no-data
+            [isSearch]="true"
+            [isKeyboardOpen]="isKeyboardOpen"
+            imgPath="empty-search-product.svg"
+            title="No result found."
+          ></app-no-data>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

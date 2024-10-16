@@ -1,0 +1,40 @@
+@import "../../../../global.scss";
+
+.return-information {
+  background: $white;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 16px;
+
+  .header {
+    @include font-size($font-size-n);
+
+    color: $txt-color-dk;
+    font-weight: $bold-n;
+    text-transform: capitalize;
+    padding-bottom: 12px;
+  }
+
+  &-details {
+    border-top: 1px solid $yellow-light;
+
+    div {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0 0;
+
+      p {
+        @include font-size($font-size-sm);
+
+        color: $txt-color-dk;
+        font-weight: $bold-md;
+        margin: 0;
+      }
+
+      p:first-child {
+        color: $solid-gray;
+        font-weight: $normal;
+      }
+    }
+  }
+}

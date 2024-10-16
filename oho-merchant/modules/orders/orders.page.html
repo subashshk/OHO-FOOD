@@ -1,0 +1,22 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title slot="start">Orders</ion-title>
+    <!-- Might require in future <app-store-select (changeStore)="changeStoreId($event)"></app-store-select> -->
+  </ion-toolbar>
+  <div class="segment">
+    <app-ion-segment
+      [value]="segmentList"
+      (onChangeEvent)="segmentChanged($event)"
+      [segmentValue]="currentSegment"
+    ></app-ion-segment>
+  </div>
+</ion-header>
+
+<ion-content>
+  <section>
+    <app-order-list
+      [storeId]="storeId"
+      [type]="currentSegment === 'all' ? '' : currentSegment"
+    ></app-order-list>
+  </section>
+</ion-content>

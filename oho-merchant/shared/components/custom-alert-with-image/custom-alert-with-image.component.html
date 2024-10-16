@@ -1,0 +1,20 @@
+<div class="alert-container">
+  <div class="img-section">
+    <img [src]="image" />
+  </div>
+  <div class="text" [innerHTML]="text"></div>
+  <div class="sub-text" *ngIf="subText">{{ subText }}</div>
+  <div class="btn">
+    <ion-button class="confirm-btn" (click)="confirmClick()" id="alert-ok-btn"
+      >{{ btnText }}
+    </ion-button>
+    <ion-button
+      *ngIf="secondaryBtn"
+      fill="clear"
+      class="secondary-btn"
+      (click)="dismiss()"
+      id="alert-secondary-btn"
+      >{{ secondaryBtn }}
+    </ion-button>
+  </div>
+</div>

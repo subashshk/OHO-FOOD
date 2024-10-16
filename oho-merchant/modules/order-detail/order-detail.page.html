@@ -1,0 +1,334 @@
+<app-toolbar-arrow-text
+  [title]="shipmentNumber"
+  (backEvent)="goBack()"
+></app-toolbar-arrow-text>
+
+<ion-content *ngIf="!isLoading">
+  <!-- Customer card start -->
+  <app-order-user-card
+    *ngIf="!(isOrderDeliveredAndPaid)"
+    [storeName]="orderDetails.products[0].storeName"
+    [customer]="orderDetails.customer"
+    [isUser]="true"
+    (mapClick)="mapView($event)"
+  ></app-order-user-card>
+  <!-- Customer card end -->
+  <!-- Rider card start -->
+  <app-order-user-card
+    *ngIf="!(isOrderDeliveredAndPaid) && orderDetails.rideRequest && orderDetails.rideRequest.rider"
+    [user]="orderDetails.rideRequest.rider"
+    [storeName]="orderDetails.products[0].storeName"
+    [status]="orderDetails.rideRequest.status"
+    (mapClick)="mapView($event)"
+  >
+  </app-order-user-card>
+  <!-- Rider card end -->
+
+  <!-- Delivered Card start -->
+  <section class="delivered-card" *ngIf="isOrderDeliveredAndPaid">
+    <div class="card-wrap">
+      <div class="customer">
+        <div class="left-wrap">
+          <div class="icon-div">
+            <i class="icon-user"></i>
+          </div>
+          <div class="name-date">
+            <div class="name">
+              {{ orderDetails.customer ? orderDetails.customer.name : 'User' }}
+            </div>
+            <div class="date">{{ orderDetails.formattedDateTime }}</div>
+          </div>
+        </div>
+        <div class="payment-div">
+          <div>CASH</div>
+        </div>
+      </div>
+
+      <div class="address-container">
+        <div class="left">
+          <ion-img src="/assets/images/pick-up.svg"></ion-img>
+          <div class="dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+          <ion-img src="/assets/images/drop-off.svg"></ion-img>
+        </div>
+        <div class="right">
+          <!--store address start-->
+          <ion-label>Store Address</ion-label>
+          <div
+            class="text-md pickup"
+            *ngIf="orderDetails && orderDetails.storeAddress && orderDetails.storeAddress.formattedAddress"
+          >
+            {{ orderDetails.storeAddress.formattedAddress }}
+          </div>
+          <!--store address end-->
+
+          <!--delivery address start-->
+          <ion-label>Delivery Address</ion-label>
+          <div
+            class="text-md"
+            *ngIf="orderDetails && orderDetails.shipAddress && orderDetails.shipAddress.formattedAddress"
+          >
+            {{ orderDetails.shipAddress.formattedAddress }}
+          </div>
+          <!--delivery address end-->
+        </div>
+      </div>
+      <div class="rider">
+        <div class="left-wrap">
+          <div class="icon-div">
+            <ion-img [src]="getRiderImage()"></ion-img>
+            <div class="rate">
+              <i class="icon-star-grade"></i>
+              <div class="pl-1">
+                {{ orderDetails.rideRequest.rider.avgRating | number: '1.0-0' }}
+              </div>
+            </div>
+          </div>
+          <div class="name-date">
+            <div class="name">
+              {{ orderDetails.rideRequest && orderDetails.rideRequest.rider ?
+              orderDetails.rideRequest.rider.fullName : 'User' }}
+            </div>
+            <div class="date">{{ orderDetails.formattedShippingDateTime }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Delivered Card end -->
+
+  <!-- Order Block start -->
+  <section
+    class="order-block"
+    *ngIf="!isChoosingRider && !isOrderDeliveredAndPaid"
+  >
+    <div class="address-container">
+      <div class="left">
+        <ion-img src="/assets/images/pick-up.svg"></ion-img>
+        <div class="dots">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+        <ion-img src="/assets/images/drop-off.svg"></ion-img>
+      </div>
+      <div class="right">
+        <!--store address start-->
+        <ion-label>Store Address</ion-label>
+        <div
+          class="text-md pickup"
+          *ngIf="orderDetails && orderDetails.storeAddress && orderDetails.storeAddress.formattedAddress"
+        >
+          {{ orderDetails.storeAddress.formattedAddress }}
+        </div>
+        <!--store address end-->
+
+        <!--delivery address start-->
+        <ion-label>Delivery Address</ion-label>
+        <div
+          class="text-md"
+          *ngIf="orderDetails && orderDetails.shipAddress && orderDetails.shipAddress.formattedAddress"
+        >
+          {{ orderDetails.shipAddress.formattedAddress }}
+        </div>
+        <!--delivery address end-->
+      </div>
+    </div>
+
+    <!--delivery note start-->
+    <div class="delivery-note">
+      <div class="icon-div">
+        <i class="icon-note"></i>
+      </div>
+      <div>
+        <ion-label>Delivery Note</ion-label>
+        <div class="text-sm">
+          {{ orderDetails.deliveryNote ? orderDetails.deliveryNote : '---' }}
+        </div>
+      </div>
+    </div>
+    <!--delivery note end-->
+    <!--Expected Delivery start-->
+    <div class="expected-delivery">
+      <div class="icon-div">
+        <i class="icon-expected-delivery"></i>
+      </div>
+      <div>
+        <ion-label>Expected Delivery</ion-label>
+        <div class="text-md">Sep 11, 2020</div>
+      </div>
+    </div>
+    <!--Expected Delivery end-->
+  </section>
+  <!-- Order Block end -->
+
+  <!-- Order summary start -->
+  <section class="order-summary" *ngIf="!isChoosingRider">
+    <div class="header">
+      <div class="title">Order Summary</div>
+      <div class="payment">
+        <div>{{ getPaymentStatus() }}</div>
+      </div>
+    </div>
+    <div class="orders">
+      <div class="order" *ngFor="let item of orderDetails.products">
+        <div class="img-div">
+          <ion-img [src]="utility.getImage(item.imageSrcMini)"></ion-img>
+        </div>
+        <div class="details">
+          <div class="sku-name">
+            <div class="sku">{{ 'SKU: ' + item.sku }}</div>
+            <div class="product-name">{{ item.name }}</div>
+            <div class="option-type">{{ item.formattedOptionType }}</div>
+          </div>
+          <div class="price-div">
+            <div class="product-qt">{{ item.quantity + ' X' }}</div>
+            <div class="product-rate">{{ item.price | nprCurrency }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="delivery-div">
+        <div class="delivery-type">
+          <div>
+            <i class="icon-delivery"></i>
+            {{ orderDetails.deliveryOptionName }}
+          </div>
+        </div>
+        <div class="delivery-charge">
+          {{ orderDetails.deliveryCharge | nprCurrency }}
+        </div>
+      </div>
+      <div class="total">
+        <div>TOTAL</div>
+        <div>{{ orderDetails.total | nprCurrency }}</div>
+      </div>
+    </div>
+  </section>
+  <!-- Order summary end -->
+
+  <!-- Assign Delivery Start -->
+  <section class="assign-rider" *ngIf="isChoosingRider">
+    <div class="header">Available Riders ({{ riderTotalCount }})</div>
+    <div class="loader" *ngIf="riderLoading; else showRider">
+      <app-loader [message]="'Loading'"></app-loader>
+    </div>
+    <ng-template #showRider>
+      <div class="riders" *ngIf="riders.length > 0">
+        <div
+          class="rider ion-activatable"
+          *ngFor="let item of riders"
+          (click)="selectRider(item)"
+        >
+          <div class="rider-wrap">
+            <div class="img-info">
+              <div class="img-div">
+                <ion-img
+                  [src]="utility.getImage(item.profilePictureMini)"
+                ></ion-img>
+              </div>
+              <div class="name-rating">
+                <div class="name">{{ item.fullName || '---' }}</div>
+
+                <div class="rating">
+                  <i class="icon-star-grade"></i>
+                  <div>{{ item.avgRating | number: '1.0-1' }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="assign-btn-div">
+              <div class="assign-check" *ngIf="item.id === assignedRiderId">
+                <ion-icon name="checkmark-circle"></ion-icon>
+              </div>
+              <div class="assign-btn" *ngIf="item.id !== assignedRiderId">
+                + Assign
+              </div>
+            </div>
+          </div>
+        </div>
+        <ion-infinite-scroll
+          [disabled]="riders.length >= riderTotalCount"
+          (ionInfinite)="getMoreRiders($event)"
+        >
+          <ion-infinite-scroll-content loadingSpinner="circular">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </div>
+      <div class="no-data" *ngIf="riders.length === 0">
+        <app-no-data
+          title="No Riders!"
+          subtitle="Currently there are no available riders"
+        ></app-no-data>
+      </div>
+    </ng-template>
+  </section>
+  <!-- Assign Delivery End -->
+</ion-content>
+
+<ion-content *ngIf="isLoading">
+  <app-loader message="Loading"></app-loader>
+</ion-content>
+
+<ion-footer *ngIf="!isLoading" class="ion-no-border">
+  <!-- Button start-->
+  <section class="btn-div" *ngIf="showButtons">
+    <div
+      class="pay-rider"
+      *ngIf="showPayToRider()"
+      (click)="riderPaymentConfirm()"
+    >
+      <ion-button expand="block">
+        <ion-spinner *ngIf="isPayingRider"></ion-spinner>Pay To Rider
+      </ion-button>
+    </div>
+    <div class="cancel" *ngIf="orderDetails.status === orderStatus.Pending">
+      <ion-button (click)="showCancelConfirmation()" expand="block">
+        <ion-spinner *ngIf="isCancellingOrder"></ion-spinner>Cancel
+      </ion-button>
+    </div>
+    <div class="confirm" *ngIf="orderDetails.status === orderStatus.Pending">
+      <ion-button
+        expand="block"
+        (click)="showConfirmAlert()"
+        [disabled]="isConfirmingOrder"
+      >
+        <ion-spinner *ngIf="isConfirmingOrder"></ion-spinner>Confirm
+      </ion-button>
+    </div>
+    <div
+      class="ship"
+      *ngIf="showShipButton() && !isChoosingRider"
+      (click)="chooseRider()"
+    >
+      <ion-button expand="block">Ship</ion-button>
+    </div>
+    <div
+      class="assign-rider-div"
+      *ngIf="orderDetails.status === orderStatus.Ready && isChoosingRider"
+    >
+      <ion-button [disabled]="isAssigningRider" (click)="assignRider()">
+        <ion-spinner *ngIf="isAssigningRider"></ion-spinner>Assign Rider
+      </ion-button>
+      <ion-button
+        class="assign-closest-riders-btn"
+        [disabled]="isAssigningClosestRiders"
+        (click)="viewClosestRiders()"
+      >
+        <ion-spinner *ngIf="isAssigningClosestRiders"></ion-spinner>
+        View closest riders
+      </ion-button>
+    </div>
+    <div
+      class="payment"
+      *ngIf="orderDetails.status === orderStatus.Delivered && orderDetails.payment && orderDetails.payment.state === 'pending'"
+      (click)="showPaymentConfirmation()"
+    >
+      <ion-button expand="block" [disabled]="isConfirmingPayment">
+        <ion-spinner *ngIf="isConfirmingPayment"></ion-spinner>Confirm Payment
+      </ion-button>
+    </div>
+  </section>
+  <!-- Button end-->
+</ion-footer>

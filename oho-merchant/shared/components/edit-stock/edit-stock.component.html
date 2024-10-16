@@ -1,0 +1,42 @@
+<section class="edit-stock-modal">
+  <div class="header">
+    <p class="header-title">Edit Stock</p>
+    <i class="icon-close" (click)="dismiss()" id="close-product-modal"></i>
+  </div>
+  <section class="stock-content">
+    <div class="orderable">
+      <div class="label">Back Orderable</div>
+      <ion-toggle
+        (ionChange)="setBackOrderable($event)"
+        [checked]="false"
+        class="toggle-small"
+        slot="end"
+        mode="ios"
+      >
+      </ion-toggle>
+    </div>
+    <div class="count">
+      <div class="label">Count on hand</div>
+      <div class="value">{{ stock?.countOnHand }}</div>
+    </div>
+    <div class="modifier">
+      <div class="label">Modifier(+/-)</div>
+      <app-value-spinner
+        (valueChanged)="changeModifier($event)"
+      ></app-value-spinner>
+    </div>
+    <div class="threshold">
+      <div class="label">Threshold</div>
+      <app-value-spinner
+        (valueChanged)="changeThreshold($event)"
+      ></app-value-spinner>
+    </div>
+  </section>
+  <app-footer-button
+    btnTitle="Cancel"
+    (btnEvent)="dismiss()"
+    nextBtnTitle="Save"
+    (nextBtnEvent)="saveStockData()"
+  ></app-footer-button>
+</section>
+

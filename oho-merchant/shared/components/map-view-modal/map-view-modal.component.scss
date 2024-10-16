@@ -1,0 +1,266 @@
+@import "../../../../global.scss";
+
+.back {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  z-index: 1;
+
+  .icon-div {
+    align-items: center;
+    background: $white;
+    border-radius: 50%;
+    box-shadow: $box-shadow-color2;
+    display: flex;
+    height: 44px;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    width: 44px;
+
+    ion-icon {
+      @include font-size($font-size-lg);
+    }
+  }
+}
+
+app-google-maps {
+  height: 100%;
+  width: 100%;
+  display: block;
+}
+
+.rider {
+  position: absolute;
+  width: 90%;
+  bottom: 25px;
+}
+
+.selector {
+  background-color: $white;
+  bottom: 30px;
+  left: 3%;
+  position: absolute;
+  width: 94%;
+}
+
+ion-content {
+  .map {
+    height: 100%;
+    position: relative;
+
+    &::after {
+      @include align(true, true, absolute);
+
+      background-size: 50px 54px;
+      content: " ";
+      display: block;
+      height: 54px;
+      pointer-events: none;
+      top: calc(50% - 34px);
+      width: 50px;
+    }
+
+    &.marker {
+      &::after {
+        background: url("/assets/images/drop-off-shadow.svg");
+        background-size: 80px 95px;
+        height: 95px;
+        width: 80px;
+      }
+    }
+  }
+
+  .halo-marker {
+    &::after {
+      background: url("/assets/images/drop-off-down.svg");
+      background-size: 80px;
+      height: 75px;
+      width: 80px;
+      z-index: 2;
+    }
+  }
+
+  .ripple {
+    animation: ripple-animation 1s ease-out;
+    animation-play-state: running;
+    background-color: $red-dk;
+    border-radius: 50%;
+    height: 100px;
+    left: calc(50% - 50px);
+    opacity: 0.5;
+    position: absolute;
+    top: calc(50% - 80px);
+    transform: scale(0);
+    width: 100px;
+    z-index: 1;
+
+    @keyframes ripple-animation {
+      to {
+        transform: scale(0.75);
+        opacity: 0;
+      }
+    }
+  }
+
+  .search-location {
+    position: absolute;
+    top: 80px;
+    width: 100%;
+
+    ion-searchbar {
+      --background: white;
+      --placeholder-color: #8b8b8b;
+      --placeholder-opacity: 1;
+
+      padding: 10px 16px;
+      text-align: left;
+      z-index: 3000;
+
+      ::ng-deep {
+        .searchbar-input-container {
+          height: 44px;
+
+          .searchbar-input {
+            @include font-size($font-size-sm);
+          }
+        }
+      }
+    }
+
+    .search-result {
+      background: white;
+      border-radius: 8px;
+      margin: 0 16px;
+      padding: 12px 16px;
+
+      .list {
+        @include font-size(15px);
+
+        border-bottom: 1px solid $yellow-light;
+        color: $solid-gray;
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+
+        i {
+          @include font-size($font-size-lg);
+
+          margin-right: 12px;
+        }
+      }
+
+      .last {
+        border: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+
+.current-location {
+  --background: white;
+  --border-radius: 50%;
+  --color: #4a4a4a;
+  --padding-end: 0;
+  --padding-start: 0;
+
+  height: 40px;
+  right: 10px;
+  width: 40px;
+
+  ion-icon {
+    @include font-size($font-size-xlg);
+  }
+}
+
+ion-footer {
+  bottom: 0;
+  overflow: hidden;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+
+  .footer-button {
+    text-align: right;
+
+    .current-location-footer {
+      margin: 0 16px 16px 0;
+
+      @extend .current-location;
+    }
+  }
+
+  .footer-content {
+    background: $white;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 16px;
+  }
+
+  .title {
+    @include font-size($font-size-md);
+
+    color: $black-dk;
+    font-weight: $bold-n;
+    margin-left: 16px;
+    text-align: left;
+  }
+
+  .footer-container {
+    margin: 0 16px;
+
+    ion-item {
+      --padding-end: 16px;
+      --padding-start: 16px;
+
+      align-items: center;
+      border-radius: 8px;
+      border: 1px solid $grey-dk;
+      display: flex;
+      height: 44px;
+
+      i {
+        @include font-size($font-size-lg);
+
+        color: $grey-xxxlt;
+        margin-right: 8px;
+      }
+
+      ion-input {
+        @include font-size($font-size-sm);
+
+        --padding-bottom: 0;
+        --padding-start: 0;
+        --padding-top: 0;
+        --placeholder-color: #808080;
+
+        color: $solid-gray;
+      }
+    }
+  }
+
+  .btn {
+    box-shadow: 0 1px 0 0 $anti-flash-white inset;
+    padding: 0 16px 16px;
+
+    ion-button {
+      @include font-size($font-size-n);
+
+      --background: #ee001a;
+      --border-radius: 8px;
+      --box-shadow: none;
+
+      border-radius: 8px;
+      color: $white;
+      font-weight: 700;
+      height: 44px;
+      margin-right: 16px;
+      margin: 0;
+      text-transform: capitalize;
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,72 @@
+@import '../../../../global.scss';
+
+.notification {
+  .header {
+    padding: 15px;
+    font-weight: 600;
+    color: $txt-color-dk;
+    text-transform: uppercase;
+  }
+  .notification-card {
+    border-radius: 8px;
+    position: relative;
+    background: white;
+    display: flex;
+    align-items: center;
+    margin: 16px;
+    padding: 16px;
+
+    .icon-div {
+      align-items: center;
+      background: $chablis-approx;
+      border-radius: 50%;
+      color: $status-red-text;
+      display: flex;
+      height: 40px;
+      justify-content: center;
+      margin-right: 12px;
+      padding: 8px;
+      position: relative;
+      width: 40px;
+
+      i {
+        @include font-size($font-size-lg);
+      }
+    }
+    .item {
+      width: 85%;
+
+      .time {
+        @include font-size(13px);
+
+        color: $solid-gray;
+      }
+
+      .notification-content {
+        @include font-size($font-size-sm);
+
+        margin-top: 6px;
+        font-weight: 600;
+        color: $txt-color-dk;
+
+        div {
+          ::ng-deep {
+            p {
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.no-data {
+  height: 100%;
+
+  .no-content {
+    background-color: $white;
+    border-radius: 8px;
+    height: 90%;
+    margin: 0 16px 16px;
+  }
+}

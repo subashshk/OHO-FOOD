@@ -1,0 +1,182 @@
+@import "../../../../global.scss";
+
+.header {
+  display: flex;
+  padding: 16px;
+}
+
+.main-wrapper {
+  background: $white;
+  border-radius: 8px;
+  margin: 30px 16px 16px;
+  padding: 20px 16px;
+
+  .form-input {
+    display: flex;
+    align-items: center;
+
+    .input-country-list {
+      max-width: 110px;
+      color: $txt-color-dk;
+      font-size: 15px;
+
+      p {
+        font-size: 14px;
+      }
+
+      select {
+        border: none;
+        background: transparent;
+        width: 100%;
+
+        &:focus-visible {
+          outline: none;
+        }
+      }
+    }
+  }
+
+  app-footer-button {
+    ::ng-deep {
+      .footer {
+        box-shadow: none;
+        padding: 14px 0;
+      }
+
+      ion-footer {
+        ion-toolbar {
+          padding: 0 !important;
+        }
+      }
+    }
+  }
+
+  .verification-design {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .otp-text {
+      text-align: center;
+      margin-top: 24px;
+
+      p {
+        @include font-size($font-size-n);
+
+        color: $solid-gray;
+        margin: 0;
+
+        span {
+          color: $txt-color-dk;
+          font-weight: $bold-md;
+        }
+
+        .color-text {
+          color: $app-accent-color;
+          font-weight: 700;
+
+          &.active {
+            pointer-events: none;
+            cursor: not-allowed;
+            opacity: 0.3;
+          }
+        }
+      }
+    }
+  }
+
+  ion-item {
+    --background: #f9f9f9;
+    margin-top: 20px;
+    border: 1px solid $background-dk;
+    width: 100%;
+    --highlight-background: none;
+
+    &.focused {
+      border: 1px solid $black-dk;
+    }
+
+    &.blurred {
+      border: 1px solid $border-color;
+    }
+  }
+
+  .resend-otp {
+    margin: 24px;
+
+    p {
+      @include font-size(15px);
+
+      color: $solid-gray;
+      margin: 0;
+
+      span {
+        color: $red-dk;
+        font-weight: $bold-md;
+      }
+    }
+  }
+
+  .main-otp-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+
+    .input-wrapper {
+      --padding-start: 0;
+
+      border-radius: 4px;
+      border: 1px solid $grey-dk;
+      font-size: 20px;
+      height: 40px;
+      margin-right: 14px;
+      text-align: center;
+      width: 40px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &:focus-within,
+      &.has-value {
+        border: 1px solid $red-dk;
+        color: $red-dk;
+        font-weight: $bold-md;
+      }
+    }
+
+    &.error-message {
+      .input-wrapper {
+        &:focus-within,
+        &.has-value {
+          border: 1px solid $app-accent-color;
+          color: $app-accent-color;
+        }
+      }
+    }
+  }
+
+  .item-has-focus {
+    --highlight-background: none;
+  }
+
+  .error-message-otp {
+    color: $app-accent-color;
+    font-size: 14px;
+  }
+
+  .input-field-number {
+    width: 100%;
+    position: relative;
+
+    .error {
+      left: 14px;
+      position: absolute;
+    }
+  }
+}
+
+.icon-css {
+  font-size: 24px;
+  color: black;
+}

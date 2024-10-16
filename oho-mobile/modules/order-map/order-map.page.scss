@@ -1,0 +1,58 @@
+@import '../../../global.scss';
+
+.back {
+  left: 16px;
+  position: absolute;
+  top: 44px;
+  z-index: 1;
+
+  .icon-div {
+    align-items: center;
+    background: $white;
+    border-radius: 50%;
+    box-shadow: 0px 1px 2px $box-shadow-color1;
+    display: flex;
+    height: 44px;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    width: 44px;
+
+    i {
+      @include font-size($font-size-xlg);
+
+      color: $black-dk;
+    }
+  }
+}
+
+.order-map-height {
+  display: block;
+  height: 81%;
+  width: 100%;
+}
+
+.order-detail-modal {
+  margin-top: -20px;
+
+  &.draft {
+    margin-top: -10px;
+  }
+
+  &::part(content) {
+    border-radius: 8px 8px 0px 0px;
+  }
+}
+
+.sheet-content {
+  --padding-bottom: 30px;
+
+  &::part(scroll) {
+    overflow-y: hidden;
+  }
+
+  &.modal-content {
+    --background: #ffffff;
+  }
+}
+

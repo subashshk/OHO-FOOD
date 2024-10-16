@@ -1,0 +1,22 @@
+<div class="ride-selector" *ngIf="!isLoading">
+  <section class="vehicle-types">
+    <ion-slides [options]="slideOpts">
+      <ion-slide *ngFor="let item of vehicleTypes">
+        <div class="vehicle-card ion-activatable" (click)="selectVehicleType(item)"
+          [class.selected]="selectedVehicleType && item.id === selectedVehicleType.id">
+          <div class="icon">
+            <ion-img [src]="utility.getImage(item.image)"></ion-img>
+          </div>
+          <div class="name">{{ item.name }}</div>
+          <div class="price">{{item.fare | nprCurrency}}</div>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </section>
+  <ion-button class="action-btn" (click)="assignRiders()" [disabled]="isAssigningRiders">
+    <ion-spinner *ngIf="isAssigningRiders"></ion-spinner>
+    Assign Riders
+  </ion-button>
+</div>
+
+<app-loader *ngIf="isLoading"></app-loader>

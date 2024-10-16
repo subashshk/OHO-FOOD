@@ -1,0 +1,39 @@
+@import "../../../../global.scss";
+
+.circle-progress {
+  background: $grey-xlt;
+  display: flex;
+  padding: 8px 16px 16px;
+
+  &-custom {
+    ::ng-deep {
+      svg {
+        text {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .step-information {
+    padding-left: 16px;
+
+    p {
+      margin: 0;
+    }
+
+    .step-count {
+      @include font-size($font-size-sm);
+
+      color: $solid-gray;
+    }
+
+    .step-title {
+      @include font-size($font-size-n);
+
+      color: $txt-color-dk;
+      font-weight: $bold-md;
+      padding-top: 4px;
+    }
+  }
+}

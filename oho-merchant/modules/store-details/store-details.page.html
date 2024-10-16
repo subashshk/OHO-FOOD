@@ -1,0 +1,156 @@
+<app-toolbar-arrow-text
+  title="Store Details"
+  (backEvent)="back()"
+  [showEndButton]="true"
+  endButtonLabel="Edit Details"
+  (closeEvent)="editDetails()"
+></app-toolbar-arrow-text>
+
+<ion-content>
+  <section *ngIf="isLoading; else loadContent" class="store-details-container">
+    <div class="store-card">
+      <div class="store-header">
+        <div class="logo-name" style="width: 100%">
+          <div class="img-div">
+            <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+          </div>
+          <div class="name-div" style="width: 54%">
+            <div><ion-skeleton-text [animated]="true"></ion-skeleton-text></div>
+            <div><ion-skeleton-text [animated]="true"></ion-skeleton-text></div>
+          </div>
+        </div>
+      </div>
+      <div class="content" *ngIf="!isPhysicalStore">
+        <div class="content-wrap">
+          <div class="icon-div">
+            <i class="icon-location"></i>
+          </div>
+          <div class="location">
+            <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="physical-store-outlets" *ngFor="let i of 2 | staticArray">
+      <div class="header">
+        <ion-skeleton-text
+          [animated]="true"
+          class="txt"
+          style="width: 40%"
+        ></ion-skeleton-text>
+        <div class="btn" slot="end" style="width: 35%">
+          <ion-skeleton-text
+            [animated]="true"
+            class="btn-txt"
+          ></ion-skeleton-text>
+          <ion-icon name="chevron-forward"></ion-icon>
+        </div>
+      </div>
+      <div class="content">
+        <div class="location">
+          <img src="/assets/images/drop-off.svg" />
+          <ion-skeleton-text
+            [animated]="true"
+            class="txt"
+            style="height: 16px"
+          ></ion-skeleton-text>
+        </div>
+        <div class="members">
+          <i class="icon-members"></i>
+          <ion-skeleton-text
+            [animated]="true"
+            class="txt"
+            style="height: 16px"
+          ></ion-skeleton-text>
+        </div>
+      </div>
+    </section>
+    <section class="store-details">
+      <div
+        class="content"
+        *ngFor="let item of mapStoreDetails() | keyvalue: noSorting"
+      >
+        <div class="labels">{{ item?.key }}</div>
+        <ion-skeleton-text [animated]="true" class="values" style="width: 30%"
+          >{{ item?.value }}</ion-skeleton-text
+        >
+      </div>
+    </section>
+    <section class="document">
+      <div class="img-div">
+        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+      </div>
+    </section>
+  </section>
+  <ng-template #loadContent>
+    <section class="store-details-container">
+      <div class="store-card">
+        <div class="store-header">
+          <div class="logo-name">
+            <div class="img-div">
+              <ion-img
+                [src]="utility.getImage(store?.logoMini, true)"
+              ></ion-img>
+            </div>
+            <div class="name-div">
+              <div>{{ store?.name }}</div>
+              <div>{{ store?.proprietorName }}</div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="content"
+          *ngIf="store?.addresses?.length > 0 && !isPhysicalStore"
+        >
+          <div class="content-wrap" *ngFor="let item of store?.addresses">
+            <div class="icon-div">
+              <i class="icon-location"></i>
+            </div>
+            <div class="location">
+              {{ item?.formattedAddress ? item?.formattedAddress : '---' }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngIf="isPhysicalStore">
+        <section
+          class="physical-store-outlets"
+          *ngFor="let outlet of storeOutlets; let i = index"
+        >
+          <div class="header">
+            <p class="txt">Outlet <span>#{{i + 1}}</span></p>
+            <div class="btn" (click)="navigateToEmployees(i+1, outlet?.id)">
+              <p class="btn-txt">Outlet Employees</p>
+              <ion-icon name="chevron-forward"></ion-icon>
+            </div>
+          </div>
+          <div class="content">
+            <div class="location">
+              <img src="/assets/images/drop-off.svg" />
+              <p class="txt">{{ outlet | removePlusCode }}</p>
+            </div>
+            <div class="members">
+              <i class="icon-members"></i>
+              <p class="txt">{{ outlet?.membersCount }}</p>
+            </div>
+          </div>
+        </section>
+      </ng-container>
+      <section class="store-details">
+        <div
+          class="content"
+          *ngFor="let item of mapStoreDetails() | keyvalue: noSorting"
+        >
+          <div class="labels">{{ item?.key }}</div>
+          <div class="values">{{ item?.value }}</div>
+        </div>
+      </section>
+      <section class="document">
+        <div class="img-div">
+          <ion-img [src]="utility.getImage(store?.certificateImage)"></ion-img>
+        </div>
+      </section>
+    </section>
+  </ng-template>
+</ion-content>

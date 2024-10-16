@@ -1,0 +1,11 @@
+<div class="overlay">
+  <div class="header">
+    <i
+      class="icon-back-arrow"
+      (click)="back()"
+      [id]="backIconId"
+      *ngIf="!hideBackIcon"
+    ></i>
+    <div class="title">{{ title }}</div>
+  </div>
+</div>

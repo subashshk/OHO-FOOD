@@ -1,0 +1,36 @@
+@import "src/global.scss";
+
+ion-item-options {
+  ion-item-option {
+    min-width: 80px;
+
+    .icon-options {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .icon-label {
+      @include font-size($font-size-sm);
+
+      font-weight: $bold-md;
+      margin: 0;
+      text-transform: capitalize;
+    }
+  }
+
+  .icon-Edit-filled,
+  .icon-Delete-filled {
+    @include font-size($font-size-lg);
+
+    padding-bottom: 7px;
+  }
+
+  .special-instructions {
+    background: $grey-xmd;
+  }
+
+  .delete {
+    background: $app-accent-color;
+  }
+}

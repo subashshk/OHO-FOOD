@@ -1,0 +1,231 @@
+@import '../../../../global.scss';
+
+.restaurant-item {
+  height: 100%;
+  background: $white;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+
+  .restaurant-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: $txt-color-dk;
+
+    .cover {
+      width: 100%;
+      height: 120px;
+      position: relative;
+
+      ion-img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        overflow: hidden;
+
+        &.no-img {
+          object-fit: contain;
+        }
+      }
+
+      .closed-info {
+        z-index: 2;
+        color: #ffffff;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        text-align: start;
+        justify-content: start;
+        padding: 0;
+
+        .new-label {
+          @include font-size($font-size-xs);
+
+          align-items: center;
+          background: $white;
+          border-radius: 8px;
+          color: $proton-red;
+          display: flex;
+          font-weight: $bold-md;
+          height: 22px;
+          justify-content: start;
+          margin: 8px;
+          padding: 4px 6px;
+          width: fit-content;
+
+          i {
+            @include font-size($font-size-sm);
+
+            margin-right: 4px;
+          }
+        }
+
+        .header {
+          @include font-size($font-size-xlg);
+          font-weight: $bold-md;
+        }
+
+        .dotted {
+          border-bottom: 3px dashed $white;
+          margin: 15px;
+        }
+
+        .timing {
+          @include font-size($font-size-lg);
+        }
+      }
+
+      .closed-txt {
+        color: #ffffff;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        background-color: black;
+        opacity: 0.5;
+        top: 0;
+        text-align: center;
+        justify-content: center;
+      }
+    }
+
+    .text-desc {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      align-items: flex-start;
+    }
+
+    .lower-section {
+      display: flex;
+      justify-content: start;
+      padding-top: 6px;
+      width: 100%;
+    }
+
+    .rating-status {
+      display: flex;
+      align-items: center;
+
+      .rating-div {
+        @include font-size(13px);
+
+        align-items: center;
+        display: flex;
+        font-weight: $normal;
+        line-height: 15px;
+        justify-content: center;
+
+        .avg-rating {
+          color: $black-dk;
+        }
+
+        .rate-count {
+          color: $solid-gray;
+        }
+
+        i {
+          @include font-size($font-size-n);
+
+          color: $orange-n;
+          margin-right: 4px;
+        }
+      }
+    }
+
+    .location-section {
+      align-items: center;
+      display: flex;
+      justify-content: start;
+
+      .dot {
+        @include font-size(2px);
+
+        color: $solid-gray;
+        margin: 0 6px;
+        height: 15px;
+      }
+
+      .location {
+        @include font-size(13px);
+
+        align-items: flex-end;
+        color: $solid-gray;
+        display: flex;
+        font-weight: $normal;
+        height: 15px;
+        width: max-content;
+
+        i {
+          @include font-size($font-size-n);
+
+          color: $black-xxlt;
+          margin-right: 4px;
+        }
+      }
+    }
+
+
+    .title {
+      @include font-size(15px);
+
+      color: $black-dk;
+      display: -webkit-box;
+      font-weight: $bold-md;
+      line-height: 18px;
+      overflow: hidden;
+      text-align: left;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+    }
+
+    .cuisine {
+      @include font-size($font-size-sm);
+
+      margin-top: 6px;
+      text-transform: capitalize;
+      line-height: 16px;
+      color: $solid-gray;
+      font-weight: $normal;
+    }
+
+    .location-div {
+      margin-top: 5px;
+      text-align: center;
+      height: 15px;
+      line-height: 15px;
+      @include font-size($font-size-sm);
+      color: $txt-color-dk;
+      i {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  &.slide-item {
+    .restaurant-wrap {
+      .cover {
+        height: 120px;
+
+        .closed-text {
+          padding: 15px;
+
+          .header {
+            @include font-size($font-size-lg);
+            font-weight: $bold-n;
+          }
+        }
+      }
+    }
+  }
+}

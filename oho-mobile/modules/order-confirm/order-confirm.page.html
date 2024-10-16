@@ -1,0 +1,19 @@
+<ion-content>
+  <div class="order-confirm">
+    <div class="info-div">
+      <div class="icon-div">
+        <i class="icon-order-confirmed"></i>
+      </div>
+      <div class="message-title">Thank You!</div>
+      <div class="message-sub">Your Order Has Been Confirmed</div>
+    </div>
+    <div class="btn-div">
+      <ion-button expand="block" color="medium" fill="outline" (click)="navigateToOrder()"
+        >{{ 'Go to your Orders' }}</ion-button
+      >
+      <ion-button expand="block" class="btn-shop" routerLink="/tabs" routerDirection="root"
+        >{{ 'Continue Shopping' }}</ion-button
+      >
+    </div>
+  </div>
+</ion-content>

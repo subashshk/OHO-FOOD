@@ -1,0 +1,42 @@
+@import "../../../../global.scss";
+
+.content {
+  background: $white;
+  border-radius: 8px;
+  margin: 16px;
+  padding: 16px;
+
+  .header {
+    @include font-size($font-size-n);
+
+    color: $txt-color-dk;
+    font-weight: $bold-n;
+  }
+
+  .images {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+
+    .image {
+      background: $grey-xlt;
+      border-radius: 5px;
+      height: 64px;
+      margin-right: 8px;
+      margin-top: 8px;
+      overflow: inherit;
+      padding-top: 15px;
+      position: relative;
+      text-align: center;
+      width: 64px;
+
+      img {
+        border-radius: 5px;
+        height: 64px;
+        margin-top: -15px;
+        object-fit: cover;
+        width: 100%;
+        width: 64px;
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+<ion-item class="ion-no-padding" lines="none" *ngIf="isLoading; else loadContent">
+  <div class="img-div">
+    <ion-skeleton-text [animated]="true" style="border-radius: 8px; margin: 0;"></ion-skeleton-text>
+  </div>
+  <div class="classified-info" style="width: 80%;">
+    <ion-skeleton-text [animated]="true" style="width: 100%;"></ion-skeleton-text>
+    <ion-skeleton-text [animated]="true" style="width: 70%; margin-top: 6px;"></ion-skeleton-text>
+  </div>
+</ion-item>
+
+<ng-template #loadContent>
+  <ion-item class="ion-no-padding" lines="none">
+    <div *ngIf="product?.imageSrc; else noImage" class="img-div">
+      <img [src]="product?.imageSrc" alt="" />
+    </div>
+    <ng-template #noImage>
+      <div class="no-img">
+        <img src="/assets/images/no-image-logo.png" alt="" />
+      </div>
+    </ng-template>
+    <div class="classified-info">
+      <p class="product-name">{{ product?.name }}</p>
+      <p class="product-price">{{ product?.price | nprCurrency }}</p>
+    </div>
+  </ion-item>
+</ng-template>

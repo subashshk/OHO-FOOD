@@ -1,0 +1,47 @@
+<div class="date-time">
+  <div class="dt-header">
+    {{ 'Custom Date Range' }}
+  </div>
+  <div class="dt-body">
+    <ion-item class="ion-activatable" id="start">
+      <ion-label>Start Date</ion-label>
+      <ion-label>{{ stDate }}</ion-label>
+    </ion-item>
+    <ion-popover class="custom-popover" trigger="start" size="cover">
+      <ng-template>
+        <ion-datetime
+          mode="md"
+          color="oho"
+          [value]="stDate"
+          placeholder="Start Date"
+          [showDefaultButtons]="true"
+          (ionChange)="saveStartDate($event)"
+        ></ion-datetime>
+      </ng-template>
+    </ion-popover>
+    <ion-item class="ion-activatable" id="end">
+      <ion-label>End Date</ion-label>
+      <ion-label>{{ endDate }}</ion-label>
+    </ion-item>
+    <ion-popover class="custom-popover" trigger="end" size="cover">
+      <ng-template>
+        <ion-datetime
+          mode="md"
+          color="oho"
+          [value]="endDate"
+          placeholder="End Date"
+          [showDefaultButtons]="true"
+          (ionChange)="saveEndDate($event)"
+        ></ion-datetime>
+      </ng-template>
+    </ion-popover>
+  </div>
+  <div class="dt-footer">
+    <ion-button class="cancel" expand="block" (click)="cancel()"
+      >Cancel</ion-button
+    >
+    <ion-button class="confirm" expand="block" (click)="confirm()"
+      >Confirm</ion-button
+    >
+  </div>
+</div>

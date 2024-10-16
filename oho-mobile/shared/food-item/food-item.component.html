@@ -1,0 +1,238 @@
+<div class="food-item ion-activatable" [class.isSearch]="isSearchItem" (click)="handleClick()" [id]="categoryName + '-' + product?.id" *ngIf="!listDesign && !isLoader">
+  <div class="item-details" [class.no-img]="!product?.imageSrc">
+    <div class="info-wrap">
+      <!-- <ion-badge class="best-seller-badge" >Best Seller</ion-badge> -->
+      <div class="info-badge" *ngIf="!isSearchItem">
+        <i class="icon-food-signs item-badge" [class.veg]="product?.productType === productTypes.VEG"></i>
+        <div class="best-check" *ngIf="product?.isBestSeller">
+          <ion-icon class="ion-no-padding" name="star"></ion-icon>
+          <p>Bestseller</p>
+        </div>
+      </div>
+      <div class="name">
+        <div class="product-name">
+          {{product?.name}}
+        </div>
+      </div>
+      <div class="store-name" *ngIf="showStore">
+        {{product?.storeName}}
+      </div>
+      <div [class.prices-noimg]="!product?.imageSrc" class="initial-prices">
+        <div class="price">
+          {{ product?.price | nprCurrency }}
+        </div>
+        <div class="discounts" *ngIf="product?.discountPercent">
+          <div class="discounted-price">
+            {{ product?.originalPrice | nprCurrency }}
+          </div>
+        </div>
+      </div>
+      <div [class.desc-noimg]="!product?.imageSrc" class="desc" *ngIf="showDesc && !isSearchItem">
+        <div>
+          {{product?.description}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="image-button">
+    <div class="img-div">
+      <div class="closed-info" *ngIf="!product?.store?.storeIsOpen && isSearchItem">
+        <div class="new-label">
+          <i class="icon-clock-filled"></i>
+          <span>Closed</span>
+        </div>
+      </div>
+      <img [src]="utility.getImage(product?.imageSrcMedium)">
+      <div class="closed-txt" *ngIf="!product?.store?.storeIsOpen && isSearchItem"></div>
+    </div>
+    <div class="custom" *ngIf="product?.optionTypes?.length">Customizable</div>
+    <div class="cart-actions" *ngIf="!isSearchItem && showAddBtn">
+      <div *ngIf="product?.optionTypes?.length; else normalCartFlow">
+        <ion-button
+          class="add-to-cart-btn"
+          (click)="checkRepeatModal($event)"
+          id="open-custom-modal-btn"
+        >
+          <div class="btn-content">
+            Add
+          </div>
+        </ion-button>
+      </div>
+      <ng-template #normalCartFlow>
+        <ion-button
+          class="add-to-cart-btn"
+          *ngIf="!cartCount"
+          (click)="checkRepeatModal($event)"
+          id="open-custom-modal-btn"
+        >
+          <div class="btn-content">
+            Add
+          </div>
+        </ion-button>
+        <div class="cart-count" *ngIf="cartCount">
+          <form [formGroup]="quantityForm">
+            <app-value-spinner formControlName="quantity" [deleteWhenLastItem]="true" [minValue]="0">
+            </app-value-spinner>
+          </form>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<div class="food-item search ion-activatable" [class.isSearch]="isSearchItem" [class.remove-padding]="isFoodSearch" (click)="handleClick()" [id]="categoryName + '-' + product?.id" *ngIf="listDesign && !isLoader">
+  <div class="image-button" *ngIf="!isRestaurantCard">
+    <div class="img-div search">
+      <div class="closed-info search" *ngIf="!product?.store?.storeIsOpen && isSearchItem">
+        <div class="new-label">
+          <i class="icon-clock-filled"></i>
+          <span>Closed</span>
+        </div>
+      </div>
+      <img [src]="utility.getImage(product?.imageSrcMedium)">
+      <div class="closed-txt search" *ngIf="!product?.store?.storeIsOpen && isSearchItem"></div>
+    </div>
+  </div>
+
+  <div class="image-button" *ngIf="isRestaurantCard" [class.no-closed-info]="!store?.storeIsOpen && !isSearchItem">
+    <div class="img-div search">
+      <div class="closed-info search" *ngIf="!store?.storeIsOpen && isSearchItem">
+        <div class="new-label">
+          <i class="icon-clock-filled"></i>
+          <span>Closed</span>
+        </div>
+      </div>
+      <img [src]="utility.getImage(store?.logo)">
+      <div class="closed-txt search" *ngIf="!store?.storeIsOpen && isSearchItem"></div>
+    </div>
+  </div>
+
+  <div class="item-details search" [class.no-img]="!product?.imageSrc" *ngIf="!isRestaurantCard">
+    <div class="info-wrap">
+      <div class="name">
+        <div class="product-name-search">
+          {{product?.name}}
+        </div>
+      </div>
+      <div class="store-name-search" *ngIf="showStore">
+        {{product?.storeName}}
+      </div>
+      <div [class.prices-noimg]="!product?.imageSrc" class="initial-prices search">
+        <div class="price">
+          {{ product?.price | nprCurrency }}
+        </div>
+        <div class="discounts" *ngIf="product?.discountPercent">
+          <div class="discounted-price">
+            {{ product?.originalPrice | nprCurrency }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="item-details search" *ngIf="isRestaurantCard">
+    <div class="info-wrap">
+      <div class="name">
+        <div class="product-name-search">
+          {{store?.name}}
+        </div>
+      </div>
+      <div class="store-name-search">
+        {{ store?.cuisineType || 'Variety Cuisine' | titlecase }}
+      </div>
+      <div class="rating-status">
+        <div class="rating-div">
+          <i class="icon-Star-filled"></i>
+          <div class="avg-rating">{{ store?.avgRating }}</div>
+          <div class="rating-info" *ngIf="isFoodSearch">
+            ({{store?.reviewsCount}} Rating{{store?.reviewsCount > 1 ? 's' : ''}})
+          </div>
+        </div>
+        <div class="location-section">
+          <ion-icon class="dot" name="ellipse" *ngIf="restaurantDuration"></ion-icon>
+          <div class="location" *ngIf="restaurantDuration">
+            <i class="icon-Clock"></i>
+            {{ restaurantDuration }}
+          </div>
+          <ion-icon class="dot" name="ellipse" *ngIf="restaurantDistance"></ion-icon>
+          <div class="location" *ngIf="restaurantDistance">
+            <i class="icon-Location-outline"></i>
+            {{ restaurantDistance }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- skeleton loading -->
+<div
+  class="food-item-loading ion-activatable"
+  style="height: 104px;"
+  [class.isSearch]="isSearchItem"
+  *ngIf="!isFoodDetail && isLoader"
+>
+  <div class="image-button">
+    <ion-skeleton-text class="img-div" [animated]="true" style="margin: 0;"></ion-skeleton-text>
+  </div>
+  <div class="item-details" style="min-height: 80px;">
+    <div class="info-wrap">
+      <div class="info-badge">
+        <ion-skeleton-text [animated]="true" style="height: 10px; margin: 0;"></ion-skeleton-text>
+      </div>
+      <div class="store-name">
+        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+      </div>
+      <div class="desc">
+        <div>
+          <ion-skeleton-text [animated]="true" style="height: 10px;"></ion-skeleton-text>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="food-item ion-activatable" *ngIf="isFoodDetail && isLoader">
+  <div class="item-details">
+    <div class="info-wrap">
+      <div class="info-badge" *ngIf="!isSearchItem">
+        <ion-skeleton-text [animated]="true" style="width: 20px;"></ion-skeleton-text>
+      </div>
+      <div class="name">
+        <div class="product-name">
+          <ion-skeleton-text [animated]="true" style="width: 120px;"></ion-skeleton-text>
+        </div>
+      </div>
+      <div class="store-name">
+        <ion-skeleton-text [animated]="true" style="width: 60px;"></ion-skeleton-text>
+      </div>
+      <div class="initial-prices">
+        <div class="price">
+          <ion-skeleton-text [animated]="true" style="width: 180px;"></ion-skeleton-text>
+        </div>
+      </div>
+      <div class="desc">
+        <div>
+          <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="image-button">
+    <div class="img-div">
+      <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+    </div>
+    <div class="cart-actions">
+      <div>
+        <ion-button
+          class="add-to-cart-btn"
+          style="--color: #F2F2F2;"
+        >
+          <div class="btn-content">
+            <ion-skeleton-text [animated]="true" style="width: 30px;"></ion-skeleton-text>
+          </div>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</div>

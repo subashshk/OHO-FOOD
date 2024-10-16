@@ -1,0 +1,78 @@
+<div class="alert-container">
+  <div class="header">
+    <div class="title">{{ title }}</div>
+    <i
+      (click)="dismissModal()"
+      id="alert-close-btn"
+      class="icon-close"
+    ></i>
+  </div>
+  <div class="form">
+    <form [formGroup]="optionValueForm">
+      <ion-item lines="none">
+        <div class="title">
+          <ion-label position="stacked">Name</ion-label>
+        </div>
+        <ion-input
+          formControlName="name"
+          inputmode="text"
+          placeholder="Enter Choice name"
+        ></ion-input>
+      </ion-item>
+      <ion-label
+        class="error"
+        color="danger"
+        *ngIf="
+          optionValueForm.controls.name.touched &&
+          optionValueForm.controls.name.errors
+        "
+      >
+        <div
+          *ngIf="optionValueForm.controls.name.errors.required"
+        >
+          Name is required.
+        </div>
+      </ion-label>
+      <ion-item lines="none">
+        <div class="title">
+          <ion-label position="stacked">Price</ion-label>
+        </div>
+        <ion-input
+          formControlName="price"
+          inputmode="number"
+          placeholder="Enter Price"
+        ></ion-input>
+      </ion-item>
+      <ion-label
+        class="error"
+        color="danger"
+        *ngIf="
+          optionValueForm.controls.price.touched &&
+          optionValueForm.controls.price.errors
+        "
+      >
+        <div
+          *ngIf="optionValueForm.controls.price.errors.required"
+        >
+          Price is required.
+        </div>
+      </ion-label>
+    </form>
+  </div>
+  <div class="btn">
+    <ion-button
+      fill="clear"
+      class="cancel-btn"
+      (click)="dismissModal()"
+      id="alert-cancel-btn"
+      >Cancel
+    </ion-button>
+    <ion-button
+      class="confrim-btn"
+      (click)="confirmClick()"
+      [disabled]="!optionValueForm.valid"
+      id="alert-confirm-btn"
+      >Save
+    </ion-button>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+@import "../../../../global.scss";
+
+.ride-selector {
+  padding: 20px;
+
+  .vehicle-types {
+    display: flex;
+  
+    .vehicle-card {
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      padding: 15px 10px;
+      background: white;
+      width: 100%;
+      position: relative;
+      opacity: 0.5;
+
+      &.selected {
+        opacity: 1;
+        box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+      }
+  
+      .icon {
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+  
+        ion-img {
+          height: 100%;
+          width: 100%;
+          object-fit: contain;
+        }
+      }
+  
+      .name, .price {
+        color: $txt-color-dk;
+        @include font-size($font-size-sm);
+      }
+  
+      .name {
+        margin: 15px 0 5px 0;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+      }
+  
+      .price {
+        @include font-size($font-size-xs);
+        font-weight: 500;
+      }
+    }
+  }
+  
+  .action-btn {
+    margin-top: 10px;
+    width: 100%;
+    border-radius: 4px;
+    text-transform: none;
+    color: white;
+    --background: #ee001a;
+    height: 40px;
+    @include font-size($font-size-lg);
+    font-weight: 500;
+
+    ion-spinner {
+      margin-right: 5px;
+      height: 20px;
+    }
+  }
+}
+
+

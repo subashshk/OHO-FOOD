@@ -1,0 +1,57 @@
+<div class="chart-header-container">
+  <div
+    class="card-header"
+    *ngIf="chartOptions.chartTitle || chartOptions.chartSubtitle"
+  >
+    <div class="header-wrap">
+      <div class="d-flex align-vertical mb-2">
+        <div class="card-title">
+          {{ chartOptions.chartTitle }}
+        </div>
+        <div class="card-subtitle" *ngIf="chartOptions.chartSubtitle">
+          {{ chartOptions.chartSubtitle }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="select-date-popover"
+    class="select-date"
+    (click)="openDateRangeModal()"
+    *ngIf="!isPhaseOne"
+  >
+    <div>Select date</div>
+    <i class="icon-chevron-down"></i>
+  </div>
+</div>
+<div class="chart-card">
+  <div class="inner-div" [ngClass]="chartClassName">
+    <apx-chart
+      *ngIf="seriesLength > 0 && !chartOptions.isLoading"
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [labels]="chartOptions.labels"
+      [responsive]="chartOptions.responsive"
+      [colors]="chartOptions.colors"
+      [legend]="chartOptions.legend"
+      [plotOptions]="chartOptions.plotOptions"
+      [dataLabels]="chartOptions.dataLabels"
+      [yaxis]="chartOptions.yaxis"
+      [fill]="chartOptions.fill"
+      [stroke]="chartOptions.stroke"
+      [tooltip]="chartOptions.tooltip"
+      [xaxis]="chartOptions.xaxis"
+    ></apx-chart>
+    <app-no-data
+      imgPath="no-data.svg"
+      *ngIf="seriesLength === 0 && !chartOptions.isLoading"
+      [title]="'No Data'"
+      [subtitle]="'Currently there are no available data to show'"
+      [small]="true"
+    ></app-no-data>
+    <div class="loader" *ngIf="chartOptions.isLoading">
+      <app-loader message="Loading ..."></app-loader>
+    </div>
+  </div>
+</div>

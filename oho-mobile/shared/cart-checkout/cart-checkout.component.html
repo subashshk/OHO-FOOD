@@ -1,0 +1,296 @@
+<div class="cart-checkout">
+  <ng-container *ngIf="!isDeleteLoad">
+    <div
+      class="stores"
+      *ngFor="let store of order?.stores; let storeIndex = index"
+    >
+      <div class="store-header" *ngIf="!isMartFood()">
+        <section class="header" *ngIf="fromCart">
+          <ion-checkbox slot="start" mode="ios" [(ngModel)]="selectedStores[storeIndex]" (ionChange)="toggleStoreSelection($event, storeIndex)"></ion-checkbox>
+          <div class="ion-activatable store-name" (click)="goToStore(store)">
+            {{ store?.name }} <ion-icon name="chevron-forward-outline"></ion-icon>
+          </div>
+        </section>
+        <div class="ion-activatable store-name" *ngIf="!fromCart">
+          <i class="icon-store"></i>{{ store?.name }}
+        </div>
+        <div [class]="'order-state ' + store?.shipmentState">
+          {{ store?.shipmentState === 'ready' ? 'confirm' : store?.shipmentState }}
+        </div>
+        <div
+          class="package-index"
+          *ngIf="order?.serviceType !== platformServices.Food && !fromCart"
+        >
+          {{ storeIndex + 1 + ' of ' + order?.stores?.length + ' Package' }}
+        </div>
+      </div>
+      <div
+        class="store-header-mart"
+        *ngIf="isMartFood()"
+        id="go-to-restaurant"
+        (click)="goToRestaurant(store)"
+      >
+        <div class="ion-activatable store-name">
+          <img class="store-img" [src]="utility.getImage(store?.logoMedium)">
+          <div class="detail">
+            <span class="title" id="mart-store-title">{{ store?.name }}</span>
+            <div
+              class="rating"
+            >
+              <img src="assets/images/rate-star.svg"/>
+              <span class="rate-num">{{ store?.avgRating }}</span>
+              <div class="rating-count">({{ store?.reviewsCount}} Ratings)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ion-list [class.mart-padding]="currentServiceType === platformServices.Mart || currentServiceType === platformServices.Food">
+        <ng-container *ngIf="store?.products">
+          <ion-item-sliding *ngFor="let product of store?.products; let i = index; let isLast = last">
+            <ion-item
+              *ngIf="
+                currentServiceType !== platformServices.Mart &&
+                currentServiceType !== platformServices.Food
+              "
+              lines="none"
+            >
+              <div class="cart-item">
+                <div class="product-info">
+                  <div class="checkbox-store" *ngIf="fromCart">
+                    <!-- Inside ion-item-sliding -->
+                    <ion-checkbox slot="start" mode="ios" [(ngModel)]="selectedProducts[storeIndex][i]" (ionChange)="toggleProductSelection($event, storeIndex, i)"></ion-checkbox>
+                  </div>
+                  <div class="img-wrap">
+                    <div class="product-image">
+                      <img [src]="utility.getImage(product?.imageSrcMedium)" />
+                    </div>
+                  </div>
+                  <div class="info-div">
+                    <div>
+                      <div class="product-title" id="mall-product-title-section">
+                        {{ product?.name }}
+                      </div>
+                      <div class="product-options" id="mall-product-options-section">
+                        {{ product?.options }}
+                      </div>
+                    </div>
+                    <div class="text-info">
+                      <!--
+                    <div class="product-options">
+                      {{product?.fiveFormattedHighlights}}
+                    </div> -->
+                      <div class="product-price">
+                        {{ product?.price | nprCurrency }}
+                      </div>
+                      <div class="quantity">
+                        <form [formGroup]="form">
+                          <div
+                            class="quantity"
+                            [formGroup]="getFormGroup(storeIndex, i)"
+                          >
+                            <app-value-spinner
+                              formControlName="quantity"
+                              [readonly]="!fromCart"
+                              [minValue]="0"
+                            >
+                            </app-value-spinner>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <!-- <ion-button class="special-instructions-btn"
+                    *ngIf="currentServiceType === platformServices.Food && !product?.specialInstructions"
+                    (click)="showOrderModal(product)" [disabled]="!isDraft">
+                    Add Special Instructions
+                  </ion-button> -->
+                  </div>
+                </div>
+                <div
+                  class="special-instructions ion-activatable"
+                  *ngIf="product?.specialInstructions"
+                  (click)="showOrderModal(product)"
+                >
+                  <ion-label class="label"> Special Instructions: </ion-label>
+                  <ion-label class="instructions">
+                    {{ product?.specialInstructions }}
+                  </ion-label>
+                </div>
+              </div>
+            </ion-item>
+
+              <ion-item
+                lines= "none"
+                class="mart-checkout"
+                *ngIf="isMartFood()"
+              >
+                <div
+                  class="img-wrap"
+                  *ngIf="product?.imageSrcMedium && currentServiceType !== platformServices.Food"
+                >
+                  <div class="product-image">
+                    <img
+                      [src]="product?.imageSrcMedium"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div class="product-details" id="show-order-modal" (click)="showOrderModal(product)">
+                  <div class="product-name" id="product-name-mart-section">
+                    <div
+                      class="veg-nonveg-indicator"
+                      *ngIf="currentServiceType === platformServices.Food"
+                    >
+                      <i
+                        class="icon-food-signs"
+                        [ngClass]="{
+                          green: product?.productType === productTypes.VEG,
+                          brown: product?.productType === productTypes.NONVEG
+                        }"
+                      ></i>
+                    </div>
+                    {{ product?.name }}
+                  </div>
+                  <div class="product-price" id="product-price-mart-section">{{ product?.price | nprCurrency }}</div>
+                  <div
+                    class="special-instructions-new ion-activatable"
+                    *ngIf="
+                      currentServiceType === platformServices.Food &&
+                      product?.specialInstructions
+                    "
+                  >
+                    <div class="instructions">
+                        "{{ product?.specialInstructions }}"
+                    </div>
+                  </div>
+                </div>
+
+                <div slot="end" class="mart-price">
+                  <div class="quantity">
+                    <form [formGroup]="form">
+                      <div class="quantity" [formGroup]="getFormGroup(storeIndex, i)">
+                        <app-value-spinner
+                          formControlName="quantity"
+                          [readonly]="!fromCart"
+                          [minValue]="0"
+                        >
+                        </app-value-spinner>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </ion-item>
+
+            <ion-item-options side="end" *ngIf="fromCart">
+              <ion-item-option
+                class="special-instructions"
+                *ngIf="
+                  currentServiceType === platformServices.Food &&
+                  !product?.specialInstructions
+                "
+                (click)="showOrderModal(product)"
+                id="show-order-modal-btn"
+              >
+                <ion-icon name="pencil"></ion-icon>
+              </ion-item-option>
+              <ion-item-option
+                class="wishlist"
+                (click)="toggleAddWishlist(product)"
+                id="toggle-wishlist-btn"
+                *ngIf="currentServiceType !== platformServices.Food"
+              >
+                <i
+                  [class]="
+                    !product?.isAddedToWishlist ? 'icon-heart-outline' : 'icon-heart-filled'
+                  "
+                ></i>
+              </ion-item-option>
+              <ion-item-option class="delete" (click)="deleteConfirm(product)" id="delete-confirm-btn">
+                <i class="icon-delete"></i>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ng-container>
+        <div
+          class="delivery-options"
+          id="delivery-options"
+          (click)="openDeliveryMethodModal(store)"
+          *ngIf="store?.deliveryOption && !fromCart && isDraft"
+        >
+          <ion-label>
+            {{
+              store?.deliveryOption
+                ? store?.deliveryOption.name + ': '
+                : 'Select a delivery method'
+            }}
+          </ion-label>
+          <div class="price" id="delivery-option-price">
+            &nbsp; {{ store?.deliveryOption.deliveryCharge | nprCurrency }}
+          </div>
+          <div class="down-icon">
+            <ion-icon name="chevron-down-outline"></ion-icon>
+          </div>
+        </div>
+        <div class="delivery-div" *ngIf="!isDraft">
+          <div>{{ store?.deliveryOption.name + ': ' }}</div>
+          <div class="strong">
+            &nbsp;{{ store?.deliveryOption.deliveryCharge | nprCurrency }}
+          </div>
+        </div>
+      </ion-list>
+
+      <!-- Todo: Can be removed in future after verification -->
+      <div
+        class="store-footer"
+        *ngIf="
+          !store?.rider && currentServiceType !== platformServices.Mart && currentServiceType !== platformServices.Food && !fromCart
+        ">
+        <!-- <div class="delivery">
+          {{ 'Delivery Charge:' }} <b>{{ getDeliveryCharge(order?.deliveryCharge)  | nprCurrency }}</b>
+        </div>
+        <div class="quantity">
+          <form [formGroup]="form">
+            <div class="quantity" [formGroup]="getFormGroup(i)">
+              <app-value-spinner formControlName="quantity" [readonly]="!isDraft"></app-value-spinner>
+            </div>
+          </form>
+        </div> -->
+
+        <div class="sub-total">Total</div>
+        <div class="store-total">
+          {{ getVendorSubTotal(store) | nprCurrency }}
+        </div>
+      </div>
+      <div class="store-footer-rider" *ngIf="store?.rider">
+        <div class="rider-details">
+          <div class="info">
+            <div class="img-div">
+              <ion-img
+                [src]="
+                  store?.rider.profilePictureMini ||
+                  '/assets/images/no-image-logo.png'
+                "
+              ></ion-img>
+            </div>
+            <div class="name-div">
+              <div>
+                {{
+                  store?.shipmentState === 'shipping' ? 'Delivering' : 'Delivered'
+                }}
+                By
+              </div>
+              <div class="strong">{{ store?.rider.fullName }}</div>
+              <div class="mobile">{{ store?.rider.mobileNumber }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="store-total">
+          <div>Sub Total</div>
+          <div>{{ getVendorSubTotal(store) | nprCurrency }}</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="isDeleteLoad">
+    <app-loader></app-loader>
+  </ng-container>
+</div>

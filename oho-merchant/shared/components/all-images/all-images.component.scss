@@ -1,0 +1,36 @@
+@import "../../../../global.scss";
+
+.my-images {
+  margin-top: 12px;
+
+  .images-grid {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    justify-content: start;
+    margin: 0 16px 16px;
+
+    .grid-view {
+      align-items: center;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      height: 104px;
+      margin: 8px;
+      width: 104px;
+
+      ion-img {
+        height: 100%;
+        width: 100%;
+
+        &::part(image) {
+          border-radius: 8px;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+}
+
+ion-skeleton-text {
+  --border-radius: 8px;
+}
